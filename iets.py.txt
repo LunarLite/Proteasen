@@ -1,8 +1,5 @@
 djfkadfna
 kashdfjasdf
 
-Eline fissa<<<<<<< HEAD
 Eline fissa
-=======
 Mick was here
->>>>>>> 386c90e3a4f0e84e8674300be6ca1dc46e072f30
