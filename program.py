@@ -1,8 +1,11 @@
 # imports
 import sys
 
+# global variables
+dictOfMolecules = {}
 
-# object that can be either a hydrophobic or polar
+
+# Molecule. Can be either hydrophobic or polair, gets a position assigned based on the algorythm
 class Aminozuur:
 	def __init__(self, molecule_type):
 		self.molecule_type = molecule_type
@@ -15,7 +18,7 @@ if __name__ == '__main__':
 		sys.exit("Usage: python program.py HPPHHPPHH")
 	input = str(sys.argv[1])
 	
-	dictOfMolecules = {}
+	
 	count = 0
 	for c in input:
 		x = str(count)
