@@ -1,5 +1,6 @@
 # Imports.
 import sys
+import timeit
 
 from Dependencies.helpers import *
 from Classes.AminoAcid import *
@@ -9,6 +10,9 @@ aminoacid_chain = []
 
 # Main function.
 def main():
+
+	# initialize timer
+	start = timeit.default_timer()
 
 	# Check if command line argument is given.
 	if (len(sys.argv) != 2):
@@ -24,6 +28,11 @@ def main():
 
 	# Plot the "folded" aminoacid chain.
 	plot(aminoacid_chain)
+
+	# stop timer
+	stop = timeit.default_timer()
+
+	print"Runtime:", (stop - start)
 
 		
 # Main execution

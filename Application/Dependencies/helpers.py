@@ -31,6 +31,7 @@ def load(input):
 # Determines optimal aminoacid chain configuration.
 def fold(chain): 
 
+	occupied = [[0, 0]]
 	# Iterate over each aminoacid.
 	for i in range (1, len(chain)):
 
@@ -43,32 +44,18 @@ def fold(chain):
 
 		options = [tup1, tup2, tup3, tup4]
 
-		zelfde = True
-		fouten = []
 		fout = True
 
-		while zelfde:
-			zelfde = False
-
-			while fout:
-				option = randint(0, 3)
-				if option not in fouten:
-					fout = False
+		while fout:
+			option = randint(0, 3)
 
 			x = options[option][0]
 			y = options[option][1]
+			if [x, y] not in occupied:
+				fout = False			 		
 
-			for j in range(0, i - 1):
-				if chain[j].x == x and chain[j].y == y:
-			 		zelfde = True
-			 		fouten.append(option)
-			 		break
-			 	else: 
-			 		zelfde = False
-			 		fouten = 0
-			 		
-
-		print(x, y)
+		occupied.append([x, y])
+		#print(occupied)
 
 		chain[i].x = x
 		chain[i].y = y
