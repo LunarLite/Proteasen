@@ -26,13 +26,12 @@ def main():
 	# Set x and y coordinates of the aminoacids of chain.
 	fold(aminoacid_chain)
 
-	# Plot the "folded" aminoacid chain.
-	plot(aminoacid_chain)
-
 	# stop timer
 	stop = timeit.default_timer()
-
 	print"Runtime:", (stop - start)
+	
+	# Plot the "folded" aminoacid chain.
+	plot(aminoacid_chain)
 
 		
 # Main execution
