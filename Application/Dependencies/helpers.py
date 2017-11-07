@@ -1,5 +1,7 @@
 from matplotlib import pyplot as plt
+from random import randint
 from Classes.AminoAcid import *
+
 
 aminoacid_chain = []
 
@@ -26,39 +28,86 @@ def load(input):
 	return aminoacid_chain
 	
 	
+# Determines optimal aminoacid chain configuration.
+def fold(chain): 
+
+	# Iterate over each aminoacid.
+	for i in range (1, len(chain)):
+
+		# create array containing possible positions
+		prev_acid = chain[i - 1]
+		tup1 = [prev_acid.x + 1, prev_acid.y]
+		tup2 = [prev_acid.x - 1, prev_acid.y]
+		tup3 = [prev_acid.x, prev_acid.y + 1]
+		tup4 = [prev_acid.x, prev_acid.y - 1]
+
+		options = [tup1, tup2, tup3, tup4]
+
+		zelfde = True
+		fouten = []
+		fout = True
+
+		while zelfde:
+			zelfde = False
+
+			while fout:
+				option = randint(0, 3)
+				if option not in fouten:
+					fout = False
+
+			x = options[option][0]
+			y = options[option][1]
+
+			for j in range(0, i - 1):
+				if chain[j].x == x and chain[j].y == y:
+			 		zelfde = True
+			 		fouten.append(option)
+			 		break
+			 	else: 
+			 		zelfde = False
+			 		fouten = 0
+			 		
+
+		print(x, y)
+
+		chain[i].x = x
+		chain[i].y = y
+
+		
 # Plots aminoacid chain configuration.
-def plot():
+def plot(chain):
 	
 	# Create empty lists to store x and y coordinates.
 	x = []
 	y = []
 
 	# Iterate over each aminoacid. 
-	for i in range(0, len(aminoacid_chain)):
+	for i in range(0, len(chain)):
 
 		# Store x and y coordinates of current aminoacid.
-		x.append(aminoacid_chain[i].x)
-		y.append(aminoacid_chain[i].y)
+		x.append(chain[i].x)
+		y.append(chain[i].y)
 	
 	# Plot backbone aminoacid chain.
 	plt.plot(x, y, 'k-')
 
 	# Iterate over each aminoacid.
-	for i in range(0, len(aminoacid_chain)):
+	for i in range(0, len(chain)):
 		
 		# Check for type of current aminoacid. 
-		if aminoacid_chain[i].molecule_type == "hydrophobic": 
+		if chain[i].molecule_type == "hydrophobic": 
 
 			# Plot red dot at coordinates of hydrophobic aminoacid.
-			plt.plot(aminoacid_chain[i].x, aminoacid_chain[i].y, 'ro')
+			plt.plot(chain[i].x, chain[i].y, 'ro')
 
-		elif aminoacid_chain[i].molecule_type == "polair":  
+		elif chain[i].molecule_type == "polair":  
 
 			# Plot blue dot at coordinates of polair aminoacid.
-			plt.plot(aminoacid_chain[i].x, aminoacid_chain[i].y, 'bo')
+			plt.plot(chain[i].x, chain[i].y, 'bo')
 	
 	# Draw a grid behind plots. 
 	plt.grid()
 
 	# Display pop-up window with plot. 
 	plt.show()
+	
