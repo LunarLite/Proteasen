@@ -61,7 +61,7 @@ def load(input):
 		aminoacid_chain.append(Amino_acid(molecule_type))
 
 
-# Plots optimal aminoacid chain configuration.
+# Plots aminoacid chain configuration.
 def plot():
 	
 	# Create empty lists to store x and y coordinates.
@@ -98,9 +98,10 @@ def plot():
 	# Display pop-up window with plot. 
 	plt.show()
 
+# Determines optimal aminoacid chain configuration.
 def fold(): 
 
-	#Iterate over each aminoacid.
+	# Iterate over each aminoacid.
 	for i in range(0, len(aminoacid_chain)): 
 
 		# set the x and y coordinate of current aminoacid.
