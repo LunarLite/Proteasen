@@ -8,11 +8,9 @@ from matplotlib import pyplot as plt
 class Amino_acid_chain:
 	def __init__(self):
 		self.chain = []
-		self.length = 0
 
 	def add_amino(self, molecule_type):
 		self.chain.append(AminoAcid.Amino_acid(molecule_type))
-		self.length += 1
 
 	# Determines optimal aminoacid chain configuration.
 	def fold(self): 
