@@ -40,22 +40,22 @@ class Amino_acid_chain:
 
 				# create array containing possible positions
 				prev_acid = self.chain[i - 1]
-				tup1 = [prev_acid.x + 1, prev_acid.y]
-				tup2 = [prev_acid.x - 1, prev_acid.y]
-				tup3 = [prev_acid.x, prev_acid.y + 1]
-				tup4 = [prev_acid.x, prev_acid.y - 1]
+				option1 = [prev_acid.x + 1, prev_acid.y]
+				option2 = [prev_acid.x - 1, prev_acid.y]
+				option3 = [prev_acid.x, prev_acid.y + 1]
+				option4 = [prev_acid.x, prev_acid.y - 1]
 
-				options = [tup1, tup2, tup3, tup4]
+				options = [option1, option2, option3, option4]
 
-				fout = True
+				error = True
 
-				while fout:
+				while error:
 					option = randint(0, 3)
 
 					x = options[option][0]
 					y = options[option][1]
 					if [x, y] not in occupied:
-						fout = False			 		
+						error = False			 		
 
 				occupied.append([x, y])
 				#print(occupied)
