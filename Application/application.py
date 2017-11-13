@@ -2,8 +2,8 @@
 import sys
 import timeit
 
-from Dependencies.helpers import *
-from Classes.AminoAcid import *
+from Dependencies import helpers
+from Classes import AminoAcid
 
 # Global variables.
 aminoacid_chain = []
@@ -21,17 +21,17 @@ def main():
 	input = str(sys.argv[1])
 	
 	# Create amino acid chain by the given comment line argument.
-	aminoacid_chain = load(input)
+	aminoacid_chain = helpers.load(input)
 
 	# Set x and y coordinates of the aminoacids of chain.
-	fold(aminoacid_chain)
+	helpers.fold(aminoacid_chain)
 
 	# stop timer
 	stop = timeit.default_timer()
 	print"Runtime:", (stop - start)
 	
 	# Plot the "folded" aminoacid chain.
-	plot(aminoacid_chain)
+	helpers.plot(aminoacid_chain)
 
 		
 # Main execution

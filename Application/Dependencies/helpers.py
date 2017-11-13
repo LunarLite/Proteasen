@@ -1,6 +1,6 @@
 from matplotlib import pyplot as plt
 from random import randint
-from Classes.AminoAcid import *
+from Classes import AminoAcid
 
 
 aminoacid_chain = []
@@ -24,7 +24,7 @@ def load(input):
 			sys.exit("Usage: python program.py HPPHHPPHH")
 
 		# Create aminoacid with appropriate type and append it to the chain.
-		aminoacid_chain.append(Amino_acid(molecule_type))
+		aminoacid_chain.append(AminoAcid.Amino_acid(molecule_type))
 	return aminoacid_chain
 	
 	
