@@ -2,7 +2,7 @@
 import sys
 import timeit
 
-from Dependencies import helpers as h
+from Classes import AminoAcidChain
 
 # Main function.
 def main():
@@ -16,8 +16,11 @@ def main():
 
 	input = str(sys.argv[1])
 	
+	# create AminoAcidChain object
+	amino_acid_chain = AminoAcidChain.Amino_acid_chain()
+
 	# Create amino acid chain by the given comment line argument.
-	amino_acid_chain = h.load(input)
+	amino_acid_chain.create(input)
 
 	# Set x and y coordinates of the aminoacids of chain.
 	amino_acid_chain.fold()

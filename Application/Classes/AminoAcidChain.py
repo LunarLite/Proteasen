@@ -9,8 +9,24 @@ class Amino_acid_chain:
 	def __init__(self):
 		self.chain = []
 
-	def add_amino(self, molecule_type):
-		self.chain.append(AminoAcid.Amino_acid(molecule_type))
+	def create(self, input):
+
+		# Iterate over each character in command line argument. 
+		for c in input:
+
+			# Allow only H and P in command line argument. 
+			# Set molecule type to either hydrophobic or polair, as H or P indicates.
+			if (c.upper() == 'H'):
+				molecule_type = "hydrophobic"
+
+			elif (c.upper() == 'P'):
+				molecule_type = "polair"
+
+			else: 
+				sys.exit("Usage: python program.py HPPHHPPHH algorithm")
+
+			# Append amino acid with appropriate molecule type to chain.
+			self.chain.append(AminoAcid.Amino_acid(molecule_type))
 
 	# Determines optimal aminoacid chain configuration.
 	def fold(self): 
