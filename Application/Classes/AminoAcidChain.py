@@ -1,4 +1,6 @@
 import AminoAcid
+import sys
+
 from random import randint
 from matplotlib import pyplot as plt
 
@@ -15,34 +17,39 @@ class Amino_acid_chain:
 	# Determines optimal aminoacid chain configuration.
 	def fold(self): 
 
-		occupied = [[0, 0]]
-		# Iterate over each aminoacid.
-		for i in range (1, len(self.chain)):
+		algorithm = str(sys.argv[2])
 
-			# create array containing possible positions
-			prev_acid = self.chain[i - 1]
-			tup1 = [prev_acid.x + 1, prev_acid.y]
-			tup2 = [prev_acid.x - 1, prev_acid.y]
-			tup3 = [prev_acid.x, prev_acid.y + 1]
-			tup4 = [prev_acid.x, prev_acid.y - 1]
+		if algorithm == "Random" or algorithm == "random":
+			occupied = [[0, 0]]
+			# Iterate over each aminoacid.
+			for i in range (1, len(self.chain)):
 
-			options = [tup1, tup2, tup3, tup4]
+				# create array containing possible positions
+				prev_acid = self.chain[i - 1]
+				tup1 = [prev_acid.x + 1, prev_acid.y]
+				tup2 = [prev_acid.x - 1, prev_acid.y]
+				tup3 = [prev_acid.x, prev_acid.y + 1]
+				tup4 = [prev_acid.x, prev_acid.y - 1]
 
-			fout = True
+				options = [tup1, tup2, tup3, tup4]
 
-			while fout:
-				option = randint(0, 3)
+				fout = True
 
-				x = options[option][0]
-				y = options[option][1]
-				if [x, y] not in occupied:
-					fout = False			 		
+				while fout:
+					option = randint(0, 3)
 
-			occupied.append([x, y])
-			#print(occupied)
+					x = options[option][0]
+					y = options[option][1]
+					if [x, y] not in occupied:
+						fout = False			 		
 
-			self.chain[i].x = x
-			self.chain[i].y = y
+				occupied.append([x, y])
+				#print(occupied)
+
+				self.chain[i].x = x
+				self.chain[i].y = y
+		else: 
+			sys.exit("Usage: python program.py HPPHHPPHH algorithm")
 
 	# Plots aminoacid chain configuration.
 	def plot(self):

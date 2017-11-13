@@ -11,8 +11,8 @@ def main():
 	start = timeit.default_timer()
 
 	# Check if command line argument is given.
-	if (len(sys.argv) != 2):
-		sys.exit("Usage: python program.py HPPHHPPHH")
+	if (len(sys.argv) != 3):
+		sys.exit("Usage: python program.py HPPHHPPHH algorithm")
 
 	input = str(sys.argv[1])
 	

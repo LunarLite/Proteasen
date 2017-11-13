@@ -19,7 +19,7 @@ def load(input):
 			molecule_type = "polair"
 
 		else: 
-			sys.exit("Usage: python program.py HPPHHPPHH")
+			sys.exit("Usage: python program.py HPPHHPPHH algorithm")
 
 		# Create amino acid with appropriate type and append it to the chain.
 		amino_acid_chain.add_amino(molecule_type)
