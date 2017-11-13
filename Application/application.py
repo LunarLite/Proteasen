@@ -11,9 +11,10 @@ def main():
 
 	# Check if command line argument is given.
 	if (len(sys.argv) != 3):
-		sys.exit("Usage: python program.py HPPHHPPHH algorithm")
+		sys.exit("Usage: python program.py algorithm HPPHHPPHH")
 
-	input = str(sys.argv[1])
+	algorithm = str(sys.argv[1])
+	input = str(sys.argv[2])
 	
 	# create AminoAcidChain object
 	amino_acid_chain = AminoAcidChain.Amino_acid_chain()
@@ -22,7 +23,7 @@ def main():
 	amino_acid_chain.create(input)
 
 	# Set x and y coordinates of the aminoacids of chain.
-	amino_acid_chain.fold()
+	amino_acid_chain.fold(algorithm)
 
 	# stop timer
 	stop = timeit.default_timer()

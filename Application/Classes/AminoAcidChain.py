@@ -9,10 +9,10 @@ class Amino_acid_chain:
 	def __init__(self):
 		self.chain = []
 
-	def create(self, input):
+	def create(self, chain_prototype):
 
 		# Iterate over each character in command line argument. 
-		for c in input:
+		for c in chain_prototype:
 
 			# Allow only H and P in command line argument. 
 			# Set molecule type to either hydrophobic or polair, as H or P indicates.
@@ -23,15 +23,13 @@ class Amino_acid_chain:
 				molecule_type = "polair"
 
 			else: 
-				sys.exit("Usage: python program.py HPPHHPPHH algorithm")
+				sys.exit("Usage: python program.py algorithm HPPHHPPHH")
 
 			# Append amino acid with appropriate molecule type to chain.
 			self.chain.append(AminoAcid.Amino_acid(molecule_type))
 
 	# Determines optimal aminoacid chain configuration.
-	def fold(self): 
-
-		algorithm = str(sys.argv[2])
+	def fold(self, algorithm): 
 
 		if algorithm == "Random" or algorithm == "random":
 			occupied = [[0, 0]]
@@ -63,7 +61,7 @@ class Amino_acid_chain:
 				self.chain[i].x = x
 				self.chain[i].y = y
 		else: 
-			sys.exit("Usage: python program.py HPPHHPPHH algorithm")
+			sys.exit("Usage: python program.py algorithm HPPHHPPHH")
 
 	# Plots aminoacid chain configuration.
 	def plot(self):
