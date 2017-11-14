@@ -1,4 +1,4 @@
-# Imports.
+# Imports
 import sys
 import timeit
 from Classes import AminoAcidChain
