@@ -2,7 +2,13 @@ import AminoAcid
 import sys
 
 from random import randint
-from matplotlib import pyplot as plt
+
+# Imports required for plot
+import matplotlib.pyplot as plt
+import numpy as np
+# Setup for plot
+fig = plt.figure()
+fig.suptitle('AminoAcidChain')
 
 # Amino acid chain. 
 class Amino_acid_chain:
@@ -66,10 +72,12 @@ class Amino_acid_chain:
 	# Plots aminoacid chain configuration.
 	def plot(self):
 		
+		subPlot = fig.add_subplot(111)
 		# Create empty lists to store x and y coordinates.
 		x = []
 		y = []
 
+		
 		# Iterate over each aminoacid. 
 		for i in range(0, len(self.chain)):
 
@@ -78,7 +86,9 @@ class Amino_acid_chain:
 			y.append(self.chain[i].y)
 		
 		# Plot backbone aminoacid chain.
-		plt.plot(x, y, 'k-')
+		subPlot.plot(x, y, 'k-')
+		subPlot.set_xticks(x, False)
+		subPlot.set_yticks(y, False)
 
 		# Iterate over each aminoacid.
 		for i in range(0, len(self.chain)):
@@ -87,15 +97,15 @@ class Amino_acid_chain:
 			if self.chain[i].molecule_type == "hydrophobic": 
 
 				# Plot red dot at coordinates of hydrophobic aminoacid.
-				plt.plot(self.chain[i].x, self.chain[i].y, 'ro')
+				subPlot.plot(self.chain[i].x, self.chain[i].y, 'ro')
 
 			elif self.chain[i].molecule_type == "polair":  
 
 				# Plot blue dot at coordinates of polair aminoacid.
-				plt.plot(self.chain[i].x, self.chain[i].y, 'bo')
+				subPlot.plot(self.chain[i].x, self.chain[i].y, 'bo')
 		
 		# Draw a grid behind plots. 
-		plt.grid()
+		subPlot.grid()
 
 		# Display pop-up window with plot. 
 		plt.show()
