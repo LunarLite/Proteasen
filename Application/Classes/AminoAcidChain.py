@@ -36,29 +36,29 @@ class Amino_acid_chain:
 			# Iterate over each aminoacid.
 			for i in range (1, len(self.chain)):
 
-				# create array containing possible positions
+				# create arrays containing possible position (x and y coordinates)
 				prev_acid = self.chain[i - 1]
-				option1 = [prev_acid.x + 1, prev_acid.y]
-				option2 = [prev_acid.x - 1, prev_acid.y]
-				option3 = [prev_acid.x, prev_acid.y + 1]
-				option4 = [prev_acid.x, prev_acid.y - 1]
+				option_0 = [prev_acid.x + 1, prev_acid.y]
+				option_1 = [prev_acid.x - 1, prev_acid.y]
+				option_2 = [prev_acid.x, prev_acid.y + 1]
+				option_3 = [prev_acid.x, prev_acid.y - 1]
 
-				options = [option1, option2, option3, option4]
+				options = [option_0, option_1, option_2, option_3]
 
-				error = True
+				conflict = True
 
-				while error:
+				while conflict:
 					option_number = randint(0, 3)
 
-					x = options[option_number][0]
-					y = options[option][1]
-					if [x, y] not in occupied:
-						error = False			 		
+					coordinates = options[option_number]
 
-				self.chain[i].x = x
-				self.chain[i].y = y
+					if coordinates not in occupied:
+						conflict = False			 		
 
-				occupied.append([x, y])
+				self.chain[i].x = coordinates[0]
+				self.chain[i].y = coordinates[1]
+
+				occupied.append(coordinates)
 				#print(occupied)
 
 		else: 
