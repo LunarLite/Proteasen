@@ -49,6 +49,7 @@ class Amino_acid_chain:
 	# Plots aminoacid chain configuration.
 	def plot(self):
 		
+		# Add new subplot
 		subPlot = fig.add_subplot(111)
 		# Create empty lists to store x and y coordinates.
 		x = []
@@ -62,8 +63,9 @@ class Amino_acid_chain:
 			x.append(self.chain[i].coordinates[0])
 			y.append(self.chain[i].coordinates[1])
 		
-		# Plot backbone aminoacid chain.
+		# Subplot backbone aminoacid chain.
 		subPlot.plot(x, y, 'k-')
+		# Set subplot ticks to the exact amount required
 		subPlot.set_xticks(x, False)
 		subPlot.set_yticks(y, False)
 
@@ -83,11 +85,8 @@ class Amino_acid_chain:
 				subPlot.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], 'bo')
 				plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], 'bo')
 		
-		# Draw a grid behind plots. 
+		# Draw a grid behind Subplot 
 		subPlot.grid()
 
-		# Display pop-up window with plot. 
+		# Display pop-up window with plot
 		plt.show()
-		
-
-
