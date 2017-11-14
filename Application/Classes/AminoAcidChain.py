@@ -1,6 +1,7 @@
 import AminoAcid
 import sys
 
+from Dependencies import helpers
 from random import randint
 
 # Imports required for plot
@@ -38,34 +39,9 @@ class Amino_acid_chain:
 	def fold(self, algorithm): 
 
 		if algorithm == "Random" or algorithm == "random":
-			occupied = [[0, 0]]
-			# Iterate over each aminoacid.
-			for i in range (1, len(self.chain)):
-
-				# create array containing possible positions
-				prev_acid = self.chain[i - 1]
-				option1 = [prev_acid.x + 1, prev_acid.y]
-				option2 = [prev_acid.x - 1, prev_acid.y]
-				option3 = [prev_acid.x, prev_acid.y + 1]
-				option4 = [prev_acid.x, prev_acid.y - 1]
-
-				options = [option1, option2, option3, option4]
-
-				error = True
-
-				while error:
-					option = randint(0, 3)
-
-					x = options[option][0]
-					y = options[option][1]
-					if [x, y] not in occupied:
-						error = False			 		
-
-				occupied.append([x, y])
-				#print(occupied)
-
-				self.chain[i].x = x
-				self.chain[i].y = y
+			helpers.random(self.chain)
+			
+		# ensure proper usage
 		else: 
 			sys.exit("Usage: python program.py algorithm HPPHHPPHH")
 
@@ -82,8 +58,8 @@ class Amino_acid_chain:
 		for i in range(0, len(self.chain)):
 
 			# Store x and y coordinates of current aminoacid.
-			x.append(self.chain[i].x)
-			y.append(self.chain[i].y)
+			x.append(self.chain[i].coordinates[0])
+			y.append(self.chain[i].coordinates[1])
 		
 		# Plot backbone aminoacid chain.
 		subPlot.plot(x, y, 'k-')
@@ -97,12 +73,20 @@ class Amino_acid_chain:
 			if self.chain[i].molecule_type == "hydrophobic": 
 
 				# Plot red dot at coordinates of hydrophobic aminoacid.
+<<<<<<< HEAD
 				subPlot.plot(self.chain[i].x, self.chain[i].y, 'ro')
+=======
+				plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], 'ro')
+>>>>>>> ed7c541e6732cefc37959b567691fd203a53cbad
 
 			elif self.chain[i].molecule_type == "polair":  
 
 				# Plot blue dot at coordinates of polair aminoacid.
+<<<<<<< HEAD
 				subPlot.plot(self.chain[i].x, self.chain[i].y, 'bo')
+=======
+				plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], 'bo')
+>>>>>>> ed7c541e6732cefc37959b567691fd203a53cbad
 		
 		# Draw a grid behind plots. 
 		subPlot.grid()
