@@ -48,18 +48,19 @@ class Amino_acid_chain:
 				error = True
 
 				while error:
-					option = randint(0, 3)
+					option_number = randint(0, 3)
 
-					x = options[option][0]
+					x = options[option_number][0]
 					y = options[option][1]
 					if [x, y] not in occupied:
 						error = False			 		
 
+				self.chain[i].x = x
+				self.chain[i].y = y
+
 				occupied.append([x, y])
 				#print(occupied)
 
-				self.chain[i].x = x
-				self.chain[i].y = y
 		else: 
 			sys.exit("Usage: python program.py algorithm HPPHHPPHH")
 
