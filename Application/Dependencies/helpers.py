@@ -2,36 +2,58 @@ from random import randint
 
 
 def random(amino_acid_chain):
-	occupied = [[0, 0]]
+
+	
+	# occupied = [[0, 0]]
 
 	# Iterate over each aminoacid.
 	for i in range (1, len(amino_acid_chain)):
 
+		# remember coordinates of previous amino acid
+		x = amino_acid_chain[i - 1].coordinates[0]
+		y = amino_acid_chain[i - 1].coordinates[1]
+
 		# create array containing possible positions
-		prev_acid = amino_acid_chain[i - 1]
-		option1 = [prev_acid.x + 1, prev_acid.y]
-		option2 = [prev_acid.x - 1, prev_acid.y]
-		option3 = [prev_acid.x, prev_acid.y + 1]
-		option4 = [prev_acid.x, prev_acid.y - 1]
+		option1 = [x + 1, y]
+		option2 = [x - 1, y]
+		option3 = [x, y + 1]
+		option4 = [x, y - 1]
 
 		options = [option1, option2, option3, option4]
 
-		error = True
+		conflict = True
 
-		while error:
+		while conflict:
+
+			# randomly choose one of the possible positions
 			option = randint(0, 3)
+			coordinates = options[option]
+			
+			# iterate over all previously positioned amino acids
+			for j in range(0, i):
 
-			x = options[option][0]
-			y = options[option][1]
-			if [x, y] not in occupied:
-				error = False			 		
+				# if coordinates match, break to choose new coordinates
+				if coordinates == amino_acid_chain[j].coordinates:
+					conflict = True	
+					break
 
-		occupied.append([x, y])
-		#print(occupied)
+				# if none of the previous coordinates match, break out of while loop
+				else: 
+					conflict = False	
+		
+		# set coordinates of current amino acid
+		amino_acid_chain[i].coordinates = coordinates
 
-		amino_acid_chain[i].x = x
-		amino_acid_chain[i].y = y
-	return amino_acid_chain
+
+
+
+
+# # occupied has to be a dict of format {"type": "H/P", : [x, y]}
+# def score(occupied): 
+	
+	
+
+
 
 	
 

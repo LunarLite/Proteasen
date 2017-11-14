@@ -33,7 +33,7 @@ class Amino_acid_chain:
 	def fold(self, algorithm): 
 
 		if algorithm == "Random" or algorithm == "random":
-			self.chain = helpers.random(self.chain)
+			helpers.random(self.chain)
 			
 		# ensure proper usage
 		else: 
@@ -50,8 +50,8 @@ class Amino_acid_chain:
 		for i in range(0, len(self.chain)):
 
 			# Store x and y coordinates of current aminoacid.
-			x.append(self.chain[i].x)
-			y.append(self.chain[i].y)
+			x.append(self.chain[i].coordinates[0])
+			y.append(self.chain[i].coordinates[1])
 		
 		# Plot backbone aminoacid chain.
 		plt.plot(x, y, 'k-')
@@ -63,12 +63,12 @@ class Amino_acid_chain:
 			if self.chain[i].molecule_type == "hydrophobic": 
 
 				# Plot red dot at coordinates of hydrophobic aminoacid.
-				plt.plot(self.chain[i].x, self.chain[i].y, 'ro')
+				plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], 'ro')
 
 			elif self.chain[i].molecule_type == "polair":  
 
 				# Plot blue dot at coordinates of polair aminoacid.
-				plt.plot(self.chain[i].x, self.chain[i].y, 'bo')
+				plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], 'bo')
 		
 		# Draw a grid behind plots. 
 		plt.grid()

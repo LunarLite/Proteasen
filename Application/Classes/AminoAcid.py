@@ -5,5 +5,6 @@
 class Amino_acid:
 	def __init__(self, molecule_type):
 		self.molecule_type = molecule_type
-		self.x = 0
-		self.y = 0
+		# [x, y]
+		self.coordinates = [5, 4]
+
