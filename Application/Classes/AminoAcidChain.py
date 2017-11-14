@@ -1,6 +1,7 @@
 import AminoAcid
 import sys
 
+from Dependencies import helpers
 from random import randint
 from matplotlib import pyplot as plt
 
@@ -32,35 +33,9 @@ class Amino_acid_chain:
 	def fold(self, algorithm): 
 
 		if algorithm == "Random" or algorithm == "random":
-			occupied = [[0, 0]]
-			# Iterate over each aminoacid.
-			for i in range (1, len(self.chain)):
-
-				# create arrays containing possible position (x and y coordinates)
-				prev_acid = self.chain[i - 1]
-				option_0 = [prev_acid.x + 1, prev_acid.y]
-				option_1 = [prev_acid.x - 1, prev_acid.y]
-				option_2 = [prev_acid.x, prev_acid.y + 1]
-				option_3 = [prev_acid.x, prev_acid.y - 1]
-
-				options = [option_0, option_1, option_2, option_3]
-
-				conflict = True
-
-				while conflict:
-					option_number = randint(0, 3)
-
-					coordinates = options[option_number]
-
-					if coordinates not in occupied:
-						conflict = False			 		
-
-				self.chain[i].x = coordinates[0]
-				self.chain[i].y = coordinates[1]
-
-				occupied.append(coordinates)
-				#print(occupied)
-
+			self.chain = helpers.random(self.chain)
+			
+		# ensure proper usage
 		else: 
 			sys.exit("Usage: python program.py algorithm HPPHHPPHH")
 
