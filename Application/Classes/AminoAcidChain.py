@@ -1,12 +1,13 @@
 import AminoAcid
 import sys
 
-from Dependencies import helpers
+from Algorithms import Random
 from random import randint
 
 # Imports required for plot
 import matplotlib.pyplot as plt
 import numpy as np
+
 # Setup for plot
 fig = plt.figure()
 fig.suptitle('AminoAcidChain')
@@ -39,7 +40,7 @@ class Amino_acid_chain:
 	def fold(self, algorithm): 
 
 		if algorithm == "Random" or algorithm == "random":
-			helpers.random(self.chain)
+			Random.fold(self.chain)
 			
 		# ensure proper usage
 		else: 
