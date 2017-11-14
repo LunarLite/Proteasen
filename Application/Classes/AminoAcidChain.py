@@ -73,13 +73,13 @@ class Amino_acid_chain:
 			if self.chain[i].molecule_type == "hydrophobic": 
 
 				# Plot red dot at coordinates of hydrophobic aminoacid.
-				subPlot.plot(self.chain[i].x, self.chain[i].y, 'ro')
+				subPlot.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], 'ro')
 				plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], 'ro')
 
 			elif self.chain[i].molecule_type == "polair":  
 
 				# Plot blue dot at coordinates of polair aminoacid.
-				subPlot.plot(self.chain[i].x, self.chain[i].y, 'bo')
+				subPlot.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], 'bo')
 				plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], 'bo')
 		
 		# Draw a grid behind plots. 
