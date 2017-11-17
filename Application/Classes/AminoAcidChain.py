@@ -46,6 +46,33 @@ class Amino_acid_chain:
 		else: 
 			sys.exit("Usage: python program.py algorithm HPPHHPPHH")
 
+	# calculates chain stability score
+	def stability(self):
+		
+		# initialize score variable
+		score = 0
+		
+		# iterate over chain
+		for j in range (0, len(self.chain)):
+
+			# if current aminoacid is hydrophobic, check for neigbouring aminoacids
+			if self.chain[j].molecule_type == "hydrophobic":
+
+				# loop through remaining acids to check coordinates and molecule type
+				# skip one acid (j + 2), since next acid in the string does not count for score
+				for k in range(j + 2, len(self.chain)):
+
+					# calculate absolute difference in x- and y-coordinates 
+					x_difference = abs(self.chain[j].coordinates[0] - self.chain[k].coordinates[0])
+					y_difference = abs(self.chain[k].coordinates[1] - self.chain[j].coordinates[1])
+
+					# if abs x- and y-difference is 1, acids are positioned next to eachother
+					# if neighbouring acids are hydrophobic, increase score
+					if self.chain[k].molecule_type == "hydrophobic" and x_difference + y_difference == 1:
+						score += 1
+						
+		return score
+
 	# Plots aminoacid chain configuration.
 	def plot(self):
 		

@@ -29,6 +29,10 @@ def main():
 	stop = timeit.default_timer()
 	print"Runtime:", (stop - start)
 	
+	# calculate chains stability score
+	score = amino_acid_chain.stability()
+	print"Score:", (score)
+
 	# Plot the "folded" aminoacid chain.
 	amino_acid_chain.plot()
 
