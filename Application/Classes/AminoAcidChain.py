@@ -1,4 +1,4 @@
-import AminoAcid
+from .AminoAcid import Amino_acid
 import sys
 
 from Algorithms import Random
@@ -34,7 +34,7 @@ class Amino_acid_chain:
 				sys.exit("Usage: python program.py algorithm HPPHHPPHH")
 
 			# Append amino acid with appropriate molecule type to chain.
-			self.chain.append(AminoAcid.Amino_acid(molecule_type))
+			self.chain.append(Amino_acid(molecule_type))
 
 	# Determines optimal aminoacid chain configuration.
 	def fold(self, algorithm): 
