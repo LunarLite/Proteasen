@@ -17,10 +17,10 @@ class Amino_acid_chain:
 	def __init__(self):
 		self.chain = []
 
-	def create(self, chain_prototype):
+	def create(self, sequence):
 
 		# Iterate over each character in command line argument. 
-		for c in chain_prototype:
+		for c in sequence:
 
 			# Allow only H and P in command line argument. 
 			# Set molecule type to either hydrophobic or polair, as H or P indicates.
@@ -29,9 +29,6 @@ class Amino_acid_chain:
 
 			elif (c.upper() == 'P'):
 				molecule_type = "polair"
-
-			else: 
-				sys.exit("Usage: python program.py algorithm HPPHHPPHH")
 
 			# Append amino acid with appropriate molecule type to chain.
 			self.chain.append(Amino_acid(molecule_type))
