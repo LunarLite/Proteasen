@@ -69,7 +69,7 @@ class Amino_acid_chain:
 					# if abs x- and y-difference is 1, acids are positioned next to eachother
 					# if neighbouring acids are hydrophobic, increase score
 					if self.chain[k].molecule_type == "hydrophobic" and x_difference + y_difference == 1:
-						score += 1
+						score -= 1
 						
 		return score
 
