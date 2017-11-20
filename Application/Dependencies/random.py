@@ -2,6 +2,7 @@ from random import randint
 
 def fold(amino_acid_chain):
 
+	archive = []
 	# Iterate over each aminoacid.
 	for i in range (1, len(amino_acid_chain)):
 
