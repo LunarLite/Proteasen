@@ -52,19 +52,19 @@ class Amino_acid_chain:
 		# initialize score variable
 		score = 0
 		
-		# iterate over chain
-		for j in range (0, len(self.chain)):
+		# iterate over chain, keeping track of the count
+		for count, j in enumerate(self.chain):
 
 			# if current aminoacid is hydrophobic, check for neigbouring aminoacids
-			if self.chain[j].molecule_type == "hydrophobic":
+			if j.molecule_type == "hydrophobic":
 
 				# loop through remaining acids to check coordinates and molecule type
-				# skip one acid (j + 2), since next acid in the string does not count for score
-				for k in range(j + 2, len(self.chain)):
+				# skip one acid (count + 2), since next acid in the string does not count for score
+				for k in range(count + 2, len(self.chain)):
 
 					# calculate absolute difference in x- and y-coordinates 
-					x_difference = abs(self.chain[j].coordinates[0] - self.chain[k].coordinates[0])
-					y_difference = abs(self.chain[k].coordinates[1] - self.chain[j].coordinates[1])
+					x_difference = abs(j.coordinates[0] - self.chain[k].coordinates[0])
+					y_difference = abs(self.chain[k].coordinates[1] - j.coordinates[1])
 
 					# if abs x- and y-difference is 1, acids are positioned next to eachother
 					# if neighbouring acids are hydrophobic, increase score
