@@ -12,15 +12,9 @@ def main():
 	# initialize timer
 	start = timeit.default_timer()
 
-	# Check if command line argument is given.
-	if (len(sys.argv) != 2):
-		sys.exit("Usage: python program.py algorithm")
-
-	algorithm = str(sys.argv[1])
-
 	sequences = h.load_sequences_from_csv()
 	
-	sequence = h.select_sequence(sequences)
+	sequence, algorithm = h.select_sequence(sequences)
 
 	# create AminoAcidChain object
 	amino_acid_chain = AminoAcidChain.Amino_acid_chain()
