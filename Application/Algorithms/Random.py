@@ -3,9 +3,6 @@ from random import randint
 
 def fold(amino_acid_chain):
 
-	
-	# occupied = [[0, 0]]
-
 	# Iterate over each aminoacid.
 	for i in range (1, len(amino_acid_chain)):
 
@@ -51,7 +48,7 @@ def fold(amino_acid_chain):
 					conflict = False	
 		
 		if conflicts < 20:
-			
+
 			# set coordinates of current amino acid
 			amino_acid_chain[i].coordinates = coordinates
 		
