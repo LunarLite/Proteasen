@@ -37,8 +37,14 @@ class Amino_acid_chain:
 	def fold(self, algorithm): 
 
 		if algorithm == "Random" or algorithm == "random":
-			Random.fold(self.chain)
-			
+			output = Random.fold(self.chain)
+
+			# if chain stuck in conflict, set coordinates back and fold again
+			if output == 1:
+				for i in self.chain:
+					i.coordinates = [0, 0]
+				self.fold(algorithm)
+				
 		# ensure proper usage
 		else: 
 			sys.exit("Usage: python program.py algorithm HPPHHPPHH")

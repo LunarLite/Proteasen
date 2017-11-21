@@ -21,9 +21,17 @@ def fold(amino_acid_chain):
 
 		options = [option1, option2, option3, option4]
 
+		# keep track of (the amount of) conflicts
 		conflict = True
+		conflicts = 0;
 
 		while conflict:
+
+			# if conflicts more than 20, chain is probably stuck, break
+			if conflicts > 20:
+				print("large conflict")
+				conflict = False
+				break
 
 			# randomly choose one of the possible positions
 			option = randint(0, 3)
@@ -35,11 +43,23 @@ def fold(amino_acid_chain):
 				# if coordinates match, break to choose new coordinates
 				if coordinates == amino_acid_chain[j].coordinates:
 					conflict = True	
+					conflicts += 1
 					break
 
 				# if none of the previous coordinates match, break out of while loop
 				else: 
 					conflict = False	
 		
-		# set coordinates of current amino acid
-		amino_acid_chain[i].coordinates = coordinates
+		if conflicts < 20:
+			
+			# set coordinates of current amino acid
+			amino_acid_chain[i].coordinates = coordinates
+		
+		else:
+			break
+
+	# return error to fold again is conflicts > 20
+	if conflicts >= 20:
+		return 1
+	else:
+		return 0
