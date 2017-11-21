@@ -12,6 +12,7 @@ class Sequence_Selector:
 
 		self.top_frame = Frame(self.container)
 		self.top_frame.pack(side=TOP, pady=10)
+		
 		self.list_frame = Frame(self.top_frame)
 		self.list_frame.pack(side=TOP)
 
@@ -45,7 +46,6 @@ class Sequence_Selector:
 		# create select button
 		self.select_button = Button(self.top_frame, text=">> Select <<", relief=GROOVE)
 		self.select_button.bind("<Button-1>", self.list_selection)
-
 
 		# create sequence entry bar 
 		self.label = Label(self.sequence_frame, text="Sequence:", font='Helvetica 12  bold')

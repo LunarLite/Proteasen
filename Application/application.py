@@ -12,9 +12,16 @@ def main():
 	# initialize timer
 	start = timeit.default_timer()
 
-	sequences = h.load_sequences_from_csv()
-	
-	sequence, algorithm = h.select_sequence(sequences)
+	if len(sys.argv) == 3: 
+		algorithm = sys.argv[1]
+		sequence = sys.argv[2]
+
+	elif len(sys.argv) > 1: 
+		sys.exit("Usage: application.py algorithm HHPHHHPHPHHHPH") 
+		
+	else: 
+		sequences = h.load_sequences_from_csv()	
+		sequence, algorithm = h.select_sequence(sequences)
 
 	# create AminoAcidChain object
 	amino_acid_chain = AminoAcidChain.Amino_acid_chain()

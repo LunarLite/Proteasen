@@ -31,6 +31,9 @@ class Amino_acid_chain:
 			elif (c.upper() == 'P'):
 				molecule_type = "polair"
 
+			else: 
+				sys.exit("Usage: application.py algorithm HHPHHHPHPHHHPH")
+
 			# Append amino acid with appropriate molecule type to chain.
 			self.chain.append(Amino_acid(molecule_type))
 
@@ -48,6 +51,9 @@ class Amino_acid_chain:
 		# ensure proper usage
 		elif algorithm == "Breadth" or algorithm == "breadth":
 			output = breadth_algorithm.fold(self.chain)
+
+		else: 
+			sys.exit("Usage: application.py algorithm HHPHHHPHPHHHPH")
 			
 
 	# calculates chain stability score
