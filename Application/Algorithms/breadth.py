@@ -26,14 +26,15 @@ def fold(input):
 
 	
 	for i in range (2, len(input_chain)):
-	
+		print("hoi")
 		possibilities = checkPossibilities(i)
 		for chain in archive:
 			buildChain(chain, i, possibilities)
 			
 			
 		archive = temp_archive
-
+		
+	best_chain = 0
 	for chain in archive:
 		score = chain.stability()
 		if score >= result:
@@ -63,7 +64,6 @@ def checkPossibilities(i):
 	option2 = [x - 1, y]
 	option3 = [x, y + 1]
 	option4 = [x, y - 1]
-
 	options = [option1, option2, option3, option4]
 	
 	# removes invalid options from the array
@@ -71,8 +71,11 @@ def checkPossibilities(i):
 	for j in test_chain.chain:
 		for option in options:
 			if j.coordinates == option:
-				to_remove.append(option)
+				if option not in to_remove:
+					to_remove.append(option)
+					print("add", option)
 	for option in to_remove:
+		print("rem", option)
 		options.remove(option)
 			
 	return options
