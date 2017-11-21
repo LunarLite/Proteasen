@@ -3,6 +3,7 @@ import sys
 
 from Algorithms import Random
 from random import randint
+from Algorithms import Breadth
 
 # Imports required for plot
 import matplotlib.pyplot as plt
@@ -46,6 +47,9 @@ class Amino_acid_chain:
 				self.fold(algorithm)
 				
 		# ensure proper usage
+		elif algorithm == "Breadth" or algorithm == "breadth":
+			output = Breadth.fold(self.chain)
+			
 		else: 
 			sys.exit("Usage: python program.py algorithm HPPHHPPHH")
 
