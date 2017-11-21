@@ -45,16 +45,10 @@ class Amino_acid_chain:
 				for i in self.chain:
 					i.coordinates = [0, 0]
 				self.fold(algorithm)
-<<<<<<< HEAD
-				
 		# ensure proper usage
 		elif algorithm == "Breadth" or algorithm == "breadth":
 			output = Breadth.fold(self.chain)
 			
-		else: 
-			sys.exit("Usage: python program.py algorithm HPPHHPPHH")
-=======
->>>>>>> 44cfcccc73b2c4b724ff17ae13a71eff752826f7
 
 	# calculates chain stability score
 	def stability(self):
