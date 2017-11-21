@@ -26,11 +26,11 @@ def fold(input):
 
 	
 	for i in range (2, len(input_chain)):
-		print("hoi")
+		
 		possibilities = checkPossibilities(i)
+		
 		for chain in archive:
 			buildChain(chain, i, possibilities)
-			
 			
 		archive = temp_archive
 		
@@ -51,14 +51,15 @@ def buildChain(start_chain, i, options):
 		temp_chain = start_chain
 		input_chain[i].coordinates = option
 		temp_chain.chain.append(input_chain[i])
-		# removeDuplicates(temp_chain)
+		# checkDuplicates(temp_chain)
 		temp_archive.append(temp_chain)
 		
 def checkPossibilities(i):
 	# remember coordinates of previous amino acid
 	x = test_chain.chain[i - 1].coordinates[0]
 	y = test_chain.chain[i - 1].coordinates[1]
-	
+	print("x", x)
+	print("y", y)
 	# create array containing possible positions
 	option1 = [x + 1, y]
 	option2 = [x - 1, y]
@@ -73,12 +74,10 @@ def checkPossibilities(i):
 			if j.coordinates == option:
 				if option not in to_remove:
 					to_remove.append(option)
-					print("add", option)
 	for option in to_remove:
-		print("rem", option)
 		options.remove(option)
 			
 	return options
 	
-#def removeDuplicates():
+#def checkDuplicates():
 		
