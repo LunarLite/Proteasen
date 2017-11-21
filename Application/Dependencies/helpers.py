@@ -27,7 +27,7 @@ def load_sequences_from_csv():
 			if firstline: 
 				firstline = False 
 				continue
-			sequences.append({"id": rows[0], "sequence": rows[1]})
+			sequences.append({"id": rows[0], "sequence": rows[1].strip()})
 
 	return sequences
 		

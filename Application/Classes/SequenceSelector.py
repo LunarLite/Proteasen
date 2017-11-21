@@ -5,31 +5,40 @@ class Sequence_Selector:
 		# set window
 		self.root = master
 		self.root.title("Enter Sequence")
-		self.root.geometry("900x500")
+
 		self.container = Frame(self.root)
-		self.container.pack()
-		self.select_frame = Frame(self.container)
-		self.select_frame.grid(row=0)
-		self.sequence_frame = Frame(self.container)
-		self.sequence_frame.grid(row=2, padx=10, pady=20)
+		self.container.pack(fill=X, padx=10, pady=20)
+
+		self.top_frame = Frame(self.container)
+		self.top_frame.pack(side=TOP, pady=10)
+
+		self.bottom_frame = Frame(self.container)
+		self.bottom_frame.pack(pady=10)
+
+		self.sequence_frame = Frame(self.bottom_frame)
+		self.sequence_frame.pack(side = TOP)
+
+		self.algo_frame = Frame(self.bottom_frame)
+		self.algo_frame.pack(side = BOTTOM)
+
 
 		# default mode selected sequence
 		self.selected_sequence = ""
 
 
 		# create listbox
-		self.Lb = Listbox(self.select_frame, selectmode=EXTENDED, width = 100, relief=GROOVE)
+		self.Lb = Listbox(self.top_frame, selectmode=EXTENDED, width = 100, relief=GROOVE)
 		
 
 		#create buttons
-		self.select_button = Button(self.select_frame, text=">> Select <<", relief=GROOVE)
+		self.select_button = Button(self.top_frame, text=">> Select <<", relief=GROOVE)
 		self.select_button.bind("<Button-1>", self.selection)
 		
 		
 
 		# create textbar
 		self.label = Label(self.sequence_frame, text="Sequence:", font='Helvetica 12  bold')
-		self.label.pack()
+		self.label.pack(pady=10)
 	
 		self.entry = Entry(self.sequence_frame, width = 100)
 		self.entry.pack()
@@ -39,18 +48,18 @@ class Sequence_Selector:
 		#
 
 		# add checkboxes for algorithm
-		self.algorithm_1 = Checkbutton(self.sequence_frame, text="Random", variable="random")
-		self.algorithm_2 = Checkbutton(self.sequence_frame, text="Breadth-first", variable="breadth")
-		self.algorithm_3 = Checkbutton(self.sequence_frame, text="Depth-first", variable="depth")
-		self.algorithm_1.pack(side = TOP, anchor = CENTER)
-		self.algorithm_2.pack(side = TOP, anchor = CENTER)
-		self.algorithm_3.pack(side = TOP, anchor = CENTER)
+		self.algorithm_1 = Checkbutton(self.algo_frame, text="Random", variable="random")
+		self.algorithm_2 = Checkbutton(self.algo_frame, text="Breadth-first", variable="breadth")
+		self.algorithm_3 = Checkbutton(self.algo_frame, text="Depth-first", variable="depth")
+		self.algorithm_1.grid(row = 0, column = 0)
+		self.algorithm_2.grid(row = 0, column = 1)
+		self.algorithm_3.grid(row = 0, column = 2)
 
 
 		# create continue button
-		self.continue_button = Button(self.sequence_frame, text="Fold", bg="red", fg = "white")
+		self.continue_button = Button(self.algo_frame, text="Fold", bg="red", fg = "white")
 		self.continue_button.bind("<Button-1>", self.get_sequence)
-		self.continue_button.pack()
+		self.continue_button.grid(row=1, column = 1, pady = 20, ipadx = 20, ipady = 5)
 
 
 		# create status bar
@@ -85,7 +94,6 @@ class Sequence_Selector:
 			return False
 
 		# Ensure sequence contains only H and P
-		self.selected_sequence = self.selected_sequence.strip()
 		for c in self.selected_sequence:
 			if (c.upper() != 'H' and c.upper() != 'P'):
 				self.status["text"] = "Warning: sequence must contain only H and P"
