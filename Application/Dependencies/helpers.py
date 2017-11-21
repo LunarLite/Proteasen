@@ -7,15 +7,17 @@ from Classes import SequenceSelector
 def select_sequence(sequences):
 	root = Tk()
 	sequence_selector = SequenceSelector.Sequence_Selector(root)
-	sequence_selector.load_list(sequences)
+	sequence_selector.list_load(sequences)
 
 	root.mainloop()
 
-	sequence = sequence_selector.selected_sequence
+	sequence = sequence_selector.chosen_sequence
 	if sequence == "": 
-		sys.exit("You have to enter a sequence in order to run this program")
+		sys.exit("You have to enter a sequence and algorithm in order to run this program")
 
-	return sequence
+	algorithm = sequence_selector.chosen_algorithm
+
+	return sequence, algorithm
 
 # skip first line https://stackoverflow.com/questions/14674275/skip-first-linefield-in-loop-using-csv-file
 def load_sequences_from_csv(): 
@@ -27,7 +29,7 @@ def load_sequences_from_csv():
 			if firstline: 
 				firstline = False 
 				continue
-			sequences.append({"id": rows[0], "sequence": rows[1]})
+			sequences.append({"id": rows[0], "sequence": rows[1].strip()})
 
 	return sequences
 		
