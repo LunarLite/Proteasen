@@ -1,9 +1,9 @@
 from .AminoAcid import Amino_acid
 import sys
 
-from Algorithms import Random
+from Algorithms import random_algorithm
 from random import randint
-from Algorithms import Breadth
+from Algorithms import breadth_algorithm
 
 # Imports required for plot
 import matplotlib.pyplot as plt
@@ -38,7 +38,7 @@ class Amino_acid_chain:
 	def fold(self, algorithm): 
 
 		if algorithm == "Random" or algorithm == "random":
-			output = Random.fold(self.chain)
+			output = random_algorithm.fold(self.chain)
 
 			# if chain stuck in conflict, set coordinates back and fold again
 			if output == 1:
@@ -47,7 +47,7 @@ class Amino_acid_chain:
 				self.fold(algorithm)
 		# ensure proper usage
 		elif algorithm == "Breadth" or algorithm == "breadth":
-			output = Breadth.fold(self.chain)
+			output = breadth_algorithm.fold(self.chain)
 			
 
 	# calculates chain stability score
