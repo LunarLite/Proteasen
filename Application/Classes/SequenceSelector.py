@@ -148,10 +148,6 @@ class Sequence_Selector:
 			self.status["text"] = "Warning: depth-first is not implemented yet"
 			return False
 
-		if self.selected_algorithm == "breadth":
-			self.status["text"] = "Warning: breadth-first is not implemented yet"
-			return False
-
 		# Ensure sequence contains only H and P
 		for c in self.selected_sequence:
 			if (c.upper() != 'H' and c.upper() != 'P'):
