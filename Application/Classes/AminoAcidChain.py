@@ -51,6 +51,7 @@ class Amino_acid_chain:
 		# ensure proper usage
 		elif algorithm == "Breadth" or algorithm == "breadth":
 			output = breadth_algorithm.fold(self.chain)
+			self.chain = output
 
 		else: 
 			sys.exit("Usage: application.py algorithm HHPHHHPHPHHHPH")
