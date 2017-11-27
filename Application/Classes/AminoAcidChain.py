@@ -62,7 +62,6 @@ class Amino_acid_chain:
 		
 		# initialize score variable
 		score = 0
-		
 		# iterate over chain, keeping track of the count
 		for count, j in enumerate(self.chain):
 
@@ -81,7 +80,7 @@ class Amino_acid_chain:
 					# if neighbouring acids are hydrophobic, increase score
 					if self.chain[k].molecule_type == "hydrophobic" and x_difference + y_difference == 1:
 						score -= 1
-						
+		
 		return score
 
 	# Plots aminoacid chain configuration.

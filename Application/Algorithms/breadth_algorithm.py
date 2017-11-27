@@ -23,32 +23,31 @@ def fold(input):
 
 
 	for i in range (2, len(input_chain)):
-		print(len(chain_list))
-		if len(chain_list[0]) < i + 1:
+		while len(chain_list[0]) < i + 1:
 			temp_chain = chain_list.pop(0)
 			possibilities = checkPossibilities(temp_chain, i)
 			buildChain(temp_chain, i, possibilities)
-	
+
+	temp_check = chain_list[1]
+	for node in temp_check:
+		print("coords", node.coordinates)
+	temp_x = AminoAcidChain.Amino_acid_chain()
+	temp_x.chain = temp_check
+	for node in temp_x.chain:
+		print("coords", node.coordinates)
 	return best_chain
 	
 def buildChain(temp_chain, i, possibilities):
 
+	global input_chain
+	global chain_list
+	
 	for option in possibilities:
-		new_chain = temp_chain
+		new_chain = temp_chain[0:i]
 		input_chain[i].coordinates = option
 		new_chain.append(input_chain[i])
 		chain_list.append(new_chain)
 		
-		temp_x = AminoAcidChain.Amino_acid_chain()
-		temp_x.chain = new_chain
-		
-		global best_chain
-		temp_y = AminoAcidChain.Amino_acid_chain()
-		temp_y.chain = best_chain
-		
-		if (temp_x.stability() > temp_y.stability()):
-			best_chain = new_chain
-	
 
 # Check possible positions a new node can be placed at
 def checkPossibilities(temp_chain, i):
