@@ -1,4 +1,5 @@
 from Classes import AminoAcidChain
+import copy
 
 # Global variables
 input_chain = []
@@ -27,28 +28,34 @@ def fold(input):
 			temp_chain = chain_list.pop(0)
 			possibilities = checkPossibilities(temp_chain, i)
 			buildChain(temp_chain, i, possibilities)
-
-	temp_check = chain_list[1]
-	for node in temp_check:
-		print("coords", node.coordinates)
-	temp_x = AminoAcidChain.Amino_acid_chain()
-	temp_x.chain = temp_check
-	for node in temp_x.chain:
-		print("coords", node.coordinates)
+			
 	return best_chain
 	
 def buildChain(temp_chain, i, possibilities):
 
 	global input_chain
 	global chain_list
+	global best_chain
 	
+	# Make a new (possible) chain
 	for option in possibilities:
-		new_chain = temp_chain[0:i]
-		input_chain[i].coordinates = option
-		new_chain.append(input_chain[i])
+		new_chain = temp_chain[:]
+		new_node = copy.copy(input_chain[i])
+		new_node.coordinates = option
+		new_chain.append(new_node)
 		chain_list.append(new_chain)
 		
-
+		# Check the scores of both the old and new chain
+		previous_acid_chain = AminoAcidChain.Amino_acid_chain()
+		new_acid_chain = AminoAcidChain.Amino_acid_chain()
+		
+		previous_acid_chain.chain = best_chain
+		new_acid_chain.chain = new_chain
+		
+		if(new_acid_chain.stability() < previous_acid_chain.stability()):
+			best_chain = copy.copy(new_chain)
+		
+		
 # Check possible positions a new node can be placed at
 def checkPossibilities(temp_chain, i):
 	# Remember coordinates of last amino acid in current chain
