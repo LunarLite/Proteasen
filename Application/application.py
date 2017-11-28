@@ -1,4 +1,4 @@
-# Imports
+# imports
 import sys
 import timeit
 from Classes import AminoAcidChain
@@ -6,7 +6,7 @@ from Dependencies import helpers as h
 
 
 
-# Main function.
+# main function
 def main():
 
 	# initialize timer
@@ -26,10 +26,10 @@ def main():
 	# create AminoAcidChain object
 	amino_acid_chain = AminoAcidChain.Amino_acid_chain()
 
-	# Create amino acid chain by the given comment line argument.
+	# create amino acid chain by the given comment line argument
 	amino_acid_chain.create(sequence)
 
-	# Set x and y coordinates of the aminoacids of chain.
+	# set x and y coordinates of the aminoacids of chain
 	amino_acid_chain.fold(algorithm)
 
 	# stop timer
@@ -40,11 +40,11 @@ def main():
 	score = amino_acid_chain.stability()
 	print("Score:", (score))
 
-	# Plot the "folded" aminoacid chain.
+	# plot the "folded" aminoacid chain
 	amino_acid_chain.plot()
 
 		
-# Main execution
+# main execution
 if __name__ == '__main__':
 	main()
 	
