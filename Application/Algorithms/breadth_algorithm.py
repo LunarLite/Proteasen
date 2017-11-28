@@ -22,14 +22,20 @@ def fold(input):
 	global best_chain
 	best_chain = start_chain
 
-
+	# Increase the size of the chains with 1 node every loop
 	for i in range (2, len(input_chain)):
+		# Make sure all chains are the same (maximum) size
 		while len(chain_list[0]) < i + 1:
+			# Pop chain from list
 			temp_chain = chain_list.pop(0)
+			# Check possible places for the new node
 			possibilities = checkPossibilities(temp_chain, i)
+			# Build the new chain(s)
 			buildChain(temp_chain, i, possibilities)
 			
 	return best_chain
+
+	
 	
 def buildChain(temp_chain, i, possibilities):
 
@@ -52,7 +58,7 @@ def buildChain(temp_chain, i, possibilities):
 		previous_acid_chain.chain = best_chain
 		new_acid_chain.chain = new_chain
 		
-		if(new_acid_chain.stability() < previous_acid_chain.stability()):
+		if(new_acid_chain.stability() <= previous_acid_chain.stability()):
 			best_chain = copy.copy(new_chain)
 		
 		
