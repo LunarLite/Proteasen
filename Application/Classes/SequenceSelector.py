@@ -113,13 +113,12 @@ class Sequence_Selector:
 	def list_load(self, sequences): 
 
 		for i in range(0, len(sequences)): 
-			self.Lb.insert(i, sequences[i]["sequence"])
+			self.Lb.insert(i, sequences[i])
 
 		self.Lb.pack(fill = X)
 
 		self.select_button.pack(fill = X)
 		
-
 	def list_selection(self, event):
 		a = self.Lb.curselection()
 		for i in a: 
@@ -155,6 +154,3 @@ class Sequence_Selector:
 				return False
 
 		else: return True
-
-
-

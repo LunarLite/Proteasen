@@ -2,7 +2,7 @@
 import sys
 import timeit
 from Classes import AminoAcidChain
-from Dependencies import helpers as h
+from Visualisation import visualisation
 
 
 
@@ -20,8 +20,7 @@ def main():
 		sys.exit("Usage: application.py algorithm HHPHHHPHPHHHPH") 
 		
 	else: 
-		sequences = h.load_sequences_from_csv()	
-		sequence, algorithm = h.select_sequence(sequences)
+		sequence, algorithm = visualisation.run()
 
 	# create AminoAcidChain object
 	amino_acid_chain = AminoAcidChain.Amino_acid_chain()
