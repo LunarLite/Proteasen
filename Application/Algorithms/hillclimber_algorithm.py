@@ -12,13 +12,13 @@ def fold(input):
 	global input_chain
 	input_chain = input
 	global best_random
-	random_list.append(random_algorithm.fold(copy.copy(input_chain)))
+	random_list.append(copy.copy(random_algorithm.fold(input_chain)))
 	best_random = random_list[0]
 
-	for i in range(1, 10)
-		random_list[i] = random_algorithm.fold(copy.copy(input_chain))
+	for i in range(1, 10):
+		random_list[i] = copy.copy(random_algorithm.fold(input_chain))
 
-		if random_list[i].
+		if random_list[i].stability() >= best_random.stability()
 
 
 	# if chain stuck in conflict, set coordinates back and fold again
