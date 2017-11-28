@@ -3,7 +3,7 @@ from random import randint
 
 def fold(amino_acid_chain):
 
-	# Iterate over each aminoacid.
+	# iterate over each aminoacid
 	for i in range (1, len(amino_acid_chain)):
 
 		# remember coordinates of previous amino acid
@@ -11,12 +11,7 @@ def fold(amino_acid_chain):
 		y = amino_acid_chain[i - 1].coordinates[1]
 
 		# create array containing possible positions
-		option1 = [x + 1, y]
-		option2 = [x - 1, y]
-		option3 = [x, y + 1]
-		option4 = [x, y - 1]
-
-		options = [option1, option2, option3, option4]
+		options = [[x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]]
 
 		# keep track of (the amount of) conflicts
 		conflict = True
