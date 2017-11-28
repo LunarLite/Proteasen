@@ -5,6 +5,7 @@ from Algorithms import random_algorithm
 from random import randint
 from Algorithms import breadth_algorithm
 from Algorithms import hillclimber_algorithm
+from Dependencies import helpers
 
 # imports required for plot
 import matplotlib.pyplot as plt
@@ -42,20 +43,17 @@ class Amino_acid_chain:
 	def fold(self, algorithm): 
 
 		if algorithm == "Random" or algorithm == "random":
-			output = random_algorithm.fold(self.chain)
+			output = helpers.fold_random(self.chain)
+			self.chain = output
 
-			# if chain stuck in conflict, set coordinates back and fold again
-			if output == 1:
-				for i in self.chain:
-					i.coordinates = [0, 0]
-				self.fold(algorithm)
 		# ensure proper usage
 		elif algorithm == "Breadth" or algorithm == "breadth":
 			breadth_algorithm.fold(self)
 
 		elif algorithm == "Hillclimber" or algorithm == "hillclimber":
-			output = hillclimber_algorithm.fold(self.chain)
-			self.chain = output
+			hillclimber_algorithm.execute(self)
+			#self.chain = output
+			# self.rotate()
 
 		else: 
 			sys.exit("Usage: application.py algorithm HHPHHHPHPHHHPH")
@@ -87,11 +85,70 @@ class Amino_acid_chain:
 		
 		return score
 
+	def rotate(self):
+
+		# create array to store coordinates after rotation
+		rotated_coordinates = []
+
+		# create array to store direction strings
+		directions = []
+
+		# iterate over coordinates to create direction strings
+		for i in range(1, len(self.chain)):
+
+			# assign coordinate changes to appropriate direction strings
+			# DIT KLOPT NOG NIET, BEKIJKEN VANAF ORIENTATIE VAN PEPTIDE ZELF
+			if self.chain[i].coordinates[0] < self.chain[i - 1].coordinates[0]:
+				directions.append("left")
+			if self.chain[i].coordinates[0] > self.chain[i - 1].coordinates[0]:
+				directions.append("right")
+			if self.chain[i].coordinates[1] < self.chain[i - 1].coordinates[1]:
+				directions.append("down")
+			if self.chain[i].coordinates[1] > self.chain[i - 1].coordinates[1]:
+				directions.append("up")
+
+		# array with different possible changes
+		changes = ["right", "left", "up", "down"]
+
+		# create random integer that decides which direction will be changed
+		to_change = randint(0, len(directions) - 1)
+
+		# create random int that decides which change will be applied
+		change = randint(0, 3)
+
+		# when these two directions are the same, choose new change to apply
+		while changes[change] == directions[to_change]:
+			change = randint(0, 3)
+
+		print("changing number", to_change, "from", directions[to_change], "to", changes[change], "..")
+
+		# execute the change
+		directions[to_change] = changes[change]
+
+		# iterate over coordinates before the change to store, they stay the same
+		for i in range(0, to_change + 1):
+			rotated_coordinates.append(self.chain[i].coordinates)
+
+		# iterate over directions to determine new coordinates
+		# DIT KLOPT NOG NIET, BEKIJKEN VANAF ORIENTATIE VAN PEPTIDE ZELF
+		for i in range(to_change, len(directions)):
+			if directions[i] == "right":
+				rotated_coordinates.append([rotated_coordinates[i][0] + 1, rotated_coordinates[i][1]])
+			if directions[i] == "left":
+				rotated_coordinates.append([rotated_coordinates[i][0] - 1, rotated_coordinates[i][1]])
+			if directions[i] == "up":
+				rotated_coordinates.append([rotated_coordinates[i][0], rotated_coordinates[i][1] + 1])
+			if directions[i] == "down":
+				rotated_coordinates.append([rotated_coordinates[i][0], rotated_coordinates[i][1] - 1])
+			
+		return rotated_coordinates
+
 	# plots aminoacid chain configuration
 	def plot(self):
 		
 		# Add new subplot
 		subPlot = fig.add_subplot(111)
+
 		# create empty lists to store x and y coordinates
 		x = []
 		y = []

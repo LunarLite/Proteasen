@@ -6,7 +6,7 @@ input_chain = []
 chain_list = []
 best_chain = []
 
-def fold(input):
+def execute(input):
 	
 	# initialize input chain starting coords
 	global input_chain

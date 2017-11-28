@@ -1,30 +1,52 @@
 from Algorithms import random_algorithm
 from Classes import AminoAcidChain
 import copy
+from Dependencies import helpers
+from random import randint
 
 # Global variables
-input_chain = []
+# input_chain = []
 random_list = []
 best_random = []
 
-def fold(input):
+def execute(input):
 
-	# global input_chain
-	# input_chain = input
-	# global best_random
-	# random_list.append(copy.copy(random_algorithm.fold(input_chain)))
-	# best_random = random_list[0]
+	# initialize variables to store temporary acid chains
+	best_random = AminoAcidChain.Amino_acid_chain()
+	new_acid_chain = AminoAcidChain.Amino_acid_chain()
 
-	# for i in range(1, 10):
-	# 	random_list[i] = copy.copy(random_algorithm.fold(input_chain))
-
-	# 	if random_list[i].stability() >= best_random.stability():
+	# random_list.append(random(input))
+	# best_random.chain = random_list[0]
+	# best_score = 0
 
 
-	# if chain stuck in conflict, set coordinates back and fold again
-	# if output == 1:
-	# 	for i in self.chain:
-	# 		i.coordinates = [0, 0]
-	# 	self.fold(algorithm)
+	for i in range(10):
 
-	return input
+		# print("huidige beste score: ", best_random.stability())
+		random_list.append(helpers.fold_random(input.chain))
+		new_acid_chain.chain = random_list[i]
+
+		if i == 0:
+			best_score = copy.copy(new_acid_chain.stability())
+			best_random = copy.deepcopy(new_acid_chain)
+
+		elif new_acid_chain.stability() <= best_random.stability():
+			# print("hogere of gelijke score: ", new_acid_chain.stability(), best_random.stability())
+			best_random = copy.deepcopy(new_acid_chain)
+			best_score = best_random.stability()
+		else:
+			print("niet hoger", new_acid_chain.stability)
+
+	input.chain = best_random.chain
+
+	rotated_coordinates = input.rotate()
+
+	new_acid_chain.chain = rotated_coordinates
+
+	print(rotated_coordinates)
+
+
+
+
+
+
