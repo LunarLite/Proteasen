@@ -7,10 +7,10 @@ chain_list = []
 best_chain = []
 
 def fold(input):
-
+	
 	# initialize input chain starting coords
 	global input_chain
-	input_chain = input
+	input_chain = input.chain
 	input_chain[0].coordinates = [0,0]
 	input_chain[1].coordinates = [0,1]
 	# initialize starting chain of 2 nodes
@@ -32,8 +32,9 @@ def fold(input):
 			possibilities = checkPossibilities(temp_chain, i)
 			# build the new chain(s)
 			buildChain(temp_chain, i, possibilities)
-			
-	return best_chain
+	
+	input.chain = best_chain
+	return input
 
 	
 	
