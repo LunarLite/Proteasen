@@ -4,6 +4,7 @@ import sys
 from Algorithms import random_algorithm
 from random import randint
 from Algorithms import breadth_algorithm
+from Algorithms import hillclimber_algorithm
 
 # Imports required for plot
 import matplotlib.pyplot as plt
@@ -51,6 +52,10 @@ class Amino_acid_chain:
 		# ensure proper usage
 		elif algorithm == "Breadth" or algorithm == "breadth":
 			output = breadth_algorithm.fold(self.chain)
+			self.chain = output
+
+		elif algorithm == "Hillclimber" or algorithm == "hillclimber":
+			output = hillclimber_algorithm.fold(self.chain)
 			self.chain = output
 
 		else: 
