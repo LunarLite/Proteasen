@@ -6,26 +6,26 @@ from random import randint
 from Algorithms import breadth_algorithm
 from Algorithms import hillclimber_algorithm
 
-# Imports required for plot
+# imports required for plot
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Setup for plot
+# setup for plot
 fig = plt.figure()
 fig.suptitle('AminoAcidChain')
 
-# Amino acid chain. 
+# amino acid chain. 
 class Amino_acid_chain:
 	def __init__(self):
 		self.chain = []
 
 	def create(self, sequence):
 
-		# Iterate over each character in command line argument. 
+		# iterate over each character in command line argument
 		for c in sequence:
 
-			# Allow only H and P in command line argument. 
-			# Set molecule type to either hydrophobic or polair, as H or P indicates.
+			# allow only H and P in command line argument.
+			# set molecule type to either hydrophobic or polair, as H or P indicates
 			if (c.upper() == 'H'):
 				molecule_type = "hydrophobic"
 
@@ -35,10 +35,10 @@ class Amino_acid_chain:
 			else: 
 				sys.exit("Usage: application.py algorithm HHPHHHPHPHHHPH")
 
-			# Append amino acid with appropriate molecule type to chain.
+			# append amino acid with appropriate molecule type to chain
 			self.chain.append(Amino_acid(molecule_type))
 
-	# Determines optimal aminoacid chain configuration.
+	# determines optimal aminoacid chain configuration
 	def fold(self, algorithm): 
 
 		if algorithm == "Random" or algorithm == "random":
@@ -88,47 +88,47 @@ class Amino_acid_chain:
 		
 		return score
 
-	# Plots aminoacid chain configuration.
+	# plots aminoacid chain configuration
 	def plot(self):
 		
 		# Add new subplot
 		subPlot = fig.add_subplot(111)
-		# Create empty lists to store x and y coordinates.
+		# create empty lists to store x and y coordinates
 		x = []
 		y = []
 
 		
-		# Iterate over each aminoacid. 
+		# iterate over each aminoacid 
 		for i in range(0, len(self.chain)):
 
-			# Store x and y coordinates of current aminoacid.
+			# store x and y coordinates of current aminoacid
 			x.append(self.chain[i].coordinates[0])
 			y.append(self.chain[i].coordinates[1])
 		
-		# Subplot backbone aminoacid chain.
+		# subplot backbone aminoacid chain
 		subPlot.plot(x, y, 'k-')
-		# Set subplot ticks to the exact amount required
+		# set subplot ticks to the exact amount required
 		subPlot.set_xticks(x, False)
 		subPlot.set_yticks(y, False)
 
-		# Iterate over each aminoacid.
+		# iterate over each aminoacid
 		for i in range(0, len(self.chain)):
 			
-			# Check for type of current aminoacid. 
+			# check for type of current aminoacid
 			if self.chain[i].molecule_type == "hydrophobic": 
 
-				# Plot red dot at coordinates of hydrophobic aminoacid.
+				# plot red dot at coordinates of hydrophobic aminoacid
 				subPlot.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], 'ro')
 				plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], 'ro')
 
 			elif self.chain[i].molecule_type == "polair":  
 
-				# Plot blue dot at coordinates of polair aminoacid.
+				# plot blue dot at coordinates of polair aminoacid
 				subPlot.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], 'bo')
 				plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], 'bo')
 		
-		# Draw a grid behind Subplot 
+		# draw a grid behind Subplot 
 		subPlot.grid()
 
-		# Display pop-up window with plot
+		# display pop-up window with plot
 		plt.show()
