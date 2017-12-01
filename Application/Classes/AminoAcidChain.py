@@ -48,7 +48,7 @@ class Amino_acid_chain:
 
 		# ensure proper usage
 		elif algorithm == "Breadth" or algorithm == "breadth":
-			breadth_algorithm.fold(self)
+			breadth_algorithm.execute(self)
 
 		elif algorithm == "Hillclimber" or algorithm == "hillclimber":
 			hillclimber_algorithm.execute(self)
