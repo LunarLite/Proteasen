@@ -14,13 +14,14 @@ def execute(input):
 	# initialize variables to store temporary acid chains
 	best_random = AminoAcidChain.Amino_acid_chain()
 	new_acid_chain = AminoAcidChain.Amino_acid_chain()
+	rotated_acid_chain = AminoAcidChain.Amino_acid_chain()
 
 	# random_list.append(random(input))
 	# best_random.chain = random_list[0]
 	# best_score = 0
 
 
-	for i in range(10):
+	for i in range(1):
 
 		# print("huidige beste score: ", best_random.stability())
 		random_list.append(helpers.fold_random(input.chain))
@@ -35,15 +36,34 @@ def execute(input):
 			best_random = copy.deepcopy(new_acid_chain)
 			best_score = best_random.stability()
 		else:
-			print("niet hoger", new_acid_chain.stability)
+			print("niet hoger", new_acid_chain.stability())
 
-	input.chain = best_random.chain
+	attempts = 0
+	start_score = copy.deepcopy(best_random.stability())
+	print("stability now: ", best_random.stability())
+	while attempts < 1000:
+		rotated_coordinates = best_random.rotate(0)
+		if rotated_coordinates == 1:
+			print("DIT GING MIS DOEI")
+			break
+		print("ROTATED: ", rotated_coordinates)
+		new_acid_chain.coordinates = rotated_coordinates
+		
+		# print("NIEUWE STABILITY", new_acid_chain.stability())
 
-	rotated_coordinates = input.rotate()
+		if new_acid_chain.stability() <= best_random.stability():
+			best_random.coordinates = rotated_coordinates
+			print(best_random.coordinates)
+			attempts += 1
+		else: 
+			attempts += 1
+	
+	print(start_score, best_random.coordinates)
 
-	new_acid_chain.chain = rotated_coordinates
+	# set input chain random folded chain with best score
+	input.coordinates = best_random.coordinates
 
-	print(rotated_coordinates)
+
 
 
 

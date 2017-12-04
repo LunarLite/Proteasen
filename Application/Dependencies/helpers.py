@@ -30,7 +30,7 @@ def fold_random(input_chain):
 
 			# if conflicts more than 20, chain is probably stuck, break
 			if conflicts > 20:
-				print("large conflict")
+				# print("large conflict")
 				conflict = False
 				break
 
