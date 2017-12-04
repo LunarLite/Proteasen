@@ -10,6 +10,7 @@ from Dependencies import helpers
 # imports required for plot
 import matplotlib.pyplot as plt
 import numpy as np
+import copy
 
 # setup for plot
 fig = plt.figure()
@@ -85,62 +86,83 @@ class Amino_acid_chain:
 		
 		return score
 
-	def rotate(self):
+	def rotate(self, errors):
 
 		# create array to store coordinates after rotation
 		rotated_coordinates = []
 
-		# create array to store direction strings
+		# create array to store absolute direction strings of previous step
+		abs_directions = []
+
+		# create array to store relative direction strings of current step
 		directions = []
 
 		# iterate over coordinates to create direction strings
 		for i in range(1, len(self.chain)):
 
-			# assign coordinate changes to appropriate direction strings
-			# DIT KLOPT NOG NIET, BEKIJKEN VANAF ORIENTATIE VAN PEPTIDE ZELF
+			# assign coordinate changes to absolute direction strings
 			if self.chain[i].coordinates[0] < self.chain[i - 1].coordinates[0]:
-				directions.append("left")
+				abs_directions.append("left")
 			if self.chain[i].coordinates[0] > self.chain[i - 1].coordinates[0]:
-				directions.append("right")
+				abs_directions.append("right")
 			if self.chain[i].coordinates[1] < self.chain[i - 1].coordinates[1]:
-				directions.append("down")
+				abs_directions.append("down")
 			if self.chain[i].coordinates[1] > self.chain[i - 1].coordinates[1]:
-				directions.append("up")
+				abs_directions.append("up")
 
 		# array with different possible changes
 		changes = ["right", "left", "up", "down"]
 
 		# create random integer that decides which direction will be changed
-		to_change = randint(0, len(directions) - 1)
+		to_change = randint(0, len(abs_directions) - 1)
 
 		# create random int that decides which change will be applied
-		change = randint(0, 3)
+		change = randint(0, len(changes) - 1)
 
 		# when these two directions are the same, choose new change to apply
-		while changes[change] == directions[to_change]:
+		while changes[change] == abs_directions[to_change]:
 			change = randint(0, 3)
 
-		print("changing number", to_change, "from", directions[to_change], "to", changes[change], "..")
+		print("changing number", to_change, "from", abs_directions[to_change], "to", changes[change], "..")
 
 		# execute the change
-		directions[to_change] = changes[change]
+		abs_directions[to_change] = changes[change]
 
 		# iterate over coordinates before the change to store, they stay the same
 		for i in range(0, to_change + 1):
-			rotated_coordinates.append(self.chain[i].coordinates)
+			rotated_coordinates.append(self.chain[i].coordinates[:])
 
 		# iterate over directions to determine new coordinates
-		# DIT KLOPT NOG NIET, BEKIJKEN VANAF ORIENTATIE VAN PEPTIDE ZELF
-		for i in range(to_change, len(directions)):
-			if directions[i] == "right":
+		for i in range(to_change, len(abs_directions)):
+			if abs_directions[i] == "right":
 				rotated_coordinates.append([rotated_coordinates[i][0] + 1, rotated_coordinates[i][1]])
-			if directions[i] == "left":
+			if abs_directions[i] == "left":
 				rotated_coordinates.append([rotated_coordinates[i][0] - 1, rotated_coordinates[i][1]])
-			if directions[i] == "up":
+			if abs_directions[i] == "up":
 				rotated_coordinates.append([rotated_coordinates[i][0], rotated_coordinates[i][1] + 1])
-			if directions[i] == "down":
+			if abs_directions[i] == "down":
 				rotated_coordinates.append([rotated_coordinates[i][0], rotated_coordinates[i][1] - 1])
-			
+		# print(rotated_coordinates)
+		seen = []
+		doubles = 0
+		# print("DOUBLES TELLEN")
+
+		for i in range(0, len(rotated_coordinates) - 1): #coordinates in rotated_coordinates:
+			# print(type(rotated_coordinates[i + 1]), i)
+			if rotated_coordinates[i] in seen:
+				doubles = 1
+				errors += 1
+				# print(errors)
+				# print("DOUBLE GEVONDEN", rotated_coordinates[i])
+			else:
+				seen.append(rotated_coordinates[i])
+
+		if errors > 100:
+			return 1
+		elif doubles != 0:
+			rotated_coordinates = self.rotate(errors)
+
+				
 		return rotated_coordinates
 
 	# plots aminoacid chain configuration
