@@ -40,7 +40,7 @@ class Amino_acid_chain:
 			self.chain.append(Amino_acid(molecule_type))
 
 	# determines optimal aminoacid chain configuration
-	def fold(self, algorithm): 
+	def execute(self, algorithm): 
 
 		if algorithm == "Random" or algorithm == "random":
 			output = helpers.fold_random(self.chain)
@@ -48,7 +48,7 @@ class Amino_acid_chain:
 
 		# ensure proper usage
 		elif algorithm == "Breadth" or algorithm == "breadth":
-			breadth_algorithm.fold(self)
+			breadth_algorithm.execute(self)
 
 		elif algorithm == "Hillclimber" or algorithm == "hillclimber":
 			hillclimber_algorithm.execute(self)

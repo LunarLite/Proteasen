@@ -29,7 +29,7 @@ def main():
 	amino_acid_chain.create(sequence)
 
 	# set x and y coordinates of the aminoacids of chain
-	amino_acid_chain.fold(algorithm)
+	amino_acid_chain.execute(algorithm)
 
 	# stop timer
 	stop = timeit.default_timer()
