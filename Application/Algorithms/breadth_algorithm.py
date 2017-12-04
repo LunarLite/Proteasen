@@ -30,7 +30,6 @@ def execute(input):
 	global best_chain
 	best_chain = start_chain
 	
-	start = timeit.default_timer()
 	# increase the size of the chains with 1 node every loop
 	for i in range (2, len(input_chain)):
 		print(i)
@@ -42,10 +41,7 @@ def execute(input):
 			possibilities = checkPossibilities(temp_chain, i)
 			# build the new chain(s)
 			buildChain(temp_chain, i, possibilities)
-			
-		end = timeit.default_timer()
-		
-	print("Time: ", (end-start))
+
 	input.chain = best_chain
 	return input
 
