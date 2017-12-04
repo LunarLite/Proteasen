@@ -32,7 +32,7 @@ def execute(input):
 	
 	# increase the size of the chains with 1 node every loop
 	for i in range (2, len(input_chain)):
-		print(i)
+		print(i+1)
 		# make sure all chains are the same (maximum) size
 		while len(chain_deque[0]) < i + 1:
 			# pop chain from list
