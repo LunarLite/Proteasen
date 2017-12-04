@@ -21,7 +21,7 @@ def execute(input):
 	# best_score = 0
 
 
-	for i in range(1):
+	for i in range(10):
 
 		# print("huidige beste score: ", best_random.stability())
 		random_list.append(helpers.fold_random(input.chain))
@@ -40,25 +40,25 @@ def execute(input):
 
 	attempts = 0
 	start_score = copy.deepcopy(best_random.stability())
-	print("stability now: ", best_random.stability())
+	# print("stability now: ", best_random.stability())
 	while attempts < 1000:
 		rotated_coordinates = best_random.rotate(0)
 		if rotated_coordinates == 1:
-			print("DIT GING MIS DOEI")
+			# print("DIT GING MIS DOEI")
 			break
-		print("ROTATED: ", rotated_coordinates)
+		# print("ROTATED: ", rotated_coordinates)
 		new_acid_chain.coordinates = rotated_coordinates
 		
 		# print("NIEUWE STABILITY", new_acid_chain.stability())
 
 		if new_acid_chain.stability() <= best_random.stability():
 			best_random.coordinates = rotated_coordinates
-			print(best_random.coordinates)
+			# print(best_random.coordinates)
 			attempts += 1
 		else: 
 			attempts += 1
 	
-	print(start_score, best_random.coordinates)
+	# print(start_score, best_random.coordinates)
 
 	# set input chain random folded chain with best score
 	input.coordinates = best_random.coordinates
