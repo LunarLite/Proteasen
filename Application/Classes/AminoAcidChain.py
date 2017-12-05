@@ -67,119 +67,71 @@ class Amino_acid_chain:
 			sys.exit("Usage: application.py algorithm HHPHHHPHPHHHPH")
 			
 
+	# # calculates chain stability score
+	# def stability(self):
+
+	# 	start = timeit.default_timer()
+	# 	# initialize score variable
+	# 	score = 0
+	# 	# iterate over chain, keeping track of the count
+	# 	for count, j in enumerate(self.chain):
+
+	# 		# if current aminoacid is hydrophobic, check for neigbouring aminoacids
+	# 		if j.molecule_type == "hydrophobic":
+
+	# 			# loop through remaining acids to check coordinates and molecule type
+	# 			# skip one acid (count + 2), since next acid in the string does not count for score
+	# 			for k in range(count + 2, len(self.chain)):
+
+	# 				# calculate absolute difference in x- and y-coordinates 
+	# 				x_difference = abs(j.coordinates[0] - self.chain[k].coordinates[0])
+	# 				y_difference = abs(self.chain[k].coordinates[1] - j.coordinates[1])
+
+	# 				# if abs x- and y-difference is 1, acids are positioned next to eachother
+	# 				# if neighbouring acids are hydrophobic, increase score
+	# 				if self.chain[k].molecule_type == "hydrophobic" and x_difference + y_difference == 1:
+	# 					score -= 1
+
+	# 	stop = timeit.default_timer()
+	# 	print("Runtimeeee:", (stop - start))
+	# 	print("hoi")
+		
+	# 	return score
+
+
 	# calculates chain stability score
-	def stability(self):
+	def stability(self): 
 
-		start = timeit.default_timer()
-		# initialize score variable
 		score = 0
-		# iterate over chain, keeping track of the count
-		for count, j in enumerate(self.chain):
+		hydro_connenctions = 0
 
-			# if current aminoacid is hydrophobic, check for neigbouring aminoacids
-			if j.molecule_type == "hydrophobic":
+		# create array to remember coordinates of hydrophobic aminoacids
+		hydro_coordinates = []
 
-				# loop through remaining acids to check coordinates and molecule type
-				# skip one acid (count + 2), since next acid in the string does not count for score
-				for k in range(count + 2, len(self.chain)):
+		# iterate over aminoacids in chain
+		for i, aminoacid in enumerate(self.chain):
 
-					# calculate absolute difference in x- and y-coordinates 
-					x_difference = abs(j.coordinates[0] - self.chain[k].coordinates[0])
-					y_difference = abs(self.chain[k].coordinates[1] - j.coordinates[1])
+			if(aminoacid.molecule_type == "hydrophobic"):
 
-					# if abs x- and y-difference is 1, acids are positioned next to eachother
-					# if neighbouring acids are hydrophobic, increase score
-					if self.chain[k].molecule_type == "hydrophobic" and x_difference + y_difference == 1:
+				# iterate over remembered hydrophobic coordinates
+				for coordinate in hydro_coordinates:
+
+					# count score -1 if current hydrophobic aminoacid neighbours a remembered hydrophobic aminoacid
+					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) == 1:
 						score -= 1
 
-		stop = timeit.default_timer()
-		# print("Runtimeeee:", (stop - start))
-		# print("hoi")
-		
+				# remember current hydrophobic aminoacid
+				hydro_coordinates.append(aminoacid.coordinates)
+
+				# count connections between neigbouring hydrophobic aminoacids in chain
+				if i != len(self.chain)-1:
+					if self.chain[i+1].molecule_type == "hydrophobic":
+						hydro_connenctions += 1
+
+		# revise score taking into account connections between hydrofobic aminoacids in chain
+		score += hydro_connenctions
+
 		return score
-
-	# def stability(self): 
-
-	# 	start = timeit.default_timer()
-	# 	# initialize score variable
-	# 	score = 0
-
-	# 	neighbouring = 0
-
-	# 	# [x, y]
-	# 	hydro_coordinates = []
-
-	# 	first_aminoacid = True
-
-	# 	# iterate over chain
-	# 	for i in range (0, len(self.chain)):
-
-	# 		if(self.chain[i].molecule_type == "hydrophobic"):
-
-	# 			hydro_coordinates.append(self.chain[i].coordinates)
-				
-	# 			try:
-	# 				if self.chain[i+1].molecule_type == "hydrophobic":
-	# 					neighbouring += 1
-
-	# 			except IndexError:
-	# 				print("chain end")
-
-		
-	# 	for i in range(0, len(hydro_coordinates)):
-
-	# 		for j in range(i, len(hydro_coordinates)):
-
-	# 			if abs(hydro_coordinates[i][0] - hydro_coordinates[j][0]) + abs(hydro_coordinates[i][1] - hydro_coordinates[j][1]) == 1:
-	# 				score += 1
-
-	# 	stop = timeit.default_timer()
-	# 	print("Runtimeeee:", (stop - start))
-
-	# 	score -= neighbouring
-
-	# 	return score
-
-
-	# calculates chain stability score
-	# def stability(self): 
-
-	# 	start = timeit.default_timer()
-	# 	# initialize score variable
-	# 	score = 0
-
-	# 	neighbouring = 0
-
-	# 	# [x, y]
-	# 	hydro_coordinates = []
-
-	# 	first_aminoacid = True
-
-	# 	# iterate over chain
-	# 	for i in range (0, len(self.chain)):
-
-	# 		if(self.chain[i].molecule_type == "hydrophobic"):
-
-	# 			for j in range(0, len(hydro_coordinates)):
-
-	# 				if abs(self.chain[i].coordinates[0] - hydro_coordinates[j][0]) + abs(self.chain[i].coordinates[1] - hydro_coordinates[j][1]) == 1:
-	# 					score += 1
-
-	# 			hydro_coordinates.append(self.chain[i].coordinates)
-				
-	# 			try:
-	# 				if self.chain[i+1].molecule_type == "hydrophobic":
-	# 					neighbouring += 1
-
-	# 			except IndexError:
-	# 				print("chain end")
-
-	# 	stop = timeit.default_timer()
-	# 	print("Runtimeeee:", (stop - start))
-
-	# 	score -= neighbouring
-
-	# 	return score
 
 
 
