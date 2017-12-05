@@ -115,27 +115,36 @@ class GuiPage(tk.Frame):
 		self.entry = ttk.Entry(self, width = 100)
 		self.entry.pack()
 
+		
+		self.checkbuttons = {}
+
 		self.var1 = tk.IntVar()
 		self.var1.set(0)
-		self.checkbutton1 = tk.Checkbutton(self, text="Random", variable = self.var1, command = self.select_1)
+		self.checkbutton1 = tk.Checkbutton(self, text="Random", variable = self.var1, command=lambda: self.check("Random"))
 		# checkbutton1.grid(row = 0, column = 0)
 		self.checkbutton1.pack()
 
+		self.checkbuttons["Random"] = {"button": self.checkbutton1, "var": self.var1}
+
 		self.var2 = tk.IntVar()
 		self.var2.set(0)
-		self.checkbutton2 = tk.Checkbutton(self, text="Breadth-first", variable = self.var2, command = self.select_2)
+		self.checkbutton2 = tk.Checkbutton(self, text="Breadth-first", variable = self.var2, command=lambda: self.check("Breadth-first"))
 		# checkbutton2.grid(row = 0, column = 1)
 		self.checkbutton2.pack()
 
+		self.checkbuttons["Breadth-first"] = {"button": self.checkbutton2, "var": self.var2}
+
 		self.var3 = tk.IntVar()
 		self.var3.set(0)
-		self.checkbutton3 = tk.Checkbutton(self, text="Depth-first", variable = self.var3, command = self.select_3)
+		self.checkbutton3 = tk.Checkbutton(self, text="Depth-first", variable = self.var3, command=lambda: self.check("Depth-first"))
 		# checkbutton3.grid(row = 0, column = 2)
 		self.checkbutton3.pack()
 
+		self.checkbuttons["Depth-first"] = {"button": self.checkbutton3, "var": self.var3}
+
 
 		# create fold button to continue
-		button2 = ttk.Button(self, text="Fold")
+		button2 = ttk.Button(self, text="Fold", command=lambda: self.validate(controller))
 		# continue_button.bind("<Button-1>", self.get)
 		button2.pack(pady=10, padx=10)
 		# continue_button.grid(row=1, column = 1, pady = 20, ipadx = 20, ipady = 5)
@@ -158,37 +167,49 @@ class GuiPage(tk.Frame):
 			self.entry.delete(0, tk.END)
 			self.entry.insert(0, self.listbox.get(i))
 
-	def select_1(self):
-		if(self.var1.get()):
-			self.checkbutton1.config(state=tk.DISABLED)
-			self.var2.set(0)
-			self.checkbutton2.config(state=tk.NORMAL)
-			self.var3.set(0)
-			self.checkbutton3.config(state=tk.NORMAL)
+	def check(self, checked):
 
-			# self.selected_algorithm = "random"
+		if(self.checkbuttons[checked]["var"].get()):
+			
+			for i in self.checkbuttons: 
+				if i == checked:
+					self.checkbuttons[checked]["button"].config(state=tk.DISABLED)
+				else: 
+					self.checkbuttons[i]["button"].config(state=tk.NORMAL)
+					self.checkbuttons[i]["var"].set(0)
 
-	def select_2(self):
-		if(self.var2.get()):
-			self.checkbutton2.config(state=tk.DISABLED)
-			self.var1.set(0)
-			self.checkbutton1.config(state=tk.NORMAL)
-			self.var3.set(0)
-			self.checkbutton3.config(state=tk.NORMAL)
+	def validate(self, controller):
 
-			# self.selected_algorithm = "breadth"
+		# ensure sequence is given and only contain H and P
+		if self.get("sequence") == "":
+			self.status["text"] = "Warning: enter sequence"
+			return False
 
-	def select_3(self): 
-		if(self.var3.get()):
-			self.checkbutton3.config(state=tk.DISABLED)
-			self.var1.set(0)
-			self.checkbutton1.config(state=tk.NORMAL)
-			self.var2.set(0)
-			self.checkbutton2.config(state=tk.NORMAL)
+		for c in self.get("sequence"):
+			if (c.upper() != 'H' and c.upper() != 'P'):
+				self.status["text"] = "Warning: sequence must contain only H and P"
+				return False
 
-			# self.selected_algorithm = "depth"
+		# ensure algorithm is given
+		if self.get("algorithm") == None: 
+			self.status["text"] = "Warning: choose algorithm"
+			return False
+
+		if self.get("algorithm") == "Depth-first":
+			self.status["text"] = "Warning: depth-first is not implemented yet"
+			return False
+
+		# else: return True
+		else: controller.show_frame(PageOne)
 
 
+	def get(self, g):
+		if g == "algorithm": 
+			for i in self.checkbuttons:
+				if self.checkbuttons[i]["var"].get() == 1:
+					return i
+		elif g == "sequence":
+			return self.entry.get()
 
 class PageOne(tk.Frame):
 
@@ -213,11 +234,17 @@ class PageTwo(tk.Frame):
 
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
-		label = ttk.Label(self, text="Graph Page", font=LARGE_FONT)
+		label = ttk.Label(self, text="Results", font=LARGE_FONT)
 		label.pack(pady=10, padx=10)
 
+		label = ttk.Label(self, text="Score: "+"add_score", font=MEDIUM_FONT)
+		label.pack(pady=2, padx=10)
+
+		label = ttk.Label(self, text="Runtime: "+"add_runtime", font=MEDIUM_FONT)
+		label.pack(pady=2, padx=10)
+
 		button1 = ttk.Button(self, text="Back to Home", command=lambda: controller.show_frame(StartPage))
-		button1.pack()
+		button1.pack(pady=4)
 
 
 		canvas = FigureCanvasTkAgg(f, self)
