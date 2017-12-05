@@ -6,6 +6,8 @@ import matplotlib.animation as animation
 from matplotlib import style
 from matplotlib import pyplot as plt
 
+from Classes import AminoAcidChain
+
 import tkinter as tk
 from tkinter import ttk
 
@@ -42,18 +44,14 @@ class Visualisation_App(tk.Tk):
 
 		# tk.Tk.iconbitmap(self, default="clienticon.ico")
 		tk.Tk.wm_title(self, "Protein Po(w)der")
-
 		tk.Tk.resizable(self, width = tk.FALSE, height = tk.FALSE)
 
 		container = tk.Frame(self)
-
 		container.pack(side = "top", fill = "both", expand = True)
-
 		container.grid_rowconfigure(0, weight = 1)
 		container.grid_columnconfigure(0, weight =1)
 
 		self.frames = {}
-
 		for F in (StartPage, PageOne, PageTwo, GuiPage):
 
 			frame = F(container, self)
@@ -72,6 +70,7 @@ class Visualisation_App(tk.Tk):
 class StartPage(tk.Frame): 
 
 	def __init__(self,parent, controller): 
+
 		tk.Frame.__init__(self, parent)
 		label = ttk.Label(self, text="StartPage", font=LARGE_FONT)
 		label.pack(pady=10, padx=10)
@@ -87,20 +86,25 @@ class StartPage(tk.Frame):
 
 
 class GuiPage(tk.Frame):
+
 	def __init__(self, parent, controller):
+
 		tk.Frame.__init__(self, parent)
 		
+		list_frame = tk.Frame(self)
+		list_frame.pack(side=tk.TOP, fill = tk.X)
+		
 		# create listbox and scrollbar
-		self.listbox = tk.Listbox(self, selectmode = tk.EXTENDED, width = 100, relief = tk.GROOVE)
+		self.scrollbar = tk.Scrollbar(list_frame)
+		self.scrollbar.pack(side = tk.RIGHT, fill = tk.Y)
+
+		self.listbox = tk.Listbox(list_frame, selectmode = tk.EXTENDED, width = 100, relief = tk.GROOVE)
 		self.listbox.pack(fill = tk.X)
 		self.listbox.insert(0, "No sequences available") #help implementeren die laat zien hoe je sequenties in kan laden
 		self.listbox.delete(0)
 		self.load_listbox(["HPPHPHHH", "HPHPHHHPHPPHH", "hPHHPHPPHPHPH", "HPPHPHPHPPH"])
 
-		self.scrollbar = tk.Scrollbar(self)
-		self.scrollbar.pack(side = tk.RIGHT, fill = tk.Y)
-
-		# attach listbox to scrollbar
+		# connect scrollbar to listbox
 		self.listbox.config(yscrollcommand=self.scrollbar.set)
 		self.scrollbar.config(command=self.listbox.yview)
 
@@ -116,42 +120,36 @@ class GuiPage(tk.Frame):
 		self.entry.pack()
 
 		
+		check_frame = tk.Frame(self)
+		check_frame.pack()
+
 		self.checkbuttons = {}
 
-		self.var1 = tk.IntVar()
-		self.var1.set(0)
-		self.checkbutton1 = tk.Checkbutton(self, text="Random", variable = self.var1, command=lambda: self.check("Random"))
-		# checkbutton1.grid(row = 0, column = 0)
-		self.checkbutton1.pack()
+		var1 = tk.IntVar()
+		var1.set(0)
+		checkbutton1 = ttk.Checkbutton(check_frame, text="Random", variable = var1, command=lambda: self.check("Random"))
+		checkbutton1.grid(row = 0, column = 0)
+		self.checkbuttons["Random"] = {"button": checkbutton1, "var": var1}
 
-		self.checkbuttons["Random"] = {"button": self.checkbutton1, "var": self.var1}
+		var2 = tk.IntVar()
+		var2.set(0)
+		checkbutton2 = ttk.Checkbutton(check_frame, text="Breadth-first", variable = var2, command=lambda: self.check("Breadth-first"))
+		checkbutton2.grid(row = 0, column = 1)
+		self.checkbuttons["Breadth-first"] = {"button": checkbutton2, "var": var2}
 
-		self.var2 = tk.IntVar()
-		self.var2.set(0)
-		self.checkbutton2 = tk.Checkbutton(self, text="Breadth-first", variable = self.var2, command=lambda: self.check("Breadth-first"))
-		# checkbutton2.grid(row = 0, column = 1)
-		self.checkbutton2.pack()
-
-		self.checkbuttons["Breadth-first"] = {"button": self.checkbutton2, "var": self.var2}
-
-		self.var3 = tk.IntVar()
-		self.var3.set(0)
-		self.checkbutton3 = tk.Checkbutton(self, text="Depth-first", variable = self.var3, command=lambda: self.check("Depth-first"))
-		# checkbutton3.grid(row = 0, column = 2)
-		self.checkbutton3.pack()
-
-		self.checkbuttons["Depth-first"] = {"button": self.checkbutton3, "var": self.var3}
+		var3 = tk.IntVar()
+		var3.set(0)
+		checkbutton3 = ttk.Checkbutton(check_frame, text="Depth-first", variable = var3, command=lambda: self.check("Depth-first"))
+		checkbutton3.grid(row = 0, column = 2)
+		self.checkbuttons["Depth-first"] = {"button": checkbutton3, "var": var3}
 
 
 		# create fold button to continue
 		button2 = ttk.Button(self, text="Fold", command=lambda: self.validate(controller))
-		# continue_button.bind("<Button-1>", self.get)
 		button2.pack(pady=10, padx=10)
-		# continue_button.grid(row=1, column = 1, pady = 20, ipadx = 20, ipady = 5)
-
 
 		# create status bar
-		self.status = tk.Label(self, text="", bd=1, relief=tk.SUNKEN, anchor=tk.W)
+		self.status = tk.Label(self, text="", bd=1, relief=tk.SUNKEN, anchor=tk.W, font=SMALL_FONT)
 		self.status.pack(side = tk.BOTTOM, fill = tk.X)
 	
 
@@ -162,6 +160,7 @@ class GuiPage(tk.Frame):
 
 
 	def select_from_listbox(self, event):
+
 		a = self.listbox.curselection()
 		for i in a: 
 			self.entry.delete(0, tk.END)
@@ -204,10 +203,12 @@ class GuiPage(tk.Frame):
 
 
 	def get(self, g):
+
 		if g == "algorithm": 
 			for i in self.checkbuttons:
 				if self.checkbuttons[i]["var"].get() == 1:
 					return i
+
 		elif g == "sequence":
 			return self.entry.get()
 
@@ -215,19 +216,35 @@ class PageOne(tk.Frame):
 
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
-		label = ttk.Label(self, text="This algorithm will have a runtime of aprox. "+ "add_runtime" + " seconds", font=MEDIUM_FONT)
+
+		warning_frame = tk.Frame(self)
+		warning_frame.pack(pady=100)
+		button_frame = tk.Frame(warning_frame)
+		button_frame.pack(side=tk.BOTTOM, pady=10)
+
+		label = ttk.Label(warning_frame, text="This algorithm will have a runtime of aprox. "+ "add_runtime" + " seconds", font=MEDIUM_FONT)
 		label.pack(pady=10, padx=10)
 
-		label = ttk.Label(self, text="Are you sure you want to continue?", font=LARGE_FONT)
+		label = ttk.Label(warning_frame, text="Are you sure you want to continue?", font=LARGE_FONT)
 		label.pack(pady=10, padx=10)
 
-		button1 = ttk.Button(self, text="Yes", command=lambda: controller.show_frame(PageTwo))
-		button1.pack()
+		button1 = ttk.Button(button_frame, text="Yes", command=lambda: controller.show_frame(PageTwo))
+		button1.grid(row=0, column=0)
 
-		button2 = ttk.Button(self, text="No", command=lambda: controller.show_frame(StartPage))
-		button2.pack()
+		button2 = ttk.Button(button_frame, text="No", command=lambda: controller.show_frame(StartPage))
+		button2.grid(row=0, column=1)
 
+	def run_algorithm(self): 
+		# create AminoAcidChain object
+		amino_acid_chain = AminoAcidChain.Amino_acid_chain()
 
+		# create amino acid chain by the given comment line argument
+		# amino_acid_chain.create(get("sequence"))
+	
+		# set x and y coordinates of the aminoacids of chain
+		# amino_acid_chain.execute(get("algorithm"))
+
+		get("sequence")
 
 # https://www.youtube.com/watch?v=Zw6M-BnAPP0&list=PLQVvvaa0QuDclKx-QpC9wntnURXVJqLyk&index=6
 class PageTwo(tk.Frame):
