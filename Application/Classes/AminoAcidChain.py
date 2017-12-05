@@ -47,28 +47,7 @@ class Amino_acid_chain:
 			# append amino acid with appropriate molecule type to chain
 			self.chain.append(Amino_acid(molecule_type))
 
-	# determines optimal aminoacid chain configuration
-	def execute(self, algorithm): 
 
-		if algorithm == "Random" or algorithm == "random":
-			output = helpers.fold_random(self.chain)
-			self.chain = output
-
-		# ensure proper usage
-		elif algorithm == "Breadth" or algorithm == "breadth":
-			breadth_algorithm.execute(self)
-
-		elif algorithm == "Hillclimber" or algorithm == "hillclimber":
-			hillclimber_algorithm.execute(self)
-
-		elif algorithm == "Hillclimberw" or algorithm == "hillclimberw":
-			hillclimber_without_random.execute(self)
-			#self.chain = output
-			# self.rotate()
-
-		else: 
-			sys.exit("Usage: application.py algorithm HHPHHHPHPHHHPH")
-			
 
 	# # calculates chain stability score
 	# def stability(self):
