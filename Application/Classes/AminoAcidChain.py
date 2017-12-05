@@ -127,6 +127,9 @@ class Amino_acid_chain:
 		# create array to store relative direction strings of current step
 		directions = []
 
+		# deepcopy is nodig hier, ik heb het gecheckt
+		new_chain = copy.deepcopy(self.chain)
+
 		# iterate over coordinates to create direction strings
 		for i in range(1, len(self.chain)):
 
@@ -162,38 +165,69 @@ class Amino_acid_chain:
 		for i in range(0, to_change + 1):
 			rotated_coordinates.append(self.chain[i].coordinates[:])
 
+		seen = []
+		doubles = 0
+
+		# print("NIEUWE COORDINATEN BEPALEN.....")
 		# iterate over directions to determine new coordinates
 		for i in range(to_change, len(abs_directions)):
 			if abs_directions[i] == "right":
-				rotated_coordinates.append([rotated_coordinates[i][0] + 1, rotated_coordinates[i][1]])
+				new_coordinates = [rotated_coordinates[i][0] + 1, rotated_coordinates[i][1]]
+				if new_coordinates in rotated_coordinates:
+					doubles = 1
+					errors += 1
+					break;
+				rotated_coordinates.append(new_coordinates)
+				new_chain[i + 1].coordinates = new_coordinates
+				# print(i, new_coordinates)
 			if abs_directions[i] == "left":
-				rotated_coordinates.append([rotated_coordinates[i][0] - 1, rotated_coordinates[i][1]])
+				new_coordinates = [rotated_coordinates[i][0] - 1, rotated_coordinates[i][1]]
+				if new_coordinates in rotated_coordinates:
+					doubles = 1
+					errors += 1
+					break;
+				rotated_coordinates.append(new_coordinates)
+				new_chain[i + 1].coordinates = new_coordinates
+				# print(i, new_coordinates)
 			if abs_directions[i] == "up":
-				rotated_coordinates.append([rotated_coordinates[i][0], rotated_coordinates[i][1] + 1])
+				new_coordinates = [rotated_coordinates[i][0], rotated_coordinates[i][1] + 1]
+				if new_coordinates in rotated_coordinates:
+					doubles = 1
+					errors += 1
+					break;
+				rotated_coordinates.append(new_coordinates)
+				new_chain[i + 1].coordinates = new_coordinates
+				# print(i, new_coordinates)
 			if abs_directions[i] == "down":
-				rotated_coordinates.append([rotated_coordinates[i][0], rotated_coordinates[i][1] - 1])
+				new_coordinates = [rotated_coordinates[i][0], rotated_coordinates[i][1] - 1]
+				if new_coordinates in rotated_coordinates:
+					doubles = 1
+					errors += 1
+					break;
+				rotated_coordinates.append(new_coordinates)
+				new_chain[i + 1].coordinates = new_coordinates
+				# print(i, new_coordinates)
 		# print(rotated_coordinates)
-		seen = []
-		doubles = 0
+
 		# print("DOUBLES TELLEN")
 
-		for i in range(0, len(rotated_coordinates) - 1): #coordinates in rotated_coordinates:
-			# print(type(rotated_coordinates[i + 1]), i)
-			if rotated_coordinates[i] in seen:
-				doubles = 1
-				errors += 1
-				# print(errors)
-				# print("DOUBLE GEVONDEN", rotated_coordinates[i])
-			else:
-				seen.append(rotated_coordinates[i])
+		# for i in range(0, len(rotated_coordinates) - 1): #coordinates in rotated_coordinates:
+		# 	# print(type(rotated_coordinates[i + 1]), i)
+		# 	if rotated_coordinates[i] in seen:
+		# 		doubles = 1
+		# 		errors += 1
+		# 		# print(errors)
+		# 		print("DOUBLE GEVONDEN", rotated_coordinates[i])
+		# 	else:
+		# 		seen.append(rotated_coordinates[i])
 
-		if errors > 100:
+		if errors > 50:
 			return 1
 		elif doubles != 0:
-			rotated_coordinates = self.rotate(errors)
+			new_chain = self.rotate(errors)
 
 				
-		return rotated_coordinates
+		return new_chain
 
 	# plots aminoacid chain configuration
 	def plot(self):

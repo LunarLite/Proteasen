@@ -15,49 +15,47 @@ def execute(input_chain):
 	# best_random = AminoAcidChain.Amino_acid_chain()
 	new_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
 	rotated_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
-	best_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
-
-
-	print(input_chain.chain[3].coordinates)
-	print(new_acid_chain.chain[3].coordinates)
+	best_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)\
 
 
 	# fold amino acid chain straight
 	for i, acid in enumerate(new_acid_chain.chain):
 		acid.coordinates = [i, 0]
-		print(new_acid_chain.chain[i].coordinates)
+		# print(new_acid_chain.chain[i].coordinates)
 
 
 	attempts = 0
-	start_score = new_acid_chain.stability()
-	print("stability now: ", start_score)
+	new_acid_chain.stability()
+	start_score = new_acid_chain.score
+	# print("stability now: ", start_score)
 
 
-	while attempts < 1000:
-		rotated_coordinates = new_acid_chain.rotate(0)
-		if rotated_coordinates == 1:
+	while attempts < 10000:
+		rotated_chain = new_acid_chain.rotate(0)
+		if rotated_chain == 1:
 			print("DIT GING MIS DOEI")
 			break
 
-		print("ROTATED", rotated_coordinates)
 
-		rotated_acid_chain.chain = rotated_coordinates
-		print("ROTATED CHAIN", rotated_acid_chain)
-		print("UNROTATED CHAIN", new_acid_chain)
-	
-		print("NIEUWE STABILITY", new_acid_chain.stability())
+		rotated_acid_chain.chain = rotated_chain
+		# for acid in rotated_acid_chain.chain:
+		# 	print(acid.coordinates)
 
-		if rotated_acid_chain.stability() <= new_acid_chain.stability():
-			new_acid_chain.coordinates = rotated_coordinates
-			# print(best_random.coordinates)
+		rotated_acid_chain.stability()
+
+		# print("NIEUWE STABILITY", rotated_acid_chain.score)
+
+		if rotated_acid_chain.score <= new_acid_chain.score:
+			new_acid_chain.chain = rotated_chain
+			new_acid_chain.stability()
 			attempts += 1
 		else: 
-			attempts += 1
+			attempts += 10
 	
 	print(start_score)
 
 	# set input chain random folded chain with best score
-	input.chain = new_acid_chain.chain
+	input_chain.chain = new_acid_chain.chain
 
 
 
