@@ -9,23 +9,17 @@ from random import randint
 random_list = []
 best_random = []
 
-def execute(input):
+def execute(input_chain):
 
 	# initialize variables to store temporary acid chains
 	# best_random = AminoAcidChain.Amino_acid_chain()
-	new_acid_chain = AminoAcidChain.Amino_acid_chain()
-	rotated_acid_chain = AminoAcidChain.Amino_acid_chain()
-	best_acid_chain = AminoAcidChain.Amino_acid_chain()
+	new_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
+	rotated_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
+	best_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
 
-	new_acid_chain = copy.deepcopy(input)
-	rotated_acid_chain = copy.deepcopy(input)
 
-	print(input.chain[0].coordinates)
-	print(new_acid_chain.chain[1].coordinates)
-
-	# random_list.append(random(input))
-	# best_random.chain = random_list[0]
-	# best_score = 0
+	print(input_chain.chain[3].coordinates)
+	print(new_acid_chain.chain[3].coordinates)
 
 
 	# fold amino acid chain straight
@@ -35,19 +29,23 @@ def execute(input):
 
 
 	attempts = 0
-	start_score = copy.deepcopy(new_acid_chain.stability())
+	start_score = new_acid_chain.stability()
 	print("stability now: ", start_score)
+
+
 	while attempts < 1000:
 		rotated_coordinates = new_acid_chain.rotate(0)
 		if rotated_coordinates == 1:
 			print("DIT GING MIS DOEI")
 			break
-			
+
 		print("ROTATED", rotated_coordinates)
+
 		rotated_acid_chain.chain = rotated_coordinates
-		print("ROTATED STABILITY", rotated_acid_chain.stability())
-		
-		# print("NIEUWE STABILITY", new_acid_chain.stability())
+		print("ROTATED CHAIN", rotated_acid_chain)
+		print("UNROTATED CHAIN", new_acid_chain)
+	
+		print("NIEUWE STABILITY", new_acid_chain.stability())
 
 		if rotated_acid_chain.stability() <= new_acid_chain.stability():
 			new_acid_chain.coordinates = rotated_coordinates

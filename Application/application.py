@@ -24,10 +24,7 @@ def main():
 	start = timeit.default_timer()
 		
 	# create AminoAcidChain object
-	amino_acid_chain = AminoAcidChain.Amino_acid_chain()
-
-	# create amino acid chain by the given comment line argument
-	amino_acid_chain.create(sequence)
+	amino_acid_chain = AminoAcidChain.Amino_acid_chain(sequence)
 	
 	# set x and y coordinates of the aminoacids of chain
 	amino_acid_chain.execute(algorithm)

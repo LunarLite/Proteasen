@@ -22,13 +22,16 @@ fig.suptitle('AminoAcidChain')
 
 # amino acid chain. 
 class Amino_acid_chain:
-	def __init__(self):
+	def __init__(self, sequence):
 		self.chain = []
+		self.score = 0
+		self.sequence = sequence
+		self.create()
 
-	def create(self, sequence):
+	def create(self):
 
 		# iterate over each character in command line argument
-		for c in sequence:
+		for c in self.sequence:
 
 			# allow only H and P in command line argument.
 			# set molecule type to either hydrophobic or polair, as H or P indicates
@@ -131,7 +134,7 @@ class Amino_acid_chain:
 		# revise score taking into account connections between hydrofobic aminoacids in chain
 		score += hydro_connenctions
 
-		return score
+		self.score = score
 
 
 	def rotate(self, errors):
