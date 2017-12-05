@@ -34,8 +34,8 @@ def main():
 	print("RuntiMe:", (stop - start))
 	
 	# calculate chains stability score
-	score = amino_acid_chain.stability()
-	print("Score:", (score))
+	amino_acid_chain.stability()
+	print("Score:", (amino_acid_chain.score))
 
 	# plot the "folded" aminoacid chain
 	amino_acid_chain.plot()
