@@ -141,6 +141,51 @@ class Amino_acid_chain:
 	# 	return score
 
 
+	# calculates chain stability score
+	# def stability(self): 
+
+	# 	start = timeit.default_timer()
+	# 	# initialize score variable
+	# 	score = 0
+
+	# 	neighbouring = 0
+
+	# 	# [x, y]
+	# 	hydro_coordinates = []
+
+	# 	first_aminoacid = True
+
+	# 	# iterate over chain
+	# 	for i in range (0, len(self.chain)):
+
+	# 		if(self.chain[i].molecule_type == "hydrophobic"):
+
+	# 			for j in range(0, len(hydro_coordinates)):
+
+	# 				if abs(self.chain[i].coordinates[0] - hydro_coordinates[j][0]) + abs(self.chain[i].coordinates[1] - hydro_coordinates[j][1]) == 1:
+	# 					score += 1
+
+	# 			hydro_coordinates.append(self.chain[i].coordinates)
+				
+	# 			try:
+	# 				if self.chain[i+1].molecule_type == "hydrophobic":
+	# 					neighbouring += 1
+
+	# 			except IndexError:
+	# 				print("chain end")
+
+	# 	stop = timeit.default_timer()
+	# 	print("Runtimeeee:", (stop - start))
+
+	# 	score -= neighbouring
+
+	# 	return score
+
+
+
+
+
+
 
 	def rotate(self, errors):
 
