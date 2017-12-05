@@ -7,6 +7,7 @@ import sys
 from Algorithms import random_algorithm
 from random import randint
 from Algorithms import breadth_algorithm
+from Algorithms import hillclimber_without_random
 from Algorithms import hillclimber_algorithm
 from Dependencies import helpers
 
@@ -56,6 +57,9 @@ class Amino_acid_chain:
 
 		elif algorithm == "Hillclimber" or algorithm == "hillclimber":
 			hillclimber_algorithm.execute(self)
+
+		elif algorithm == "Hillclimberw" or algorithm == "hillclimberw":
+			hillclimber_without_random.execute(self)
 			#self.chain = output
 			# self.rotate()
 
