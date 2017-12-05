@@ -26,6 +26,7 @@ def execute(input):
 		# print("huidige beste score: ", best_random.stability())
 		random_list.append(helpers.fold_random(input.chain))
 		new_acid_chain.chain = random_list[i]
+		print("RANDOM LIST: ", random_list[i])
 
 		if i == 0:
 			best_score = copy.copy(new_acid_chain.stability())

@@ -42,8 +42,10 @@ def execute(input):
 		if rotated_coordinates == 1:
 			print("DIT GING MIS DOEI")
 			break
-		# print("ROTATED: ", rotated_coordinates)
+			
+		print("ROTATED", rotated_coordinates)
 		rotated_acid_chain.chain = rotated_coordinates
+		print("ROTATED STABILITY", rotated_acid_chain.stability())
 		
 		# print("NIEUWE STABILITY", new_acid_chain.stability())
 

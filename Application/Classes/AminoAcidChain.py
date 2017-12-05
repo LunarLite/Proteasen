@@ -93,8 +93,8 @@ class Amino_acid_chain:
 						score -= 1
 
 		stop = timeit.default_timer()
-		print("Runtimeeee:", (stop - start))
-		print("hoi")
+		# print("Runtimeeee:", (stop - start))
+		# print("hoi")
 		
 		return score
 
@@ -224,7 +224,7 @@ class Amino_acid_chain:
 		while changes[change] == abs_directions[to_change]:
 			change = randint(0, 3)
 
-		print("changing number", to_change, "from", abs_directions[to_change], "to", changes[change], "..")
+		# print("changing number", to_change, "from", abs_directions[to_change], "to", changes[change], "..")
 
 		# execute the change
 		abs_directions[to_change] = changes[change]
