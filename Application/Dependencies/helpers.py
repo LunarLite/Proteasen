@@ -6,7 +6,7 @@ def fold_random(input_chain):
 	the chain element of the Amino_acid_chain class, and returns it folded randomly. """
 
 	output_chain = copy.copy(input_chain)
-	# Iterate over each aminoacid.
+	# iterate over each aminoacid
 
 	for i in range (1, len(input_chain)):
 
@@ -29,10 +29,9 @@ def fold_random(input_chain):
 		while conflict:
 
 			# if conflicts more than 20, chain is probably stuck, break
-			if conflicts > 20:
-				# print("large conflict")
+			if conflicts >= 20:
+				print("large conflict")
 				conflict = False
-				break
 
 			# randomly choose one of the possible positions
 			option = randint(0, 3)
@@ -55,9 +54,6 @@ def fold_random(input_chain):
 
 			# set coordinates of current amino acid
 			output_chain[i].coordinates = coordinates
-		
-		else:
-			break
 
 	#if chain stuck in conflict, set coordinates back and fold again
 	if conflicts >= 20:
