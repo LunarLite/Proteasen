@@ -101,7 +101,7 @@ class Amino_acid_chain:
 
 	# calculates chain stability score
 	def stability(self): 
-
+		
 		score = 0
 		hydro_connenctions = 0
 
@@ -132,11 +132,6 @@ class Amino_acid_chain:
 		score += hydro_connenctions
 
 		return score
-
-
-
-
-
 
 
 	def rotate(self, errors):

@@ -32,6 +32,7 @@ def fold_random(input_chain):
 			if conflicts >= 20:
 				print("large conflict")
 				conflict = False
+				break
 
 			# randomly choose one of the possible positions
 			option = randint(0, 3)
