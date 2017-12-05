@@ -34,7 +34,7 @@ def main():
 
 	# stop timer
 	stop = timeit.default_timer()
-	print("Runtime:", (stop - start))
+	print("RuntiMe:", (stop - start))
 	
 	# calculate chains stability score
 	score = amino_acid_chain.stability()

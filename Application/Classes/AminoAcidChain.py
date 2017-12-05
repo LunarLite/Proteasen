@@ -1,3 +1,6 @@
+import timeit
+
+
 from .AminoAcid import Amino_acid
 import sys
 
@@ -62,7 +65,8 @@ class Amino_acid_chain:
 
 	# calculates chain stability score
 	def stability(self):
-		
+
+		start = timeit.default_timer()
 		# initialize score variable
 		score = 0
 		# iterate over chain, keeping track of the count
@@ -83,8 +87,56 @@ class Amino_acid_chain:
 					# if neighbouring acids are hydrophobic, increase score
 					if self.chain[k].molecule_type == "hydrophobic" and x_difference + y_difference == 1:
 						score -= 1
+
+		stop = timeit.default_timer()
+		print("Runtimeeee:", (stop - start))
+		print("hoi")
 		
 		return score
+
+	# def stability(self): 
+
+	# 	start = timeit.default_timer()
+	# 	# initialize score variable
+	# 	score = 0
+
+	# 	neighbouring = 0
+
+	# 	# [x, y]
+	# 	hydro_coordinates = []
+
+	# 	first_aminoacid = True
+
+	# 	# iterate over chain
+	# 	for i in range (0, len(self.chain)):
+
+	# 		if(self.chain[i].molecule_type == "hydrophobic"):
+
+	# 			hydro_coordinates.append(self.chain[i].coordinates)
+				
+	# 			try:
+	# 				if self.chain[i+1].molecule_type == "hydrophobic":
+	# 					neighbouring += 1
+
+	# 			except IndexError:
+	# 				print("chain end")
+
+		
+	# 	for i in range(0, len(hydro_coordinates)):
+
+	# 		for j in range(i, len(hydro_coordinates)):
+
+	# 			if abs(hydro_coordinates[i][0] - hydro_coordinates[j][0]) + abs(hydro_coordinates[i][1] - hydro_coordinates[j][1]) == 1:
+	# 				score += 1
+
+	# 	stop = timeit.default_timer()
+	# 	print("Runtimeeee:", (stop - start))
+
+	# 	score -= neighbouring
+
+	# 	return score
+
+
 
 	def rotate(self, errors):
 
