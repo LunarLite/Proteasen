@@ -30,7 +30,7 @@ def execute(input_chain):
 	# print("stability now: ", start_score)
 
 
-	while attempts < 10000:
+	while attempts < 500:
 		rotated_chain = new_acid_chain.rotate(0)
 		if rotated_chain == 1:
 			print("DIT GING MIS DOEI")
@@ -50,7 +50,7 @@ def execute(input_chain):
 			new_acid_chain.stability()
 			attempts += 1
 		else: 
-			attempts += 10
+			attempts += 1
 	
 	print(start_score)
 
