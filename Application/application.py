@@ -39,10 +39,9 @@ def main():
 	if algorithm == "Random" or algorithm == "random":
 		random_algorithm.execute(amino_acid_chain)
 	# ensure proper usage
-	elif algorithm == "Breadth" or algorithm == "breadth" or "Breadth-first":
+	elif algorithm == "Breadth" or algorithm == "breadth" or algorithm == "Breadth-first":
 		breadth_algorithm.execute(amino_acid_chain)
-	elif algorithm == "Breadth_heuristic" or algorithm == "Breadth_heuristic":
-		print("hallo")
+	elif algorithm == "Breadth_heur" or algorithm == "breadth_heur":
 		breadthh_algorithm.execute(amino_acid_chain)
 	elif algorithm == "Hillclimber" or algorithm == "hillclimber":
 		hillclimber_algorithm.execute(amino_acid_chain, "straight_folded")
@@ -50,7 +49,7 @@ def main():
 		hillclimber_algorithm.execute(amino_acid_chain, "random_folded")
 	else: 
 		sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH\n"
-					"algorithms: Random/Breadth/Breadth_heuristic/Hillclimber/Randomhillclimber\n")
+					"algorithms: Random/Breadth/Breadth_heur/Hillclimber/Randomhillclimber\n")
 	
 	# stop timer
 	stop = timeit.default_timer()
