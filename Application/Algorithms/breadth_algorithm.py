@@ -1,7 +1,6 @@
 from Classes import AminoAcidChain
 from collections import deque
 import copy
-import timeit
 import math
 
 # global variables
@@ -97,4 +96,4 @@ def checkPossibilities(temp_chain, i):
 		if j.coordinates in options:
 			options.remove(j.coordinates)
 	
-	return options
+	return options	
