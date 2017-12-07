@@ -88,7 +88,7 @@ class Amino_acid_chain:
 		"""This function calculates self.score, based on the 
 		coordinates of the hydrophobic Amino_acid objects in self.chain."""
 		
-		score = 0
+		self.score = 0
 		hydro_connenctions = 0
 
 		# create array to remember coordinates of hydrophobic aminoacids
@@ -104,7 +104,7 @@ class Amino_acid_chain:
 
 					# count score -1 if current hydrophobic aminoacid neighbours a remembered hydrophobic aminoacid
 					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) == 1:
-						score -= 1
+						self.score -= 1
 
 				# remember current hydrophobic aminoacid
 				hydro_coordinates.append(aminoacid.coordinates)
@@ -115,10 +115,7 @@ class Amino_acid_chain:
 						hydro_connenctions += 1
 
 		# revise score taking into account connections between hydrofobic aminoacids in chain
-		score += hydro_connenctions
-
-		self.score = score
-
+		self.score += hydro_connenctions
 
 	def rotate(self, errors):
 		"""This function returns a copy of self.chain 
@@ -133,7 +130,7 @@ class Amino_acid_chain:
 		# create array to store relative direction strings of current step
 		directions = []
 
-		# deepcopy is nodig hier, ik heb het gecheckt
+		# deepcopy is needed
 		new_chain = copy.deepcopy(self.chain)
 
 		# iterate over coordinates to create direction strings
