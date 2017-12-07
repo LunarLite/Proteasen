@@ -18,7 +18,7 @@ def execute(input):
 	input_chain[0].coordinates = [0,0]
 	input_chain[1].coordinates = [0,1]
 
-	# initialize starting chain of 2 nodes
+	# initialize starting chain, consisting of first 2 nodes
 	start_chain = [input_chain[0], input_chain[1]]
 	# initialize start of the list
 	global chain_deque
@@ -27,7 +27,6 @@ def execute(input):
 	
 	# increase the size of the chains with 1 node every loop
 	for i in range (2, len(input_chain)):
-		print(i+1)
 
 		while len(chain_deque[0]) < i + 1:
 			# pop chain from list

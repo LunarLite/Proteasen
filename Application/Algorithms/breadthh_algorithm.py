@@ -16,9 +16,6 @@ dynamic_length = 0
 # required score calculation
 passed_hydro = 0
 
-# statistics
-trashcan = 0
-
 
 def execute(input):
 	
@@ -31,23 +28,21 @@ def execute(input):
 	
 	# determine x&y domain based on chain length
 	global dynamic_length
-	#dynamic_length = math.ceil(math.sqrt(10))-math.floor(10/7)
 	dynamic_length = math.floor(math.sqrt(len(input_chain)))-1
 
-	# initialize starting chain of 2 nodes
+	# initialize starting chain, consisting of first 2 nodes
 	start_chain = [input_chain[0], input_chain[1]]
-	# initialize start of the list
+	
+	# initialize start of the deque
 	global chain_deque
 	chain_deque.append(start_chain)
 	
 
-
 	global passed_hydro
+	
 	
 	# increase the size of the chains with 1 node every loop
 	for i in range (2, len(input_chain)):
-		print(i+1)
-
 		while len(chain_deque[0]) < i + 1:
 			# pop chain from list
 			temp_chain = chain_deque.popleft()    
@@ -60,9 +55,6 @@ def execute(input):
 
 		if (input_chain[i].molecule_type == "hydrophobic"):
 			passed_hydro += 1
-
-	# temporary statistics
-	print("Chains thrown away: ", trashcan)
 			
 	# 'best_chain' is the chain that needs to be returned.
 	global best_chain
@@ -90,7 +82,6 @@ def buildChains(builds, i):
 	global best_chain
 	global best_score
 	global passed_hydro
-	global trashcan
 	
 	for build in builds:
 		
@@ -109,8 +100,6 @@ def buildChains(builds, i):
 			# what score should be pruned at
 			if (new_score <= -1*(passed_hydro/2)):
 				chain_deque.append(build)
-			else:
-				trashcan += 1
 		else:
 			chain_deque.append(build)
 			
