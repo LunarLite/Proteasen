@@ -1,13 +1,10 @@
 # imports
+from random import randint
 import sys
 import timeit
-from Classes import AminoAcidChain
-from Visualisation import visualisation
 
-from Algorithms import random_algorithm
-from random import randint
-from Algorithms import breadth_algorithm
-from Algorithms import hillclimber_algorithm
+from Classes import AminoAcidChain, GuiApplication
+from Algorithms import random_algorithm, breadth_algorithm, breadthh_algorithm, hillclimber_algorithm
 from Dependencies import helpers
 
 
@@ -20,10 +17,15 @@ def main():
 
 	elif len(sys.argv) > 1: 
 		sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH\n"
-			"algorithms: Random/Breadth/Hillclimber/Randomhillclimber\n") 
+					"algorithms: Random/Breadth/Breadth_heuristic/Hillclimber/Randomhillclimber\n")
 		
 	else: 
-		sequence, algorithm = visualisation.run()
+		app = GuiApplication.Gui_Application()
+		app.run("sequences.csv")
+		sequence = app.get("sequence")
+		algorithm = app.get("algorithm")
+		print(algorithm)
+
 
 	
 	# initialize timer
@@ -32,21 +34,23 @@ def main():
 	# create AminoAcidChain object
 	amino_acid_chain = AminoAcidChain.Amino_acid_chain(sequence)
 	
-
 		
 	# set x and y coordinates of the aminoacids of chain, depending on the algorithm	
 	if algorithm == "Random" or algorithm == "random":
 		random_algorithm.execute(amino_acid_chain)
 	# ensure proper usage
-	elif algorithm == "Breadth" or algorithm == "breadth":
+	elif algorithm == "Breadth" or algorithm == "breadth" or "Breadth-first":
 		breadth_algorithm.execute(amino_acid_chain)
+	elif algorithm == "Breadth_heuristic" or algorithm == "Breadth_heuristic":
+		print("hallo")
+		breadthh_algorithm.execute(amino_acid_chain)
 	elif algorithm == "Hillclimber" or algorithm == "hillclimber":
 		hillclimber_algorithm.execute(amino_acid_chain, "straight_folded")
 	elif algorithm == "Randomhillclimber" or algorithm == "randomhillclimber":
 		hillclimber_algorithm.execute(amino_acid_chain, "random_folded")
 	else: 
 		sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH\n"
-					"algorithms: Random/Breadth/Hillclimber/Randomhillclimber\n")
+					"algorithms: Random/Breadth/Breadth_heuristic/Hillclimber/Randomhillclimber\n")
 	
 	# stop timer
 	stop = timeit.default_timer()

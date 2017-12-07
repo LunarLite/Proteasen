@@ -1,13 +1,8 @@
 import timeit
-
+import sys
+from random import randint
 
 from .AminoAcid import Amino_acid
-import sys
-
-from Algorithms import random_algorithm # deze kan waarschijnlijk weg
-from random import randint
-from Algorithms import breadth_algorithm # deze kan waarschijnlijk weg
-from Algorithms import hillclimber_algorithm # deze kan waarschijnlijk weg
 from Dependencies import helpers
 
 # imports required for plot
@@ -44,7 +39,7 @@ class Amino_acid_chain:
 
 			else: 
 				sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH\n"
-					"algorithms: Random/Breadth/Hillclimber/Randomhillclimber\n")
+					"algorithms: Random/Breadth/Breadth_heuristic/Hillclimber/Randomhillclimber\n")
 
 			# append amino acid with appropriate molecule type to chain
 			self.chain.append(Amino_acid(molecule_type))

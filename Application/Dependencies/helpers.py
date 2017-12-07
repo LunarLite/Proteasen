@@ -61,5 +61,4 @@ def fold_random(input_chain):
 
 	return output_chain	
 
-
 		
