@@ -1,26 +1,22 @@
+from Classes import AminoAcidChain
 from random import randint
 import copy
 
 def fold_random(input_chain):
-	""" This function takes as input an unfolded aminoacid chain, which is 
-	the chain element of the Amino_acid_chain class, and returns it folded randomly. """
+	""" This function takes as input an unfolded Amino_acid_chain object
+	 and returns it folded randomly."""
 
-	output_chain = copy.copy(input_chain)
+	output_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
 	# iterate over each aminoacid
 
-	for i in range (1, len(input_chain)):
+	for i in range (1, len(input_chain.chain)):
 
 		# remember coordinates of previous amino acid
-		x = output_chain[i - 1].coordinates[0]
-		y = output_chain[i - 1].coordinates[1]
+		x = output_chain.chain[i - 1].coordinates[0]
+		y = output_chain.chain[i - 1].coordinates[1]
 
 		# create array containing possible positions
-		option1 = [x + 1, y]
-		option2 = [x - 1, y]
-		option3 = [x, y + 1]
-		option4 = [x, y - 1]
-
-		options = [option1, option2, option3, option4]
+		options = [[x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]]
 
 		# keep track of (the amount of) conflicts
 		conflict = True
@@ -42,7 +38,7 @@ def fold_random(input_chain):
 			for j in range(0, i):
 
 				# if coordinates match, break to choose new coordinates
-				if coordinates == output_chain[j].coordinates:
+				if coordinates == output_chain.chain[j].coordinates:
 					conflict = True	
 					conflicts += 1
 					break
@@ -54,12 +50,15 @@ def fold_random(input_chain):
 		if conflicts < 20:
 
 			# set coordinates of current amino acid
-			output_chain[i].coordinates = coordinates
+			output_chain.chain[i].coordinates = coordinates
+
+		else:
+			break;
 
 	#if chain stuck in conflict, set coordinates back and fold again
 	if conflicts >= 20:
 		output_chain = fold_random(input_chain)
-	
+
 	return output_chain	
 
 

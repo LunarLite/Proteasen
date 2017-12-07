@@ -1,57 +1,29 @@
+from Classes import AminoAcidChain
+from Dependencies import helpers
 from random import randint
 
 
-def fold(amino_acid_chain):
+def execute(input_chain):
+	"""This function takes as input an unfolded Amino_acid_chain object, 
+	folds it randomly 40 times, and returns the chain with the best score."""
 
-	# iterate over each aminoacid
-	for i in range (1, len(amino_acid_chain)):
+	# create new chain with sequence of input chain
+	new_random_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
 
-		# remember coordinates of previous amino acid
-		x = amino_acid_chain[i - 1].coordinates[0]
-		y = amino_acid_chain[i - 1].coordinates[1]
+	for i in range (40):
 
-		# create array containing possible positions
-		options = [[x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]]
+		# fold random new chain and calculate stability score
+		new_random_chain = helpers.fold_random(new_random_chain)
+		new_random_chain.stability()
 
-		# keep track of (the amount of) conflicts
-		conflict = True
-		conflicts = 0;
+		# if score of new chain is higher than current input_chain
+		if new_random_chain.score < input_chain.score:
 
-		while conflict:
+			# fold input_chain like new chain and update score
+			input_chain.chain = new_random_chain.chain
+			input_chain.stability()
 
-			# if conflicts more than 20, chain is probably stuck, break
-			if conflicts > 20:
-				print("large conflict")
-				conflict = False
-				break
+	# if score of best radom is still 0, fold like new_random_chain
+	if input_chain.score == 0:
+		input_chain.chain = new_random_chain.chain
 
-			# randomly choose one of the possible positions
-			option = randint(0, 3)
-			coordinates = options[option]
-			
-			# iterate over all previously positioned amino acids
-			for j in range(0, i):
-
-				# if coordinates match, break to choose new coordinates
-				if coordinates == amino_acid_chain[j].coordinates:
-					conflict = True	
-					conflicts += 1
-					break
-
-				# if none of the previous coordinates match, break out of while loop
-				else: 
-					conflict = False	
-		
-		if conflicts < 20:
-
-			# set coordinates of current amino acid
-			amino_acid_chain[i].coordinates = coordinates
-		
-		else:
-			break
-
-	# return error to fold again is conflicts > 20
-	if conflicts >= 20:
-		return 1
-	else:
-		return 0

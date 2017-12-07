@@ -7,7 +7,6 @@ from Visualisation import visualisation
 from Algorithms import random_algorithm
 from random import randint
 from Algorithms import breadth_algorithm
-from Algorithms import hillclimber_without_random
 from Algorithms import hillclimber_algorithm
 from Dependencies import helpers
 
@@ -36,23 +35,20 @@ def main():
 		
 	# set x and y coordinates of the aminoacids of chain, depending on the algorithm	
 	if algorithm == "Random" or algorithm == "random":
-		output = helpers.fold_random(amino_acid_chain.chain)
-		amino_acid_chain.chain = output
+		random_algorithm.execute(amino_acid_chain)
 	# ensure proper usage
 	elif algorithm == "Breadth" or algorithm == "breadth":
 		breadth_algorithm.execute(amino_acid_chain)
 	elif algorithm == "Hillclimber" or algorithm == "hillclimber":
-		hillclimber_algorithm.execute(amino_acid_chain)
-	elif algorithm == "Hillclimberw" or algorithm == "hillclimberw":
-		hillclimber_without_random.execute(amino_acid_chain)
-		#self.chain = output
-		# self.rotate()
+		hillclimber_algorithm.execute(amino_acid_chain, "straight_folded")
+	elif algorithm == "Randomhillclimber" or algorithm == "randomhillclimber":
+		hillclimber_algorithm.execute(amino_acid_chain, "random_folded")
 	else: 
 		sys.exit("Usage: application.py algorithm HHPHHHPHPHHHPH")
 	
 	# stop timer
 	stop = timeit.default_timer()
-	print("RuntiMe:", (stop - start))
+	print("Runtime:", (stop - start))
 	
 	# calculate chains stability score
 	amino_acid_chain.stability()

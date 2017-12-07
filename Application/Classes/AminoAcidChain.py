@@ -4,11 +4,10 @@ import timeit
 from .AminoAcid import Amino_acid
 import sys
 
-from Algorithms import random_algorithm
+from Algorithms import random_algorithm # deze kan waarschijnlijk weg
 from random import randint
-from Algorithms import breadth_algorithm
-from Algorithms import hillclimber_without_random
-from Algorithms import hillclimber_algorithm
+from Algorithms import breadth_algorithm # deze kan waarschijnlijk weg
+from Algorithms import hillclimber_algorithm # deze kan waarschijnlijk weg
 from Dependencies import helpers
 
 # imports required for plot
@@ -29,6 +28,8 @@ class Amino_acid_chain:
 		self.create()
 
 	def create(self):
+		"""This function appends Amino_acid objects with 
+		molecule_type according to sequence to self.chain."""
 
 		# iterate over each character in command line argument
 		for c in self.sequence:
@@ -83,6 +84,8 @@ class Amino_acid_chain:
 
 	# calculates chain stability score
 	def stability(self): 
+		"""This function calculates self.score, based on the 
+		coordinates of the hydrophobic Amino_acid objects in self.chain."""
 		
 		score = 0
 		hydro_connenctions = 0
@@ -117,6 +120,8 @@ class Amino_acid_chain:
 
 
 	def rotate(self, errors):
+		"""This function returns a copy of self.chain 
+		with one random Amino_acid rotated."""
 
 		# create array to store coordinates after rotation
 		rotated_coordinates = []
@@ -206,31 +211,18 @@ class Amino_acid_chain:
 					break;
 				rotated_coordinates.append(new_coordinates)
 				new_chain[i + 1].coordinates = new_coordinates
-				# print(i, new_coordinates)
-		# print(rotated_coordinates)
-
-		# print("DOUBLES TELLEN")
-
-		# for i in range(0, len(rotated_coordinates) - 1): #coordinates in rotated_coordinates:
-		# 	# print(type(rotated_coordinates[i + 1]), i)
-		# 	if rotated_coordinates[i] in seen:
-		# 		doubles = 1
-		# 		errors += 1
-		# 		# print(errors)
-		# 		print("DOUBLE GEVONDEN", rotated_coordinates[i])
-		# 	else:
-		# 		seen.append(rotated_coordinates[i])
 
 		if errors > 50:
 			return 1
 		elif doubles != 0:
 			new_chain = self.rotate(errors)
 
-				
 		return new_chain
 
 	# plots aminoacid chain configuration
 	def plot(self):
+		"""This function plots self.chain, based on the coordinates 
+		of the Amino_acids in self.chain"""
 		
 		# Add new subplot
 		subPlot = fig.add_subplot(111)

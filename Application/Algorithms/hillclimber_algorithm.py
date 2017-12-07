@@ -4,65 +4,65 @@ import copy
 from Dependencies import helpers
 from random import randint
 
-# Global variables
-# input_chain = []
-random_list = []
-best_random = []
 
-def execute(input):
+def execute(input_chain, start_point):
+	""" This function takes as input an unfolded Amino_acid_chain object 
+	and then folds it using hillcimber, with random_folded or straight_folded 
+	as a starting point."""
 
 	# initialize variables to store temporary acid chains
-	best_random = AminoAcidChain.Amino_acid_chain()
-	new_acid_chain = AminoAcidChain.Amino_acid_chain()
-	rotated_acid_chain = AminoAcidChain.Amino_acid_chain()
-
-	# random_list.append(random(input))
-	# best_random.chain = random_list[0]
-	# best_score = 0
+	new_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
+	rotated_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
+	best_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)\
 
 
-	for i in range(10):
+	if start_point == "straight_folded":
 
-		# print("huidige beste score: ", best_random.stability())
-		random_list.append(helpers.fold_random(input.chain))
-		new_acid_chain.chain = random_list[i]
-		print("RANDOM LIST: ", random_list[i])
-
-		if i == 0:
-			best_score = copy.copy(new_acid_chain.stability())
-			best_random = copy.deepcopy(new_acid_chain)
-
-		elif new_acid_chain.stability() <= best_random.stability():
-			# print("hogere of gelijke score: ", new_acid_chain.stability(), best_random.stability())
-			best_random = copy.deepcopy(new_acid_chain)
-			best_score = best_random.stability()
-		else:
-			print("niet hoger", new_acid_chain.stability())
+		# fold amino acid chain straight
+		for i, acid in enumerate(new_acid_chain.chain):
+			acid.coordinates = [i, 0]
+			# print(new_acid_chain.chain[i].coordinates)
+	
+	elif start_point == "random_folded":
+		new_acid_chain = helpers.fold_random(input_chain)
 
 	attempts = 0
-	start_score = copy.deepcopy(best_random.stability())
-	# print("stability now: ", best_random.stability())
-	while attempts < 1000:
-		rotated_coordinates = best_random.rotate(0)
-		if rotated_coordinates == 1:
-			# print("DIT GING MIS DOEI")
-			break
-		# print("ROTATED: ", rotated_coordinates)
-		new_acid_chain.coordinates = rotated_coordinates
-		
-		# print("NIEUWE STABILITY", new_acid_chain.stability())
+	new_acid_chain.stability()
+	start_score = new_acid_chain.score
+	# print("stability now: ", start_score)
 
-		if new_acid_chain.stability() <= best_random.stability():
-			best_random.coordinates = rotated_coordinates
-			# print(best_random.coordinates)
+
+	while attempts < 500:
+		rotated_chain = new_acid_chain.rotate(0)
+		if rotated_chain == 1:
+			print("no possible rotations found at attempt nr", attempts)
+			
+			# no possible rotations found, break out of loop
+			break
+
+		# set chain to new rotated_chain and update stability score
+		rotated_acid_chain.chain = rotated_chain
+		rotated_acid_chain.stability()
+
+		# if new score is lower than current score
+		if rotated_acid_chain.score <= new_acid_chain.score:
+
+			# set current chain to new chain and update stability score
+			new_acid_chain.chain = rotated_chain
+			new_acid_chain.stability()
+
+			# increase number of attempts with 1
 			attempts += 1
 		else: 
-			attempts += 1
+
+			# else, increase number of attempts with 5
+			attempts += 10
 	
-	print(start_score)
+	# print start_score to show whether hillclimber improved stability
+	print("Start score:", start_score)
 
 	# set input chain random folded chain with best score
-	input.chain = best_random.chain
+	input_chain.chain = new_acid_chain.chain
 
 
 
