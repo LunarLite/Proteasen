@@ -3,8 +3,7 @@ from tkinter import ttk
 import csv
 import sys
 
-LARGE_FONT = ("Verdana", 12)
-MEDIUM_FONT = ("Verdana", 10)
+FONT = ("Verdana", 12)
 SMALL_FONT = ("Verdana", 8)
 
 class Gui_Application(tk.Tk):
@@ -48,7 +47,7 @@ class Gui_Application(tk.Tk):
 		button1.pack(fill = tk.X)
 
 		# create sequence entry bar 
-		label = ttk.Label(self, text="Sequence:", font=LARGE_FONT)
+		label = ttk.Label(self, text="Sequence:", font=FONT)
 		label.pack(pady=10)
 		self.entry = ttk.Entry(self, width = 100)
 		self.entry.pack()
