@@ -66,7 +66,7 @@ class Sequence_Selector:
 
 		self.var3 = IntVar()
 		self.var3.set(0)
-		self.algorithm_3 = Checkbutton(self.algo_frame, text="Depth-first", variable = self.var3, command = self.check_box3)
+		self.algorithm_3 = Checkbutton(self.algo_frame, text="hillclimber", variable = self.var3, command = self.check_box3)
 		self.algorithm_3.grid(row = 0, column = 2)
 
 
@@ -108,7 +108,7 @@ class Sequence_Selector:
 			self.var2.set(0)
 			self.algorithm_2.config(state=NORMAL)
 
-			self.selected_algorithm = "depth"
+			self.selected_algorithm = "hillclimber"
 
 	def list_load(self, sequences): 
 

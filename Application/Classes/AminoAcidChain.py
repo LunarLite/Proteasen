@@ -43,7 +43,8 @@ class Amino_acid_chain:
 				molecule_type = "polair"
 
 			else: 
-				sys.exit("Usage: application.py algorithm HHPHHHPHPHHHPH")
+				sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH\n"
+					"algorithms: Random/Breadth/Hillclimber/Randomhillclimber\n")
 
 			# append amino acid with appropriate molecule type to chain
 			self.chain.append(Amino_acid(molecule_type))

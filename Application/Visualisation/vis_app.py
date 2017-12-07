@@ -1,3 +1,5 @@
+from Classes import AminoAcidChain
+
 import matplotlib
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
@@ -6,7 +8,7 @@ import matplotlib.animation as animation
 from matplotlib import style
 from matplotlib import pyplot as plt
 
-from Classes import AminoAcidChain
+
 
 import tkinter as tk
 from tkinter import ttk
@@ -22,19 +24,19 @@ style.use("ggplot")
 f = Figure()
 a = f.add_subplot(111)
 
-def animate(i): 
-	pullData = open("sampleData.txt", "r").read()
-	dataList = pullData.split('\n')
-	xList = []
-	yList = []
-	for eachLine in dataList:
-		if len(eachLine) > 1: 
-			x, y =eachLine.split(',')
-			xList.append(int(x))
-			yList.append(int(y))
+# def animate(i): 
+# 	pullData = open("sampleData.txt", "r").read()
+# 	dataList = pullData.split('\n')
+# 	xList = []
+# 	yList = []
+# 	for eachLine in dataList:
+# 		if len(eachLine) > 1: 
+# 			x, y =eachLine.split(',')
+# 			xList.append(int(x))
+# 			yList.append(int(y))
 
-	a.clear()
-	a.plot(xList, yList)
+# 	a.clear()
+# 	a.plot(xList, yList)
 
 class Visualisation_App(tk.Tk):
 
@@ -244,7 +246,7 @@ class PageOne(tk.Frame):
 		# set x and y coordinates of the aminoacids of chain
 		# amino_acid_chain.execute(get("algorithm"))
 
-		get("sequence")
+		# get("sequence")
 
 # https://www.youtube.com/watch?v=Zw6M-BnAPP0&list=PLQVvvaa0QuDclKx-QpC9wntnURXVJqLyk&index=6
 class PageTwo(tk.Frame):

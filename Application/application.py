@@ -19,7 +19,8 @@ def main():
 		sequence = sys.argv[2]
 
 	elif len(sys.argv) > 1: 
-		sys.exit("Usage: application.py algorithm HHPHHHPHPHHHPH") 
+		sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH\n"
+			"algorithms: Random/Breadth/Hillclimber/Randomhillclimber\n") 
 		
 	else: 
 		sequence, algorithm = visualisation.run()
@@ -44,7 +45,8 @@ def main():
 	elif algorithm == "Randomhillclimber" or algorithm == "randomhillclimber":
 		hillclimber_algorithm.execute(amino_acid_chain, "random_folded")
 	else: 
-		sys.exit("Usage: application.py algorithm HHPHHHPHPHHHPH")
+		sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH\n"
+					"algorithms: Random/Breadth/Hillclimber/Randomhillclimber\n")
 	
 	# stop timer
 	stop = timeit.default_timer()
