@@ -17,17 +17,14 @@ def main():
 
 	elif len(sys.argv) > 1: 
 		sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH\n"
-					"algorithms: Random/Breadth/Breadth_heuristic/Hillclimber/Randomhillclimber\n")
+					"algorithms: Random/Breadth/Breadth_heur/Hillclimber/Randomhillclimber\n")
 		
 	else: 
 		app = GuiApplication.Gui_Application()
-		app.run("sequences.csv")
+		app.run("csv", "sequences.csv")
 		sequence = app.get("sequence")
 		algorithm = app.get("algorithm")
-		print(algorithm)
 
-
-	
 	# initialize timer
 	start = timeit.default_timer()
 		

@@ -39,7 +39,7 @@ class Amino_acid_chain:
 
 			else: 
 				sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH\n"
-					"algorithms: Random/Breadth/Breadth_heuristic/Hillclimber/Randomhillclimber\n")
+					"algorithms: Random/Breadth/Breadth_heur/Hillclimber/Randomhillclimber\n")
 
 			# append amino acid with appropriate molecule type to chain
 			self.chain.append(Amino_acid(molecule_type))

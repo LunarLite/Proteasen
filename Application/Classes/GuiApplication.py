@@ -8,6 +8,8 @@ MEDIUM_FONT = ("Verdana", 10)
 SMALL_FONT = ("Verdana", 8)
 
 class Gui_Application(tk.Tk):
+	"""Application to select amino acid and algorithm. 
+	Start app by executing .run("csvfile.csv")"""
 
 	def __init__(self, *args, **kwargs):
 
@@ -16,8 +18,6 @@ class Gui_Application(tk.Tk):
 		self.sequence = ""
 		self.algorithm = ""
 
-
-		# tk.Tk.iconbitmap(self, default="clienticon.ico")
 		tk.Tk.wm_title(self, "Protein Po(w)der")
 		tk.Tk.resizable(self, width = tk.FALSE, height = tk.FALSE)
 
@@ -53,12 +53,13 @@ class Gui_Application(tk.Tk):
 		self.entry = ttk.Entry(self, width = 100)
 		self.entry.pack()
 
-		
+		# create frame to set grid for checkbuttons
 		check_frame = tk.Frame(self)
 		check_frame.pack()
 
 		self.checkbuttons = {}
 
+		# create checkbuttons
 		var1 = tk.IntVar()
 		var1.set(0)
 		checkbutton1 = ttk.Checkbutton(check_frame, text="Random", 
@@ -75,10 +76,10 @@ class Gui_Application(tk.Tk):
 
 		var3 = tk.IntVar()
 		var3.set(0)
-		checkbutton3 = ttk.Checkbutton(check_frame, text="Breadth-first with heuristic", 
-			variable = var3, command=lambda: self.check("Breadth_heuristic"))
+		checkbutton3 = ttk.Checkbutton(check_frame, text="Breadth-first with heuristics", 
+			variable = var3, command=lambda: self.check("Breadth_heur"))
 		checkbutton3.grid(row = 0, column = 2)
-		self.checkbuttons["Breadth_heuristic"] = {"button": checkbutton3, "var": var3}
+		self.checkbuttons["Breadth_heur"] = {"button": checkbutton3, "var": var3}
 
 		var4 = tk.IntVar()
 		var4.set(0)
@@ -86,7 +87,6 @@ class Gui_Application(tk.Tk):
 			variable = var4, command=lambda: self.check("Hillclimber"))
 		checkbutton4.grid(row = 0, column = 3)
 		self.checkbuttons["Hillclimber"] = {"button": checkbutton4, "var": var4}
-
 
 		# create fold button to continue
 		button2 = ttk.Button(self, text="Fold", command=lambda: self.validate())
@@ -96,15 +96,34 @@ class Gui_Application(tk.Tk):
 		self.status = tk.Label(self, text="", bd=1, relief=tk.SUNKEN, anchor=tk.W, font=SMALL_FONT)
 		self.status.pack(side = tk.BOTTOM, fill = tk.X)
 	
-	def run(self, csv_file):
-		sequences = self.load_sequences_from_csv(csv_file)
-		self.load_listbox(sequences)
+	def run(self, id, sequence_data):
+		"""Run application and load listbox with sequences 
+		from a csv file or sequences directly from an array"""
+
+		if (id == "csv"):
+			sequences = self.load_sequences_from_csv(sequence_data)
+			self.load_listbox(sequences)
+		elif (id == "array"):
+			self.load_listbox(sequence_data)
+
 		self.mainloop()
 
+		# exit program when exit application
 		if self.sequence == "" or self.algorithm == "":
 			return sys.exit()
 
+	def run_without(self):
+		"""Run application without loading listbox"""
+		self.mainloop()
+
+		# exit program when exit application
+		if self.sequence == "" or self.algorithm == "":
+			return sys.exit()
+
+
 	def load_sequences_from_csv(self, csv_file): 
+		"""load sequences from csv file into array"""
+
 		with open(csv_file, 'r') as file:
 			reader = csv.reader(file)
 			sequences = []
@@ -114,17 +133,22 @@ class Gui_Application(tk.Tk):
 					firstline = False 
 					continue
 				sequences.append(rows[1].strip())
-
 		return sequences
 
 	
 	def load_listbox(self, sequences):
+		"""add sequences from array to listbox"""
+
+		# clear listbox
 		self.listbox.delete(0)
+
+		# load sequences
 		for i in range(0, len(sequences)): 
 			self.listbox.insert(i, sequences[i])
 
 
 	def select_from_listbox(self, event):
+		"""enter selected sequence into entry bar"""
 
 		a = self.listbox.curselection()
 		for i in a: 
@@ -132,9 +156,11 @@ class Gui_Application(tk.Tk):
 			self.entry.insert(0, self.listbox.get(i))
 
 	def check(self, checked):
+		"""check selected checkbutton, and uncheck previous if any"""
 
 		if(self.checkbuttons[checked]["var"].get()):
 			
+			# disable selected checkbutton, enable and unselect other checkbuttons
 			for i in self.checkbuttons: 
 				if i == checked:
 					self.checkbuttons[checked]["button"].config(state=tk.DISABLED)
@@ -143,8 +169,10 @@ class Gui_Application(tk.Tk):
 					self.checkbuttons[i]["var"].set(0)
 
 	def validate(self):
+		"""continue and quit application 
+		if appropriate sequence and algorithm are given""" 
 
-		# ensure sequence is given and only contain H and P
+		# ensure sequence is given and only contains H and P
 		if self.get("sequence") == "":
 			self.status["text"] = "Warning: enter sequence"
 			return False
@@ -161,12 +189,15 @@ class Gui_Application(tk.Tk):
 
 		else: 
 			self.sequence = self.get("sequence")
-			self.algorithm = self.get("algorithm")					
+			self.algorithm = self.get("algorithm")		
+
+			# close application			
 			self.quit()
 			self.withdraw()
 
 
 	def get(self, g):
+		""""get selected algorithm and get sequence form entry bar"""
 
 		if g == "algorithm": 
 			for i in self.checkbuttons:
