@@ -28,7 +28,10 @@ def execute(input):
 	
 	# determine x&y domain based on chain length
 	global dynamic_length
-	dynamic_length = math.floor(math.sqrt(len(input_chain)))-1
+	if(len(input_chain) < 10):
+		dynamic_length = math.floor(math.sqrt(len(input_chain)))
+	else:
+		dynamic_length = math.floor(math.sqrt(len(input_chain)))-1
 
 	# initialize starting chain, consisting of first 2 nodes
 	start_chain = [input_chain[0], input_chain[1]]
