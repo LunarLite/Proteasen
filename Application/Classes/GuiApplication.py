@@ -1,3 +1,22 @@
+# GuiApplication.py
+#
+# Heuristics - Protein Pow(d)er
+# http://heuristieken.nl/wiki/index.php?title=Protein_Pow(d)er
+#
+# Students: Mick Tozer, Eline Rietdijk and Vanessa Botha
+#
+# this file contains the Gui_Application class.
+# Usage: 
+# loading sequences to listbox: 
+# > object.run("id", data)
+# without loading sequences to listbox: 
+# > object.run 
+#
+# to ask application for selected algorithm and sequence: object.get("algorithm" / "sequence")
+# Note: only after continuing by clicking the fold button
+
+
+
 import tkinter as tk
 from tkinter import ttk
 import csv
@@ -75,7 +94,7 @@ class Gui_Application(tk.Tk):
 
 		var3 = tk.IntVar()
 		var3.set(0)
-		checkbutton3 = ttk.Checkbutton(check_frame, text="Breadth-first with heuristics", 
+		checkbutton3 = ttk.Checkbutton(check_frame, text="Breadth-first (pruning)", 
 			variable = var3, command=lambda: self.check("Breadth_heur"))
 		checkbutton3.grid(row = 0, column = 2)
 		self.checkbuttons["Breadth_heur"] = {"button": checkbutton3, "var": var3}
@@ -86,6 +105,13 @@ class Gui_Application(tk.Tk):
 			variable = var4, command=lambda: self.check("Hillclimber"))
 		checkbutton4.grid(row = 0, column = 3)
 		self.checkbuttons["Hillclimber"] = {"button": checkbutton4, "var": var4}
+
+		var5 = tk.IntVar()
+		var5.set(0)
+		checkbutton5 = ttk.Checkbutton(check_frame, text="Hillclimber (random)", 
+			variable = var5, command=lambda: self.check("Randomhillclimber"))
+		checkbutton5.grid(row = 0, column = 4)
+		self.checkbuttons["Randomhillclimber"] = {"button": checkbutton4, "var": var5}
 
 		# create fold button to continue
 		button2 = ttk.Button(self, text="Fold", command=lambda: self.validate())

@@ -1,3 +1,19 @@
+# random_algorithm.py
+#
+# Heuristics - Protein Pow(d)er
+# http://heuristieken.nl/wiki/index.php?title=Protein_Pow(d)er
+#
+# Students: Mick Tozer, Eline Rietdijk and Vanessa Botha
+#
+# this file contains the Random algorithm
+# gives the best chain of 40 randomly folded amino acid chains
+#
+# Able to fold amino acid chains consisting of > 49 amino acids (H / P)
+# --> all of the H/P chains
+# 		Runtime: > 0,05 seconds
+#
+# 
+
 from Classes import AminoAcidChain
 from Dependencies import helpers
 from random import randint

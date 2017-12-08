@@ -1,3 +1,19 @@
+# application.py
+#
+# Heuristics - Protein Pow(d)er
+# http://heuristieken.nl/wiki/index.php?title=Protein_Pow(d)er
+#
+# Students: Mick Tozer, Eline Rietdijk and Vanessa Botha
+#
+# this file contains the main script of the program 
+# Usage: 
+# > application.py algorithm HHPHHHPHPHH
+#   algorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber 
+# 
+# > application.py (without command line arguments) to start GUI application
+
+
+
 # imports
 from random import randint
 import sys
@@ -17,11 +33,11 @@ def main():
 
 	elif len(sys.argv) > 1: 
 		sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH\n"
-					"algorithms: Random/Breadth/Breadth_heur/Hillclimber/Randomhillclimber\n")
+					"algorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber\n")
 		
 	else: 
 		app = GuiApplication.Gui_Application()
-		app.run("csv", "sequences.csv")
+		app.run("csv", "Data/sequences.csv")
 		sequence = app.get("sequence")
 		algorithm = app.get("algorithm")
 
@@ -46,7 +62,7 @@ def main():
 		hillclimber_algorithm.execute(amino_acid_chain, "random_folded")
 	else: 
 		sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH\n"
-					"algorithms: Random/Breadth/Breadth_heur/Hillclimber/Randomhillclimber\n")
+					"algorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber\n")
 	
 	# stop timer
 	stop = timeit.default_timer()

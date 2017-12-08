@@ -1,3 +1,15 @@
+# helpers.py
+#
+# Heuristics - Protein Pow(d)er
+# http://heuristieken.nl/wiki/index.php?title=Protein_Pow(d)er
+#
+# Students: Mick Tozer, Eline Rietdijk and Vanessa Botha
+#
+# this file contains helpers functions: 
+# > fold_random()
+#
+
+
 from Classes import AminoAcidChain
 from random import randint
 import copy

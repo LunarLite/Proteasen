@@ -1,3 +1,17 @@
+# breadth_algorithm.py
+#
+# Heuristics - Protein Pow(d)er
+# http://heuristieken.nl/wiki/index.php?title=Protein_Pow(d)er
+#
+# Students: Mick Tozer, Eline Rietdijk and Vanessa Botha
+#
+# this file contains the Breadth-first algorithm
+# 
+# > Able to fold amino acid chains consisting of up to 14 amino acids (H / P)
+# --> first H/P chain
+#		Runtime: aprox. 10 seconds
+# 
+
 from Classes import AminoAcidChain
 from collections import deque
 import copy

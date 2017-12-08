@@ -1,3 +1,21 @@
+# hillclimber.py
+#
+# Heuristics - Protein Pow(d)er
+# http://heuristieken.nl/wiki/index.php?title=Protein_Pow(d)er
+#
+# Students: Mick Tozer, Eline Rietdijk and Vanessa Botha
+#
+# this file contains the hillclimber algorithm
+# can have either a "straight_folded" or "random_folded" 
+# amino acid chain as starting point
+# 
+# Able to fold amino acid chains consisting of > 49 amino acids (H / P)
+# --> all of the H/P chains
+# 		Runtime: > 1.0 seconds
+#
+# 
+
+
 from Algorithms import random_algorithm
 from Classes import AminoAcidChain
 import copy

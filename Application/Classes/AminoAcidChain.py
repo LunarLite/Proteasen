@@ -1,3 +1,12 @@
+# AminoAcidChain.py
+#
+# Heuristics - Protein Pow(d)er
+# http://heuristieken.nl/wiki/index.php?title=Protein_Pow(d)er
+#
+# Students: Mick Tozer, Eline Rietdijk and Vanessa Botha
+#
+# this file contains the Amino_acid_chain class.
+
 import timeit
 import sys
 from random import randint
@@ -39,7 +48,7 @@ class Amino_acid_chain:
 
 			else: 
 				sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH\n"
-					"algorithms: Random/Breadth/Breadth_heur/Hillclimber/Randomhillclimber\n")
+					"algorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber\n")
 
 			# append amino acid with appropriate molecule type to chain
 			self.chain.append(Amino_acid(molecule_type))
