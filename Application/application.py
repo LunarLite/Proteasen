@@ -32,7 +32,7 @@ def main():
 		sequence = sys.argv[2]
 
 	elif len(sys.argv) > 1: 
-		sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH\n"
+		sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
 					"algorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber\n")
 		
 	else: 
@@ -57,11 +57,15 @@ def main():
 	elif algorithm == "Breadth_heur" or algorithm == "breadth_heur":
 		breadthh_algorithm.execute(amino_acid_chain)
 	elif algorithm == "Hillclimber" or algorithm == "hillclimber":
-		hillclimber_algorithm.execute(amino_acid_chain, "straight_folded")
+		# ask user to input number of iterations
+		num_iterations = int(input("Give number of iterations you to execute hillclimber (500 RCMD): "))
+		hillclimber_algorithm.execute(amino_acid_chain, "straight_folded", num_iterations)
 	elif algorithm == "Randomhillclimber" or algorithm == "randomhillclimber":
-		hillclimber_algorithm.execute(amino_acid_chain, "random_folded")
+		# ask user to input number of iterations
+		num_iterations = int(input("Give a number of iterations to execute hillclimber (500 RCMD): "))
+		hillclimber_algorithm.execute(amino_acid_chain, "random_folded", num_iterations)
 	else: 
-		sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH\n"
+		sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
 					"algorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber\n")
 	
 	# stop timer

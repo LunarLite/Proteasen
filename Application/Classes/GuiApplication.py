@@ -26,8 +26,7 @@ FONT = ("Verdana", 12)
 SMALL_FONT = ("Verdana", 8)
 
 class Gui_Application(tk.Tk):
-	"""Application to select amino acid and algorithm. 
-	Start app by executing .run("csvfile.csv")"""
+	"""Application to select amino acid and algorithm"""
 
 	def __init__(self, *args, **kwargs):
 
@@ -203,8 +202,8 @@ class Gui_Application(tk.Tk):
 			return False
 
 		for c in self.get("sequence"):
-			if (c.upper() != 'H' and c.upper() != 'P'):
-				self.status["text"] = "Warning: sequence must contain only H and P"
+			if (c.upper() != 'H' and c.upper() != 'P' and c.upper() != 'C'):
+				self.status["text"] = "Warning: sequence must contain only H and P (and C)"
 				return False
 
 		# ensure algorithm is given

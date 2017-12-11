@@ -45,9 +45,11 @@ class Amino_acid_chain:
 
 			elif (c.upper() == 'P'):
 				molecule_type = "polair"
+			elif (c.upper() == 'C'): 
+				molecule_type = "cysteine"
 
 			else: 
-				sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH\n"
+				sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
 					"algorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber\n")
 
 			# append amino acid with appropriate molecule type to chain
@@ -90,13 +92,16 @@ class Amino_acid_chain:
 	# calculates chain stability score
 	def stability(self): 
 		"""This function calculates self.score, based on the 
-		coordinates of the hydrophobic Amino_acid objects in self.chain."""
+		coordinates of the hydrophobic (and cysteine) Amino_acid objects in self.chain."""
 		
 		self.score = 0
-		hydro_connenctions = 0
+		hydro_connections = 0
+		cys_connections = 0
 
-		# create array to remember coordinates of hydrophobic aminoacids
+		# create arrays to remember coordinates of hydrophobic and cysteine aminoacids
 		hydro_coordinates = []
+		cys_coordinates = []
+
 
 		# iterate over aminoacids in chain
 		for i, aminoacid in enumerate(self.chain):
@@ -116,10 +121,63 @@ class Amino_acid_chain:
 				# count connections between neigbouring hydrophobic aminoacids in chain
 				if i != len(self.chain)-1:
 					if self.chain[i+1].molecule_type == "hydrophobic":
-						hydro_connenctions += 1
+						hydro_connections += 1
 
-		# revise score taking into account connections between hydrofobic aminoacids in chain
-		self.score += hydro_connenctions
+			if(aminoacid.molecule_type == "cysteine"):
+
+				# iterate over remembered cysteine coordinates
+				for coordinate in cys_coordinates:
+
+					# count score -5 if current cysteine aminoacid neighbours a remembered cysteine aminoacid
+					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) == 1:
+						self.score -= 5
+
+				# remember current cysteine aminoacid
+				cys_coordinates.append(aminoacid.coordinates)
+
+				# count connections between neigbouring cysteine aminoacids in chain
+				if i != len(self.chain)-1:
+					if self.chain[i+1].molecule_type == "cysteine":
+						cys_connections += 1
+
+		# revise score taking into account connections between hydrofobic aminoacids and between cysteine aminoacids in chain
+		self.score += hydro_connections
+		self.score += cys_connections
+
+
+	# # calculates chain stability score
+	# def stability(self): 
+	# 	"""This function calculates self.score, based on the 
+	# 	coordinates of the hydrophobic Amino_acid objects in self.chain."""
+		
+	# 	self.score = 0
+	# 	hydro_connenctions = 0
+
+	# 	# create array to remember coordinates of hydrophobic aminoacids
+	# 	hydro_coordinates = []
+
+	# 	# iterate over aminoacids in chain
+	# 	for i, aminoacid in enumerate(self.chain):
+
+	# 		if(aminoacid.molecule_type == "hydrophobic"):
+
+	# 			# iterate over remembered hydrophobic coordinates
+	# 			for coordinate in hydro_coordinates:
+
+	# 				# count score -1 if current hydrophobic aminoacid neighbours a remembered hydrophobic aminoacid
+	# 				if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) == 1:
+	# 					self.score -= 1
+
+	# 			# remember current hydrophobic aminoacid
+	# 			hydro_coordinates.append(aminoacid.coordinates)
+
+	# 			# count connections between neigbouring hydrophobic aminoacids in chain
+	# 			if i != len(self.chain)-1:
+	# 				if self.chain[i+1].molecule_type == "hydrophobic":
+	# 					hydro_connenctions += 1
+
+	# 	# revise score taking into account connections between hydrofobic aminoacids in chain
+	# 	self.score += hydro_connenctions
 
 	def rotate(self, errors):
 		"""This function returns a copy of self.chain 
@@ -254,14 +312,21 @@ class Amino_acid_chain:
 			if self.chain[i].molecule_type == "hydrophobic": 
 
 				# plot red dot at coordinates of hydrophobic aminoacid
-				subPlot.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], 'ro')
-				plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], 'ro')
+				subPlot.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], "ro")
+				plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], "ro")
 
 			elif self.chain[i].molecule_type == "polair":  
 
 				# plot blue dot at coordinates of polair aminoacid
-				subPlot.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], 'bo')
-				plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], 'bo')
+				subPlot.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], "bo")
+				plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], "bo")
+
+			elif self.chain[i].molecule_type =="cysteine":
+
+				# plot green dot at coordinates of cysteine aminoacid
+				subPlot.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], "go")
+				plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], "go")
+
 		
 		# draw a grid behind Subplot 
 		subPlot.grid()
