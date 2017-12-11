@@ -58,7 +58,7 @@ def main():
 		breadthh_algorithm.execute(amino_acid_chain)
 	elif algorithm == "Hillclimber" or algorithm == "hillclimber":
 		# ask user to input number of iterations
-		num_iterations = int(input("Give number of iterations you to execute hillclimber (500 RCMD): "))
+		num_iterations = int(input("Give number of iterations to execute hillclimber (500 RCMD): "))
 		hillclimber_algorithm.execute(amino_acid_chain, "straight_folded", num_iterations)
 	elif algorithm == "Randomhillclimber" or algorithm == "randomhillclimber":
 		# ask user to input number of iterations
