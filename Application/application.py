@@ -31,7 +31,7 @@ def main():
 		algorithm = sys.argv[1]
 		sequence = sys.argv[2]
 
-		# if iterative algorithm, ask user for number of iterations
+		# if iterative algorithm, ask user to input number of iterations
 		if (algorithm == "Hillclimber" or 
 			algorithm == "hillclimber" or 
 			algorithm == "Randomhillclimber" or 
