@@ -22,8 +22,7 @@ from tkinter import ttk
 import csv
 import sys
 
-LARGE_FONT = ("Verdana", 12)
-MEDIUM_FONT = ("Verdana", 10)
+FONT = ("Verdana", 12)
 SMALL_FONT = ("Verdana", 8)
 
 class Gui_Application(tk.Tk):
@@ -33,7 +32,8 @@ class Gui_Application(tk.Tk):
 
 		tk.Tk.__init__(self, *args, **kwargs)
 
-		self.valid = False
+		self.sequence = ""
+		self.algorithm = ""
 
 		tk.Tk.wm_title(self, "Protein Po(w)der")
 		tk.Tk.resizable(self, width = tk.FALSE, height = tk.FALSE)
@@ -65,10 +65,10 @@ class Gui_Application(tk.Tk):
 		button1.pack(fill = tk.X)
 
 		# create sequence entry bar 
-		label1 = ttk.Label(self, text="Sequence:", font=LARGE_FONT)
-		label1.pack(pady=10)
-		self.entry1 = ttk.Entry(self, width = 100)
-		self.entry1.pack()
+		label = ttk.Label(self, text="Sequence:", font=FONT)
+		label.pack(pady=10)
+		self.entry = ttk.Entry(self, width = 100)
+		self.entry.pack()
 
 		# create frame to set grid for checkbuttons
 		check_frame = tk.Frame(self)
@@ -110,20 +110,17 @@ class Gui_Application(tk.Tk):
 		checkbutton5 = ttk.Checkbutton(check_frame, text="Hillclimber (random)", 
 			variable = var5, command=lambda: self.on_checkbutton_click("Randomhillclimber"))
 		checkbutton5.grid(row = 0, column = 4)
-		self.checkbuttons["Randomhillclimber"] = {"button": checkbutton5, "var": var5}
+		self.checkbuttons["Randomhillclimber"] = {"button": checkbutton4, "var": var5}
 
 		# create frame to set grid for checkbuttons
 		property_frame = tk.Frame(self)
 		property_frame.pack()
 
-		self.label2 = ttk.Label(property_frame, text="Iterations:", font=SMALL_FONT)
-		# self.label1.grid(row = 0, column = 0)
-
 		self.entry2 = ttk.Entry(property_frame, width = 10)
 		self.entry2.insert(tk.END, '500 RCMD')
-		self.iterations_visibility = "hidden"
-		# self.entry2.grid(row = 0, column = 0)
+		self.entry2_visibility = "hidden"
 		
+		# self.hide_widget(self.entry2)
 
 		# create fold button to continue
 		button2 = ttk.Button(self, text="Fold", command=lambda: self.validate())
@@ -147,7 +144,7 @@ class Gui_Application(tk.Tk):
 		self.mainloop()
 
 		# exit program when exit application
-		if self.valid == False:
+		if self.sequence == "" or self.algorithm == "":
 			return sys.exit()
 
 	def run_without(self):
@@ -155,7 +152,7 @@ class Gui_Application(tk.Tk):
 		self.mainloop()
 
 		# exit program when exit application
-		if self.valid == False:
+		if self.sequence == "" or self.algorithm == "":
 			return sys.exit()
 
 
@@ -190,16 +187,17 @@ class Gui_Application(tk.Tk):
 
 		a = self.listbox.curselection()
 		for i in a: 
-			self.entry1.delete(0, tk.END)
-			self.entry1.insert(0, self.listbox.get(i))
+			self.entry.delete(0, tk.END)
+			self.entry.insert(0, self.listbox.get(i))
 
 	def on_checkbutton_click(self, checked):
-		if checked == "Hillclimber" or checked == "Randomhillclimber":
-			if self.iterations_visibility == "hidden": 
-				self.show_properties("iterations")
+		# if checked == "Hillclimber" or checked == "Randomhillclimber":
+		# 	if self.entry2_visibility == "hidden": 
+		# 		self.show_widget(self.entry2)
 
-		elif self.iterations_visibility == "not hidden": 
-			self.hide_properties("iterations")
+		# elif self.entry2_visibility == "not hidden": 
+		# 	self.hide_widget(self.entry2)
+
 
 		self.check(checked)
 
@@ -216,19 +214,13 @@ class Gui_Application(tk.Tk):
 					self.checkbuttons[i]["button"].config(state=tk.NORMAL)
 					self.checkbuttons[i]["var"].set(0)
 
-	def show_properties(self, prop):
-		# widget.pack()
-		if prop == "iterations":
-			self.label2.grid(row = 0, column = 0)
-			self.entry2.grid(row = 0, column = 1)
-			self.iterations_visibility = "not hidden"
+	def show_widget(self, widget):
+		widget.pack()
+		self.entry2_visibility = "not hidden"
 
-	def hide_properties(self, prop): 
-		# widget.pack_forget()
-		if prop == "iterations":
-			self.label2.grid_remove()
-			self.entry2.grid_remove()
-			self.iterations_visibility = "hidden"
+	def hide_widget(self, widget): 
+		widget.pack_forget()
+		self.entry2_visibility = "hidden"
 
 	def validate(self):
 		"""continue and quit application 
@@ -249,25 +241,9 @@ class Gui_Application(tk.Tk):
 			self.status["text"] = "Warning: choose algorithm"
 			return False
 
-		# when iterative algorithm, ensure number of iterations is given
-		if self.get("algorithm") == "Hillclimber" or self.get("algorithm") == "Randomhillclimber":
-			if self.get("iterations") == "": 
-				print("doei")
-				self.status["text"] = "Warning: give number of iterations"
-				return False
-			if not str.isdigit(self.get("iterations")): 
-				print("hallo")
-				self.status["text"] = "Warning: invalid number of iterations"
-				return False
-			else:
-				self.valid = True
-				
-				# close application			
-				self.quit()
-				self.withdraw()
-
 		else: 
-			self.valid = True
+			self.sequence = self.get("sequence")
+			self.algorithm = self.get("algorithm")		
 
 			# close application			
 			self.quit()
@@ -282,10 +258,7 @@ class Gui_Application(tk.Tk):
 				if self.checkbuttons[i]["var"].get() == 1:
 					return i
 
-		if g == "iterations": 
-			return self.entry2.get()
-
 		elif g == "sequence":
-			return self.entry1.get()
+			return self.entry.get()
 
 

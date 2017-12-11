@@ -31,6 +31,14 @@ def main():
 		algorithm = sys.argv[1]
 		sequence = sys.argv[2]
 
+		# if iterative algorithm, ask user for number of iterations
+		if (algorithm == "Hillclimber" or 
+			algorithm == "hillclimber" or 
+			algorithm == "Randomhillclimber" or 
+			algorithm == "randomhillclimber"):
+			iterations = helpers.ask_for_iterations()
+
+
 	elif len(sys.argv) > 1: 
 		sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
 					"algorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber\n")
@@ -40,6 +48,8 @@ def main():
 		app.run("csv", "Data/sequences.csv")
 		sequence = app.get("sequence")
 		algorithm = app.get("algorithm")
+		if algorithm == "Hillclimber" or algorithm == "Randomhillclimber":
+			iterations = app.get("iterations")
 
 	# initialize timer
 	start = timeit.default_timer()
@@ -57,13 +67,9 @@ def main():
 	elif algorithm == "Breadth_heur" or algorithm == "breadth_heur":
 		breadthh_algorithm.execute(amino_acid_chain)
 	elif algorithm == "Hillclimber" or algorithm == "hillclimber":
-		# ask user to input number of iterations
-		num_iterations = int(input("Give number of iterations to execute hillclimber (500 RCMD): "))
-		hillclimber_algorithm.execute(amino_acid_chain, "straight_folded", num_iterations)
+		hillclimber_algorithm.execute(amino_acid_chain, "straight_folded", iterations)
 	elif algorithm == "Randomhillclimber" or algorithm == "randomhillclimber":
-		# ask user to input number of iterations
-		num_iterations = int(input("Give a number of iterations to execute hillclimber (500 RCMD): "))
-		hillclimber_algorithm.execute(amino_acid_chain, "random_folded", num_iterations)
+		hillclimber_algorithm.execute(amino_acid_chain, "random_folded", iterations)
 	else: 
 		sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
 					"algorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber\n")

@@ -73,4 +73,13 @@ def fold_random(input_chain):
 
 	return output_chain	
 
-		
+def ask_for_iterations():
+	"""ask user to input number of iterations"""
+	
+	while True:
+		iterations = input("Give number of iterations to execute hillclimber (500 RCMD): ")
+	
+		if iterations != "": 
+			if str.isdigit(iterations): 
+				break
+	return int(iterations)
