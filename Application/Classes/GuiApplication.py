@@ -252,16 +252,14 @@ class Gui_Application(tk.Tk):
 		# when iterative algorithm, ensure number of iterations is given
 		if self.get("algorithm") == "Hillclimber" or self.get("algorithm") == "Randomhillclimber":
 			if self.get("iterations") == "": 
-				print("doei")
 				self.status["text"] = "Warning: give number of iterations"
 				return False
 			if not str.isdigit(self.get("iterations")): 
-				print("hallo")
 				self.status["text"] = "Warning: invalid number of iterations"
 				return False
 			else:
 				self.valid = True
-				
+
 				# close application			
 				self.quit()
 				self.withdraw()
@@ -283,7 +281,10 @@ class Gui_Application(tk.Tk):
 					return i
 
 		if g == "iterations": 
-			return self.entry2.get()
+			if self.valid == False:
+				return self.entry2.get()
+			if self.valid == True: 
+				return int(self.entry2.get())
 
 		elif g == "sequence":
 			return self.entry1.get()
