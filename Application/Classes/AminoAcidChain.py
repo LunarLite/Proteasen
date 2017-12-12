@@ -206,7 +206,7 @@ class Amino_acid_chain:
 		while changes[change] == abs_directions[to_change]:
 			change = randint(0, len(changes) - 1)
 
-		print("changing number", to_change, "from", abs_directions[to_change], "to", changes[change], "..")
+		# print("changing number", to_change, "from", abs_directions[to_change], "to", changes[change], "..")
 
 		# execute the change
 		abs_directions[to_change] = changes[change]

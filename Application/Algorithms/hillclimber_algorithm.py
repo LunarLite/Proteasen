@@ -74,7 +74,7 @@ def execute(input_chain, start_point, iterations):
 		else: 
 
 			# else, increase number of attempts with 5
-			attempts += 10
+			attempts += 1
 	
 	# print start_score to show whether hillclimber improved stability
 	print("Start score:", start_score)
