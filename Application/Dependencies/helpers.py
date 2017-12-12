@@ -28,7 +28,7 @@ def fold_random(input_chain):
 		y = output_chain.chain[i - 1].coordinates[1]
 
 		# create array containing possible positions
-		options = [[x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]]
+		options = [[x + 1, y, 0], [x - 1, y, 0], [x, y + 1, 0], [x, y - 1, 0]]
 
 		# keep track of (the amount of) conflicts
 		conflict = True
@@ -38,7 +38,6 @@ def fold_random(input_chain):
 
 			# if conflicts more than 20, chain is probably stuck, break
 			if conflicts >= 20:
-				print("large conflict")
 				conflict = False
 				break
 
