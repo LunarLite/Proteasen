@@ -38,7 +38,6 @@ def fold_random(input_chain):
 
 			# if conflicts more than 20, chain is probably stuck, break
 			if conflicts >= 20:
-				print("large conflict")
 				conflict = False
 				break
 
@@ -53,7 +52,6 @@ def fold_random(input_chain):
 				if coordinates == output_chain.chain[j].coordinates:
 					conflict = True	
 					conflicts += 1
-					print(coordinates)
 					break
 
 				# if none of the previous coordinates match, break out of while loop
