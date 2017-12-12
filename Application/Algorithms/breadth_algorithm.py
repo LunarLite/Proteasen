@@ -18,16 +18,12 @@ import copy
 import math
 
 # global variables
-input_chain = []
-chain_deque = deque()
-best_chain = []
-best_score = 0
+
 
 
 def execute(input):
 	
 	# initialize input chain starting coords
-	global input_chain
 	input_chain = input.chain
 	input_chain[0].coordinates = [0,0]
 	input_chain[1].coordinates = [0,1]
@@ -35,7 +31,7 @@ def execute(input):
 	# initialize starting chain, consisting of first 2 nodes
 	start_chain = [input_chain[0], input_chain[1]]
 	# initialize start of the list
-	global chain_deque
+	chain_deque = deque()
 	chain_deque.append(start_chain)
 	
 	
@@ -48,22 +44,20 @@ def execute(input):
 			# check possible places for the new node
 			possibilities = checkPossibilities(temp_chain, i)
 			# get possible builds
-			builds = formChain(temp_chain, i, possibilities)
+			builds = formChain(temp_chain, i, possibilities, input_chain)
 			# build new chains
-			buildChains(builds)
+			chain_deque = buildChains(builds, chain_deque)
 			
 	# 'best_chain' is the chain that needs to be returned.
-	global best_chain
-	input.chain = best_chain
+	input.chain = checkScore(chain_deque)
 	return input
 
 	
 	
-def formChain(temp_chain, i, possibilities):
+def formChain(temp_chain, i, possibilities, input_chain):
 
-	global input_chain
+
 	builds = []
-	
 	# make a new (possible) chain
 	for option in possibilities:
 		new_chain = temp_chain[:]
@@ -74,30 +68,18 @@ def formChain(temp_chain, i, possibilities):
 
 	return builds
 	
-def buildChains(builds):
-
-	global chain_deque
-	global best_chain
-	global best_score
+def buildChains(builds, chain_deque):
 	
 	for build in builds:
 		chain_deque.append(build)
 		
-		# check the scores of both the old and new chain
-		new_acid_chain = AminoAcidChain.Amino_acid_chain("p")
-		new_acid_chain.chain = build
-		new_acid_chain.stability()
-		new_score = new_acid_chain.score
-		
-		if(new_score <= best_score):
-			best_chain = copy.copy(build)
-			best_score = new_score
+			
+	return chain_deque
 
 # check possible positions a new node can be placed at
 def checkPossibilities(temp_chain, i):
 
-	global dynamic_length
-	
+
 	# remember coordinates of last amino acid in current chain
 	x = temp_chain[i - 1].coordinates[0]
 	y = temp_chain[i - 1].coordinates[1]
@@ -110,3 +92,22 @@ def checkPossibilities(temp_chain, i):
 			options.remove(j.coordinates)
 	
 	return options	
+	
+def checkScore(chain_deque):
+
+	# vars used for score checking
+	best_chain = []
+	best_score = 0
+	new_acid_chain = AminoAcidChain.Amino_acid_chain("p")
+	
+	for build in chain_deque:
+		# check the scores of both the old and new chain
+		new_acid_chain.chain = build
+		new_acid_chain.stability()
+		new_score = new_acid_chain.score
+		
+		if(new_score <= best_score):
+			best_chain = copy.copy(build)
+			best_score = new_score
+		
+	return best_chain
