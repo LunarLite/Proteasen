@@ -20,7 +20,7 @@ from Algorithms import random_algorithm
 from Classes import AminoAcidChain
 import copy
 from Dependencies import helpers
-from random import randint
+from random import randint, random
 
 import math
 
@@ -32,12 +32,10 @@ def execute(input_chain, start_point, total_iterations):
 
 	# parameters simulated annealing  
 	annealing_type = "Exponential"
-	T_begin = 500
+	T_begin = 100
 	T_current = 0
 	T_end = 1
 	
-
-
 
 	# initialize variables to store temporary acid chains
 	new_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
@@ -55,23 +53,27 @@ def execute(input_chain, start_point, total_iterations):
 	elif start_point == "random_folded":
 		new_acid_chain = helpers.fold_random(input_chain)
 
-	current_iteration = 0
+	
 	new_acid_chain.stability()
 	start_score = new_acid_chain.score
 	# print("stability now: ", start_score)
 
+	current_iteration = 0
 
 	while current_iteration < total_iterations:
+
+		print(current_iteration)
 
 		if annealing_type == "Lineair":
 			T_current = T_begin - current_iteration * (T_begin - T_end) / total_iterations
 
-			print("linea", T_current)
 		elif annealing_type == "Exponential": 
 			T_current = T_begin * math.pow((T_end / T_begin), (current_iteration / total_iterations))
 			print("CCCCCCurrent", T_current)
 		# elif annealing_type == "Sigmoidal":
+		# 	T_current = T_end + (T_begin - T_end) / (1+)
 		# elif annealing_type == "Geman": 
+		# 	"T_current = c / (log i + d)"
 
 		rotated_chain = new_acid_chain.rotate(0)
 		if rotated_chain == 1:
@@ -84,31 +86,23 @@ def execute(input_chain, start_point, total_iterations):
 		rotated_acid_chain.chain = rotated_chain
 		rotated_acid_chain.stability()
 
-		# if new score is lower than current score
-		if rotated_acid_chain.score <= new_acid_chain.score:
+
+
+		downhill = (rotated_acid_chain.score - new_acid_chain.score)
+		acceptance_prob = math.pow(math.e, (downhill / T_current))
+		# print("current score", rotated_acid_chain.score, "new score", new_acid_chain.score)
+		# print("verkorting", downhill)
+		# print("acceptance_prob", acceptance_prob)
+
+		if random() <= acceptance_prob: 
+			print("get in")
 
 			# set current chain to new chain and update stability score
 			new_acid_chain.chain = rotated_chain
 			new_acid_chain.stability()
 
-		else: 
-		# print(math.e)
-			verkorting = (rotated_acid_chain.score - new_acid_chain.score)
-			acceptatie_kans = math.pow(math.e, (verkorting / T_current))
-			print("verkorting", verkorting)
-			print("kans", acceptatie_kans)
-
+		# increase number of attempts with 1
 		current_iteration += 1
-
-		# 	# increase number of attempts with 1
-		# 	current_iteration += 1
-		# else: 
-
-		# 	# else, increase number of attempts with 5
-		# 	current_iteration += 10
-
-
-
 	
 	# print start_score to show whether hillclimber improved stability
 	print("Start score:", start_score)
