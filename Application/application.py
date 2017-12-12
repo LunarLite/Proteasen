@@ -56,6 +56,7 @@ def main():
 		algorithm = app.get("algorithm")
 		if algorithm == "Hillclimber" or algorithm == "Randomhillclimber":
 			iterations = app.get("iterations")
+		dimension = "2D"
 
 	# initialize timer
 	start = timeit.default_timer()

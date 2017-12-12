@@ -56,7 +56,7 @@ class Amino_acid_chain:
 			self.chain.append(Amino_acid(molecule_type))
 
 
-	calculates chain stability score
+	# calculates chain stability score
 	def stability(self): 
 		"""This function calculates self.score, based on the 
 		coordinates of the hydrophobic (and cysteine) Amino_acid objects in self.chain."""
