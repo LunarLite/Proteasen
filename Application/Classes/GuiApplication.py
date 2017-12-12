@@ -283,6 +283,7 @@ class Gui_Application(tk.Tk):
 		if g == "iterations": 
 			if self.valid == False:
 				return self.entry2.get()
+				
 			if self.valid == True: 
 				return int(self.entry2.get())
 

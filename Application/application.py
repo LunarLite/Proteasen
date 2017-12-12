@@ -20,16 +20,22 @@ import sys
 import timeit
 
 from Classes import AminoAcidChain, GuiApplication
-from Algorithms import random_algorithm, breadth_algorithm, breadthh_algorithm, hillclimber_algorithm
+from Algorithms import random_algorithm, breadth_algorithm, breadthh_algorithm, hillclimber_algorithm, hillclimber_algorithm3D
 from Dependencies import helpers
 
 
 # main function
 def main():
 
-	if len(sys.argv) == 3: 
-		algorithm = sys.argv[1]
-		sequence = sys.argv[2]
+	if len(sys.argv) == 4: 
+		dimension = sys.argv[1]
+		algorithm = sys.argv[2]
+		sequence = sys.argv[3]
+
+		if dimension != "2D" and dimension != "3D" and dimension != "2d" and dimension != "3d": 
+			sys.exit("\nUsage: application.py dimension algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
+					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber\n")
+
 
 		# if iterative algorithm, ask user to input number of iterations
 		if (algorithm == "Hillclimber" or 
@@ -40,8 +46,8 @@ def main():
 
 
 	elif len(sys.argv) > 1: 
-		sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
-					"algorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber\n")
+		sys.exit("\nUsage: application.py dimension algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
+					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber\n")
 		
 	else: 
 		app = GuiApplication.Gui_Application()
@@ -67,12 +73,18 @@ def main():
 	elif algorithm == "Breadth_heur" or algorithm == "breadth_heur":
 		breadthh_algorithm.execute(amino_acid_chain)
 	elif algorithm == "Hillclimber" or algorithm == "hillclimber":
-		hillclimber_algorithm.execute(amino_acid_chain, "straight_folded", iterations)
+		if dimension == "2D": 
+			hillclimber_algorithm.execute(amino_acid_chain, "straight_folded", iterations)
+		elif dimension == "3D": 
+			hillclimber_algorithm3D.execute(amino_acid_chain, "straight_folded", iterations)
 	elif algorithm == "Randomhillclimber" or algorithm == "randomhillclimber":
-		hillclimber_algorithm.execute(amino_acid_chain, "random_folded", iterations)
+		if dimension == "2D": 
+			hillclimber_algorithm.execute(amino_acid_chain, "straight_folded", iterations)
+		elif dimension == "3D": 
+			hillclimber_algorithm3D.execute(amino_acid_chain, "random_folded", iterations)
 	else: 
-		sys.exit("\nUsage: application.py algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
-					"algorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber\n")
+		sys.exit("\nUsage: application.py dimension algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
+					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber\n")
 	
 	# stop timer
 	stop = timeit.default_timer()
@@ -83,7 +95,7 @@ def main():
 	print("Score:", (amino_acid_chain.score))
 
 	# plot the "folded" aminoacid chain
-	amino_acid_chain.plot()
+	amino_acid_chain.plot(dimension)
 
 		
 # main execution
