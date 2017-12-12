@@ -56,64 +56,64 @@ class Amino_acid_chain:
 			self.chain.append(Amino_acid(molecule_type))
 
 
-	# calculates chain stability score
-	# def stability(self): 
-	# 	"""This function calculates self.score, based on the 
-	# 	coordinates of the hydrophobic (and cysteine) Amino_acid objects in self.chain."""
+	calculates chain stability score
+	def stability(self): 
+		"""This function calculates self.score, based on the 
+		coordinates of the hydrophobic (and cysteine) Amino_acid objects in self.chain."""
 		
-	# 	self.score = 0
-	# 	hydro_connections = 0
-	# 	cys_connections = 0
+		self.score = 0
+		hydro_connections = 0
+		cys_connections = 0
 
-	# 	# create arrays to remember coordinates of hydrophobic and cysteine aminoacids
-	# 	hydro_coordinates = []
-	# 	cys_coordinates = []
+		# create arrays to remember coordinates of hydrophobic and cysteine aminoacids
+		hydro_coordinates = []
+		cys_coordinates = []
 
 
-	# 	# iterate over aminoacids in chain
-	# 	for i, aminoacid in enumerate(self.chain):
+		# iterate over aminoacids in chain
+		for i, aminoacid in enumerate(self.chain):
 
-	# 		if(aminoacid.molecule_type == "hydrophobic"):
+			if(aminoacid.molecule_type == "hydrophobic"):
 
-	# 			# iterate over remembered hydrophobic coordinates
-	# 			for coordinate in hydro_coordinates:
+				# iterate over remembered hydrophobic coordinates
+				for coordinate in hydro_coordinates:
 
-	# 				# count score -1 if current hydrophobic aminoacid neighbours a remembered hydrophobic aminoacid
-	# 				if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) == 1:
-	# 					self.score -= 1
+					# count score -1 if current hydrophobic aminoacid neighbours a remembered hydrophobic aminoacid
+					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) == 1:
+						self.score -= 1
 
-	# 			# remember current hydrophobic aminoacid
-	# 			hydro_coordinates.append(aminoacid.coordinates)
+				# remember current hydrophobic aminoacid
+				hydro_coordinates.append(aminoacid.coordinates)
 
-	# 			# count connections between neigbouring hydrophobic aminoacids in chain
-	# 			if i != len(self.chain)-1:
-	# 				if self.chain[i+1].molecule_type == "hydrophobic":
-	# 					hydro_connections += 1
+				# count connections between neigbouring hydrophobic aminoacids in chain
+				if i != len(self.chain)-1:
+					if self.chain[i+1].molecule_type == "hydrophobic":
+						hydro_connections += 1
 
-	# 		if(aminoacid.molecule_type == "cysteine"):
+			if(aminoacid.molecule_type == "cysteine"):
 
-	# 			# iterate over remembered cysteine coordinates
-	# 			for coordinate in cys_coordinates:
+				# iterate over remembered cysteine coordinates
+				for coordinate in cys_coordinates:
 
-	# 				# count score -5 if current cysteine aminoacid neighbours a remembered cysteine aminoacid
-	# 				if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) == 1:
-	# 					self.score -= 5
+					# count score -5 if current cysteine aminoacid neighbours a remembered cysteine aminoacid
+					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) == 1:
+						self.score -= 5
 
-	# 			# remember current cysteine aminoacid
-	# 			cys_coordinates.append(aminoacid.coordinates)
+				# remember current cysteine aminoacid
+				cys_coordinates.append(aminoacid.coordinates)
 
-	# 			# count connections between neigbouring cysteine aminoacids in chain
-	# 			if i != len(self.chain)-1:
-	# 				if self.chain[i+1].molecule_type == "cysteine":
-	# 					cys_connections += 1
+				# count connections between neigbouring cysteine aminoacids in chain
+				if i != len(self.chain)-1:
+					if self.chain[i+1].molecule_type == "cysteine":
+						cys_connections += 1
 
-	# 	# revise score taking into account connections between hydrofobic aminoacids and between cysteine aminoacids in chain
-	# 	self.score += hydro_connections
-	# 	self.score += cys_connections * 5 
+		# revise score taking into account connections between hydrofobic aminoacids and between cysteine aminoacids in chain
+		self.score += hydro_connections
+		self.score += cys_connections * 5 
 
 
 # calculates chain stability score
-	def stability(self): 
+	def stability3D(self): 
 		"""This function calculates self.score, based on the 
 		coordinates of the hydrophobic (and cysteine) Amino_acid objects in self.chain."""
 		
