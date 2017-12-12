@@ -120,7 +120,7 @@ class Gui_Application(tk.Tk):
 		# self.label1.grid(row = 0, column = 0)
 
 		self.entry2 = ttk.Entry(property_frame, width = 10)
-		self.entry2.insert(tk.END, '500 RCMD')
+		self.entry2.insert(tk.END, '500')
 		self.iterations_visibility = "hidden"
 		# self.entry2.grid(row = 0, column = 0)
 		

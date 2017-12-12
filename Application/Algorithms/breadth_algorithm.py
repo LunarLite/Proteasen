@@ -41,7 +41,9 @@ def execute(input):
 	
 	# increase the size of the chains with 1 node every loop
 	while chain_deque:
+	
 		# pop chain from list
+		# .popleft() = breadth, .pop() = depth
 		temp_chain = chain_deque.popleft()
 		
 		length = len(temp_chain)

@@ -15,7 +15,6 @@
 from Classes import AminoAcidChain
 from collections import deque
 import copy
-import timeit
 import math
 
 # global variables
@@ -109,7 +108,7 @@ def buildChains(builds, i):
 		new_score = new_acid_chain.score
 		
 		if(new_score <= best_score):
-			best_chain = copy.copy(build)
+			best_chain = build
 			best_score = new_score
 		
 		# time to prune?

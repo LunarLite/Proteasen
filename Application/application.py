@@ -20,7 +20,7 @@ import sys
 import timeit
 
 from Classes import AminoAcidChain, GuiApplication
-from Algorithms import random_algorithm, breadth_algorithm, breadthh_algorithm, hillclimber_algorithm, hillclimber_algorithm3D
+from Algorithms import random_algorithm, breadth_algorithm, breadthh_algorithm, hillclimber_algorithm, hillclimber_algorithm3D, simulated_annealing
 from Dependencies import helpers
 
 
@@ -34,20 +34,22 @@ def main():
 
 		if dimension != "2D" and dimension != "3D" and dimension != "2d" and dimension != "3d": 
 			sys.exit("\nUsage: application.py dimension algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
-					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber\n")
+					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber / Simulatedannealing\n")
 
 
 		# if iterative algorithm, ask user to input number of iterations
 		if (algorithm == "Hillclimber" or 
 			algorithm == "hillclimber" or 
 			algorithm == "Randomhillclimber" or 
-			algorithm == "randomhillclimber"):
+			algorithm == "randomhillclimber" or 
+			algorithm == "Simulatedannealing" or
+			algorithm == "simulatedannealing"):
 			iterations = helpers.ask_for_iterations()
 
 
 	elif len(sys.argv) > 1: 
 		sys.exit("\nUsage: application.py dimension algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
-					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber\n")
+					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber / Simulatedannealing\n")
 		
 	else: 
 		app = GuiApplication.Gui_Application()
@@ -83,9 +85,14 @@ def main():
 			hillclimber_algorithm.execute(amino_acid_chain, "straight_folded", iterations)
 		elif dimension == "3D": 
 			hillclimber_algorithm3D.execute(amino_acid_chain, "random_folded", iterations)
+	elif algorithm == "Simulatedannealing" or algorithm == "simulatedannealing":
+		if dimension == "2D": 
+			simulated_annealing.execute(amino_acid_chain, "straight_folded", iterations)
+		elif dimension == "3D": 
+			simulated_annealing.execute(amino_acid_chain, "random_folded", iterations)
 	else: 
 		sys.exit("\nUsage: application.py dimension algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
-					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber\n")
+					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber / Simulatedannealing\n")
 	
 	# stop timer
 	stop = timeit.default_timer()
