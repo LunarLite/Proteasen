@@ -68,7 +68,7 @@ def main():
 	if algorithm == "random":
 		random_algorithm.execute(amino_acid_chain)
 	# breadth-first
-	elif algorithm == "breadth" or algorithm == "Breadth-first":
+	elif algorithm == "breadth" or algorithm == "breadth-first":
 		breadth_algorithm.execute(amino_acid_chain, dimension)
 	# breadth-first with heuristics
 	elif algorithm == "breadth_heur":
