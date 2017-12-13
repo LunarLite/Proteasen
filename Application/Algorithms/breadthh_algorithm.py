@@ -1,4 +1,4 @@
-# breadth_algorithm.py
+# breadthh_algorithm.py
 #
 # Heuristics - Protein Pow(d)er
 # http://heuristieken.nl/wiki/index.php?title=Protein_Pow(d)er
