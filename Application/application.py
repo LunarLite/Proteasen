@@ -20,7 +20,7 @@ import sys
 import timeit
 
 from Classes import AminoAcidChain, GuiApplication
-from Algorithms import random_algorithm, breadth_algorithm, breadthh_algorithm, hillclimber_algorithm, hillclimber_algorithm3D, simulated_annealing
+from Algorithms import random_algorithm, breadth_algorithm, breadthh_algorithm, depth_algorithm, hillclimber_algorithm, hillclimber_algorithm3D, simulated_annealing
 from Dependencies import helpers
 
 
@@ -28,21 +28,18 @@ from Dependencies import helpers
 def main():
 
 	if len(sys.argv) == 4: 
-		dimension = sys.argv[1]
-		algorithm = sys.argv[2]
-		sequence = sys.argv[3]
+		dimension = sys.argv[1].lower()
+		algorithm = sys.argv[2].lower()
+		sequence = sys.argv[3].lower()
 
-		if dimension != "2D" and dimension != "3D" and dimension != "2d" and dimension != "3d": 
+		if dimension != "2d" and dimension != "3d": 
 			sys.exit("\nUsage: application.py dimension algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
 					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber / Simulatedannealing\n")
 
 
 		# if iterative algorithm, ask user to input number of iterations
-		if (algorithm == "Hillclimber" or 
-			algorithm == "hillclimber" or 
-			algorithm == "Randomhillclimber" or 
+		if (algorithm == "hillclimber" or 
 			algorithm == "randomhillclimber" or 
-			algorithm == "Simulatedannealing" or
 			algorithm == "simulatedannealing"):
 			iterations = helpers.ask_for_iterations()
 
@@ -55,10 +52,10 @@ def main():
 		app = GuiApplication.Gui_Application()
 		app.run("csv", "Data/sequences.csv")
 		sequence = app.get("sequence")
-		algorithm = app.get("algorithm")
-		if algorithm == "Hillclimber" or algorithm == "Randomhillclimber":
+		algorithm = app.get("algorithm").lower()
+		if algorithm == "hillclimber" or algorithm == "randomhillclimber":
 			iterations = app.get("iterations")
-		dimension = "2D"
+		dimension = "2d"
 
 	# initialize timer
 	start = timeit.default_timer()
@@ -68,28 +65,37 @@ def main():
 	
 		
 	# set x and y coordinates of the aminoacids of chain, depending on the algorithm	
-	if algorithm == "Random" or algorithm == "random":
+	if algorithm == "random":
 		random_algorithm.execute(amino_acid_chain)
-	# ensure proper usage
-	elif algorithm == "Breadth" or algorithm == "breadth" or algorithm == "Breadth-first":
-		breadth_algorithm.execute(amino_acid_chain)
-	elif algorithm == "Breadth_heur" or algorithm == "breadth_heur":
-		breadthh_algorithm.execute(amino_acid_chain)
-	elif algorithm == "Hillclimber" or algorithm == "hillclimber":
-		if dimension == "2D": 
+	# breadth-first
+	elif algorithm == "breadth" or algorithm == "Breadth-first":
+		breadth_algorithm.execute(amino_acid_chain, dimension)
+	# breadth-first with heuristics
+	elif algorithm == "breadth_heur":
+		breadthh_algorithm.execute(amino_acid_chain, dimension)
+	# depth-first
+	elif algorithm == "depth":
+		max_duration = 15
+		depth_algorithm.execute(amino_acid_chain, dimension, max_duration)
+	# hillclimber
+	elif algorithm == "hillclimber":
+		if dimension == "2d": 
 			hillclimber_algorithm.execute(amino_acid_chain, "straight_folded", iterations)
-		elif dimension == "3D": 
+		else:
 			hillclimber_algorithm3D.execute(amino_acid_chain, "straight_folded", iterations)
-	elif algorithm == "Randomhillclimber" or algorithm == "randomhillclimber":
-		if dimension == "2D": 
+	# hillclimber with random start
+	elif algorithm == "randomhillclimber":
+		if dimension == "2d": 
 			hillclimber_algorithm.execute(amino_acid_chain, "straight_folded", iterations)
-		elif dimension == "3D": 
+		else:
 			hillclimber_algorithm3D.execute(amino_acid_chain, "random_folded", iterations)
-	elif algorithm == "Simulatedannealing" or algorithm == "simulatedannealing":
-		if dimension == "2D": 
+	# simulated annealing
+	elif algorithm == "simulatedannealing":
+		if dimension == "2d": 
 			simulated_annealing.execute(amino_acid_chain, "straight_folded", iterations)
-		elif dimension == "3D": 
+		else:
 			simulated_annealing.execute(amino_acid_chain, "random_folded", iterations)
+	# non-valid commandline arg		
 	else: 
 		sys.exit("\nUsage: application.py dimension algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
 					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber / Simulatedannealing\n")

@@ -18,18 +18,21 @@ import copy
 import math
 
 # global variables
-
+dimension = "2d"
 # vars used for score checking
 best_chain = []
 best_score = 0
 new_acid_chain = AminoAcidChain.Amino_acid_chain("p")
 
-def execute(input):
+def execute(input, d):
+	
+	global dimension
+	dimension = d
 	
 	# initialize input chain starting coords
 	input_chain = input.chain
-	input_chain[0].coordinates = [0,0]
-	input_chain[1].coordinates = [0,1]
+	input_chain[0].coordinates = [0,0,0]
+	input_chain[1].coordinates = [0,1,0]
 
 	# initialize starting chain, consisting of first 2 nodes
 	start_chain = [input_chain[0], input_chain[1]]
@@ -57,7 +60,7 @@ def execute(input):
 			chain_deque = buildChains(builds, chain_deque)
 		else:
 			checkScore(temp_chain)
-			
+
 	# 'best_chain' is the chain that needs to be returned.
 	input.chain = best_chain
 	return input
@@ -92,9 +95,15 @@ def checkPossibilities(temp_chain, i):
 	# remember coordinates of last amino acid in current chain
 	x = temp_chain[i - 1].coordinates[0]
 	y = temp_chain[i - 1].coordinates[1]
+	z = temp_chain[i - 1].coordinates[2]
+
 	# create array containing possible positions
-	options = [[x - 1, y], [x + 1, y], [x, y - 1], [x, y + 1]]
+	options = [[x - 1, y, z], [x + 1, y, z], [x, y - 1, z], [x, y + 1, z]]
 	
+	global dimension
+	if dimension is "3d":
+		option.append([x, y, z + 1], [x, y, z - 1])
+
 	# removes invalid options from the array
 	for j in temp_chain:
 		if j.coordinates in options:
