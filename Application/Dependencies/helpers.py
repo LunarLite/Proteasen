@@ -83,22 +83,18 @@ def ask_for_iterations():
 				break
 	return int(iterations)
 
-# def ask_for_hillclimbing(chain, dimension):
-# 	"""asks user whether hillclimbing with current chain is desirable"""
+def ask_for_hillclimbing():
+	"""ask user whether hillclimbing is desired in addition to depth-first search""" 
 
-# 	print("Dept-first search took longer than 15 s. Score is now: ", chain.score)
+	while True:
+		answer = input("Would you like to perform hillclimbing after DFS? (y/n)")
 
-# 	while True:
-# 		answer = input("would you like to perform hillclimbing? (y/n)")
+		if answer != "":
+			if answer == "y" or answer == "Y":
+				depth_hill = "y"
+				break;
+			elif answer == "n" or answer == "N":
+				depth_hill = "n"
+				break;
 
-# 		if answer != "":
-# 			if answer == y or answer == Y:
-
-# 				break;
-# 			else if answer == n or answer == N:
-# 				break;
-
-# 	return answer
-
-	
-
+	return depth_hill

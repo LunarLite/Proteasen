@@ -129,7 +129,7 @@ class Amino_acid_chain:
 		self.score += hydro_connections
 		self.score += cys_connections * 5 
 		self.score += hydro_cys_connections
-
+		
 	def rotate(self, dimension, errors):
 		"""This function returns a copy of self.chain 
 		with one random Amino_acid rotated."""

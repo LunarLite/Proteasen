@@ -21,6 +21,7 @@ from Classes import AminoAcidChain
 import copy
 from Dependencies import helpers
 from random import randint
+import csv
 
 
 def execute(input_chain, start_point, iterations, dimension):
@@ -46,10 +47,13 @@ def execute(input_chain, start_point, iterations, dimension):
 	elif start_point == "dept_chain":
 		new_acid_chain = copy.deepcopy(input_chain)
 
+	scores = []
+
 	attempts = 0
 	new_acid_chain.stability()
 	start_score = new_acid_chain.score
 
+	scores.append([attempts, start_score])
 
 	while attempts < iterations:
 		rotated_chain = new_acid_chain.rotate(dimension, 0)
@@ -62,7 +66,6 @@ def execute(input_chain, start_point, iterations, dimension):
 		# set chain to new rotated_chain and update stability score
 		rotated_acid_chain.chain = rotated_chain
 		rotated_acid_chain.stability()
-
 		# if new score is lower than current score
 		if rotated_acid_chain.score <= new_acid_chain.score:
 
@@ -72,6 +75,7 @@ def execute(input_chain, start_point, iterations, dimension):
 
 			# increase number of attempts with 1
 			attempts += 1
+			scores.append([attempts, new_acid_chain.score])
 		else: 
 
 			# else, increase number of attempts with 5
@@ -83,6 +87,16 @@ def execute(input_chain, start_point, iterations, dimension):
 	# set input chain random folded chain with best score
 	input_chain.chain = new_acid_chain.chain
 
+
+
+	with open("experiment2.csv", "w") as output_file:
+		writer = csv.writer(output_file)
+		writer.writerow(['Experiment2', 'Test'])
+
+		for row in scores:
+			writer.writerow(row)
+
+	print("geprint!")
 
 
 

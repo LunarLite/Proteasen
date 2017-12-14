@@ -44,7 +44,7 @@ def main():
 			iterations = helpers.ask_for_iterations()
 
 		elif algorithm == "depth":
-			depth_hill = input("Would you like to perform hillclimbing after DFS? (y/n)")
+			depth_hill = helpers.ask_for_hillclimbing()
 
 
 
