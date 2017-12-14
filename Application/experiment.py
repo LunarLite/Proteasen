@@ -13,6 +13,7 @@ import timeit
 from Classes import AminoAcidChain, GuiApplication
 from Algorithms import random_algorithm, breadth_algorithm, breadthh_algorithm, depth_algorithm, hillclimber_algorithm, hillclimber_algorithm3D, simulated_annealing
 from Dependencies import helpers
+import csv
 
 fig = plt.figure()
 
@@ -106,13 +107,10 @@ def main():
 	amino_acid_chain.plot(dimension)
 
 
-
-
-
 	x = []
 	y = []
 
-	with open("test.csv", 'r') as csvfile:
+	with open("experiment2.csv", "r") as csvfile:
 		reader = csv.reader(csvfile, delimiter=',')
 
 		firstline = True
@@ -123,7 +121,7 @@ def main():
 			x.append(int(row[0]))
 			y.append(int(row[1]))
 
-		# print("x", x, "y", y)	
+		print("x", x, "y", y)	
 
 		plot(x, y)
 

@@ -89,14 +89,12 @@ def execute(input_chain, start_point, iterations, dimension):
 
 
 
-	with open("experiment2.csv", "w") as output_file:
+	with open("experiment2.csv", "w", newline="") as output_file:
 		writer = csv.writer(output_file)
-		writer.writerow(['Experiment2', 'Test'])
+		writer.writerow(["Experiment2", "Test"])
 
 		for row in scores:
 			writer.writerow(row)
-
-	print("geprint!")
 
 
 
