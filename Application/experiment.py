@@ -1,20 +1,12 @@
-# application.py
+# experiment.py
 #
-# Heuristics - Protein Pow(d)er
-# http://heuristieken.nl/wiki/index.php?title=Protein_Pow(d)er
+# plots data from csv file of type: 
+# header 
+# x, y
+# x, y etc 
 #
-# Students: Mick Tozer, Eline Rietdijk and Vanessa Botha
-#
-# this file contains the main script of the program 
-# Usage: 
-# > application.py algorithm HHPHHHPHPHH
-#   algorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber 
-# 
-# > application.py (without command line arguments) to start GUI application
 
-
-
-# imports
+import matplotlib.pyplot as plt 
 import sys
 import timeit
 
@@ -22,9 +14,10 @@ from Classes import AminoAcidChain, GuiApplication
 from Algorithms import random_algorithm, breadth_algorithm, breadthh_algorithm, depth_algorithm, hillclimber_algorithm, hillclimber_algorithm3D, simulated_annealing
 from Dependencies import helpers
 
+fig = plt.figure()
 
-# main function
-def main():
+def main(): 
+
 
 	if len(sys.argv) == 4: 
 		dimension = sys.argv[1].lower()
@@ -43,7 +36,7 @@ def main():
 			iterations = helpers.ask_for_iterations()
 
 		elif algorithm == "depth":
-			depth_hill = helpers.ask_for_hillclimbing()
+			depth_hill = input("Would you like to perform hillclimbing after DFS? (y/n)")
 
 
 
@@ -66,7 +59,6 @@ def main():
 	# create AminoAcidChain object
 	amino_acid_chain = AminoAcidChain.Amino_acid_chain(sequence)
 	
-		
 	# set x and y coordinates of the aminoacids of chain, depending on the algorithm	
 	if algorithm == "random":
 		random_algorithm.execute(amino_acid_chain)
@@ -100,7 +92,8 @@ def main():
 	else: 
 		sys.exit("\nUsage: application.py dimension algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
 					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber / Simulatedannealing\n")
-	
+
+
 	# stop timer
 	stop = timeit.default_timer()
 	print("Runtime:", (stop - start))
@@ -112,8 +105,42 @@ def main():
 	# plot the "folded" aminoacid chain
 	amino_acid_chain.plot(dimension)
 
-		
-# main execution
+
+
+
+
+	x = []
+	y = []
+
+	with open("test.csv", 'r') as csvfile:
+		reader = csv.reader(csvfile, delimiter=',')
+
+		firstline = True
+		for row in reader: 
+			if firstline: 
+				firstline = False 
+				continue 
+			x.append(int(row[0]))
+			y.append(int(row[1]))
+
+		# print("x", x, "y", y)	
+
+		plot(x, y)
+
+
+def plot(x, y): 
+
+	# Add new subplot
+	subPlot = fig.add_subplot(111)
+
+	subPlot.plot(x, y, 'k-')
+
+	# draw a grid behind Subplot 
+	subPlot.grid()
+
+	# display pop-up window with plot
+	plt.show()
+
+	
 if __name__ == '__main__':
 	main()
-	
