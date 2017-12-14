@@ -13,7 +13,6 @@ from Algorithms import hillclimber_algorithm
 from Classes import AminoAcidChain
 from random import randint
 import copy
-from 
 
 def fold_random(input_chain):
 	""" This function takes as input an unfolded Amino_acid_chain object
@@ -84,22 +83,22 @@ def ask_for_iterations():
 				break
 	return int(iterations)
 
-def ask_for_hillclimbing(chain, dimension):
-	"""asks user whether hillclimbing with current chain is desirable"""
+# def ask_for_hillclimbing(chain, dimension):
+# 	"""asks user whether hillclimbing with current chain is desirable"""
 
-	print("Dept-first search took longer than 15 s. Score is now: ", chain.score)
+# 	print("Dept-first search took longer than 15 s. Score is now: ", chain.score)
 
-	while True:
-		answer = input("would you like to perform hillclimbing? (y/n)")
+# 	while True:
+# 		answer = input("would you like to perform hillclimbing? (y/n)")
 
-		if answer != "":
-			if answer == y or answer == Y:
-				
-				break;
-			else if answer == n or answer == N:
-				break;
+# 		if answer != "":
+# 			if answer == y or answer == Y:
 
-	return answer
+# 				break;
+# 			else if answer == n or answer == N:
+# 				break;
+
+# 	return answer
 
 	
 
