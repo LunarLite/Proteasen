@@ -34,7 +34,7 @@ def main():
 
 		if dimension != "2d" and dimension != "3d": 
 			sys.exit("\nUsage: application.py dimension algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
-					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber / Simulatedannealing\n")
+					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / hillclimber / Randomhillclimber / Simulatedannealing\n")
 
 
 		# if iterative algorithm, ask user to input number of iterations
@@ -42,6 +42,10 @@ def main():
 			algorithm == "randomhillclimber" or 
 			algorithm == "simulatedannealing"):
 			iterations = helpers.ask_for_iterations()
+
+		elif algorithm == "depth":
+			depth_hill = input("Would you like to perform hillclimbing after DFS? (y/n)")
+
 
 
 	elif len(sys.argv) > 1: 
@@ -76,8 +80,11 @@ def main():
 	# depth-first
 	elif algorithm == "depth":
 		max_duration = 15
-		premature_quit = depth_algorithm.execute(amino_acid_chain, dimension, max_duration)
-		print(premature_quit)
+		finished = depth_algorithm.execute(amino_acid_chain, dimension, max_duration)
+		if depth_hill == "y" and finished == False:
+			amino_acid_chain.stability()
+			print("Performing hillclimber.. Current score: ", amino_acid_chain.score)
+			hillclimber_algorithm.execute(amino_acid_chain, "dept_chain", 500, dimension)
 	# hillclimber
 	elif algorithm == "hillclimber":
 		hillclimber_algorithm.execute(amino_acid_chain, "straight_folded", iterations, dimension)
