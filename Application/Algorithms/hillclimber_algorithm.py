@@ -43,6 +43,9 @@ def execute(input_chain, start_point, iterations, dimension):
 	elif start_point == "random_folded":
 		new_acid_chain = helpers.fold_random(input_chain)
 
+	elif start_point == "dept_chain":
+		new_acid_chain = copy.deepcopy(input_chain)
+
 	attempts = 0
 	new_acid_chain.stability()
 	start_score = new_acid_chain.score
