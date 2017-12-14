@@ -292,42 +292,42 @@ class Amino_acid_chain:
 		subPlot.set_zlabel('Z-axis')
 		
 		# draw coloured lines for the scores
-		drawLines(self, subPlot)
+		self.drawLines(subPlot)
 		# draw a grid behind Subplot 
 		subPlot.grid()
 		# display pop-up window with plot
 		plt.show()
 		
-def drawLines(self, subPlot): 
+	def drawLines(self, subPlot): 
 
-	# iterate over chain, keeping track of the count
-	for count, j in enumerate(self.chain):
+		# iterate over chain, keeping track of the count
+		for count, j in enumerate(self.chain):
 
-		# if current aminoacid is hydrophobic, check for neigbouring aminoacids
-		if j.molecule_type == "hydrophobic":
-			# loop through remaining acids to check coordinates and molecule type
-			# skip one acid (count + 2), since next acid in the string does not count for score
-			for k in range(count + 3, len(self.chain)):
-				# calculate absolute difference in x- and y-coordinates 
-				x_difference = abs(j.coordinates[0] - self.chain[k].coordinates[0])
-				y_difference = abs(self.chain[k].coordinates[1] - j.coordinates[1])
-				z_difference = abs(self.chain[k].coordinates[2] - j.coordinates[2])
-				# if abs x- and y-difference is 1, acids are positioned next to eachother
-				# if neighbouring acids are hydrophobic, increase score
-				if self.chain[k].molecule_type == "hydrophobic" and x_difference + y_difference + z_difference == 1:
-					subPlot.plot([j.coordinates[0], self.chain[k].coordinates[0]], [j.coordinates[1], self.chain[k].coordinates[1]], [j.coordinates[2], self.chain[k].coordinates[2]], 'r:')
-				if self.chain[k].molecule_type == "cysteine" and x_difference + y_difference + z_difference == 1:
-					subPlot.plot([j.coordinates[0], self.chain[k].coordinates[0]], [j.coordinates[1], self.chain[k].coordinates[1]], [j.coordinates[2], self.chain[k].coordinates[2]], 'r--')
-	
-		if j.molecule_type == "cysteine":
-			# loop through remaining acids to check coordinates and molecule type
-			# skip one acid (count + 2), since next acid in the string does not count for score
-			for k in range(count + 3, len(self.chain)):
-				# calculate absolute difference in x- and y-coordinates 
-				x_difference = abs(j.coordinates[0] - self.chain[k].coordinates[0])
-				y_difference = abs(self.chain[k].coordinates[1] - j.coordinates[1])
-				z_difference = abs(self.chain[k].coordinates[2] - j.coordinates[2])
-				# if abs x- and y-difference is 1, acids are positioned next to eachother
-				# if neighbouring acids are hydrophobic, increase score
-				if self.chain[k].molecule_type == "cysteine" and x_difference + y_difference + z_difference == 1:
-					subPlot.plot([j.coordinates[0], self.chain[k].coordinates[0]], [j.coordinates[1], self.chain[k].coordinates[1]], [j.coordinates[2], self.chain[k].coordinates[2]], 'g:')
+			# if current aminoacid is hydrophobic, check for neigbouring aminoacids
+			if j.molecule_type == "hydrophobic":
+				# loop through remaining acids to check coordinates and molecule type
+				# skip one acid (count + 2), since next acid in the string does not count for score
+				for k in range(count + 3, len(self.chain)):
+					# calculate absolute difference in x- and y-coordinates 
+					x_difference = abs(j.coordinates[0] - self.chain[k].coordinates[0])
+					y_difference = abs(j.coordinates[1] - self.chain[k].coordinates[1])
+					z_difference = abs(j.coordinates[2] - self.chain[k].coordinates[2])
+					# if abs x- and y-difference is 1, acids are positioned next to eachother
+					# if neighbouring acids are hydrophobic, increase score
+					if self.chain[k].molecule_type == "hydrophobic" and x_difference + y_difference + z_difference == 1:
+						subPlot.plot([j.coordinates[0], self.chain[k].coordinates[0]], [j.coordinates[1], self.chain[k].coordinates[1]], [j.coordinates[2], self.chain[k].coordinates[2]], 'r:')
+					if self.chain[k].molecule_type == "cysteine" and x_difference + y_difference + z_difference == 1:
+						subPlot.plot([j.coordinates[0], self.chain[k].coordinates[0]], [j.coordinates[1], self.chain[k].coordinates[1]], [j.coordinates[2], self.chain[k].coordinates[2]], 'r--')
+		
+			if j.molecule_type == "cysteine":
+				# loop through remaining acids to check coordinates and molecule type
+				# skip one acid (count + 2), since next acid in the string does not count for score
+				for k in range(count + 3, len(self.chain)):
+					# calculate absolute difference in x- and y-coordinates 
+					x_difference = abs(j.coordinates[0] - self.chain[k].coordinates[0])
+					y_difference = abs(j.coordinates[1] - self.chain[k].coordinates[1])
+					z_difference = abs(j.coordinates[2] - self.chain[k].coordinates[2])
+					# if abs x- and y-difference is 1, acids are positioned next to eachother
+					# if neighbouring acids are hydrophobic, increase score
+					if self.chain[k].molecule_type == "cysteine" and x_difference + y_difference + z_difference == 1:
+						subPlot.plot([j.coordinates[0], self.chain[k].coordinates[0]], [j.coordinates[1], self.chain[k].coordinates[1]], [j.coordinates[2], self.chain[k].coordinates[2]], 'g:')

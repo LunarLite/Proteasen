@@ -55,7 +55,7 @@ def execute(input, d, max_time):
 		if update - start > max_time:
 			input.chain = best_chain
 			print("Took too long, stopped after ", max_time, " seconds.")
-			return input
+			return False
 		# pop chain from list
 		# .popleft() = breadth, .pop() = depth
 		temp_chain = chain_deque.pop()
@@ -74,7 +74,7 @@ def execute(input, d, max_time):
 
 	# 'best_chain' is the chain that needs to be returned.
 	input.chain = best_chain
-	return input
+	return True
 
 	
 	

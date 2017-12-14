@@ -76,7 +76,8 @@ def main():
 	# depth-first
 	elif algorithm == "depth":
 		max_duration = 15
-		depth_algorithm.execute(amino_acid_chain, dimension, max_duration)
+		premature_quit = depth_algorithm.execute(amino_acid_chain, dimension, max_duration)
+		print(premature_quit)
 	# hillclimber
 	elif algorithm == "hillclimber":
 		hillclimber_algorithm.execute(amino_acid_chain, "straight_folded", iterations, dimension)
