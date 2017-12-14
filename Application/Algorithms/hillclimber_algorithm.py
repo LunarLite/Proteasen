@@ -38,7 +38,7 @@ def execute(input_chain, start_point, iterations):
 
 		# fold amino acid chain straight
 		for i, acid in enumerate(new_acid_chain.chain):
-			acid.coordinates = [i, 0]
+			acid.coordinates = [i, 0, 0]
 			# print(new_acid_chain.chain[i].coordinates)
 	
 	elif start_point == "random_folded":

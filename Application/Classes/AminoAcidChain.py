@@ -78,7 +78,7 @@ class Amino_acid_chain:
 				for coordinate in hydro_coordinates:
 
 					# count score -1 if current hydrophobic aminoacid neighbours a remembered hydrophobic aminoacid
-					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) == 1:
+					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) + abs(aminoacid.coordinates[2] - coordinate[2]) == 1:
 						self.score -= 1
 
 				# remember current hydrophobic aminoacid
@@ -95,7 +95,7 @@ class Amino_acid_chain:
 				for coordinate in cys_coordinates:
 
 					# count score -5 if current cysteine aminoacid neighbours a remembered cysteine aminoacid
-					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) == 1:
+					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) + abs(aminoacid.coordinates[2] - coordinate[2]) == 1:
 						self.score -= 5
 
 				# remember current cysteine aminoacid
@@ -109,60 +109,6 @@ class Amino_acid_chain:
 		# revise score taking into account connections between hydrofobic aminoacids and between cysteine aminoacids in chain
 		self.score += hydro_connections
 		self.score += cys_connections * 5 
-
-
-# calculates chain stability score
-	def stability3D(self): 
-		"""This function calculates self.score, based on the 
-		coordinates of the hydrophobic (and cysteine) Amino_acid objects in self.chain."""
-		
-		self.score = 0
-		hydro_connections = 0
-		cys_connections = 0
-
-		# create arrays to remember coordinates of hydrophobic and cysteine aminoacids
-		hydro_coordinates = []
-		cys_coordinates = []
-
-		# iterate over aminoacids in chain
-		for i, aminoacid in enumerate(self.chain):
-			# print("chain", aminoacid.coordinates)
-			if(aminoacid.molecule_type == "hydrophobic"):
-				# iterate over remembered hydrophobic coordinates
-				for coordinate in hydro_coordinates:
-			
-					# count score -1 if current hydrophobic aminoacid neighbours a remembered hydrophobic aminoacid
-					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) + abs(aminoacid.coordinates[2] - coordinate[2]) == 1:
-						self.score -= 1
-
-				# remember current hydrophobic aminoacid
-				hydro_coordinates.append(aminoacid.coordinates)
-
-				# count connections between neigbouring hydrophobic aminoacids in chain
-				if i != len(self.chain)-1:
-					if self.chain[i+1].molecule_type == "hydrophobic":
-						hydro_connections += 1
-
-			if(aminoacid.molecule_type == "cysteine"):
-
-				# iterate over remembered cysteine coordinates
-				for coordinate in cys_coordinates:
-
-					# count score -5 if current cysteine aminoacid neighbours a remembered cysteine aminoacid
-					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) + abs(aminoacid.coordinates[2] - coordinate[2]) == 1:
-						self.score -= 5
-
-				# remember current cysteine aminoacid
-				cys_coordinates.append(aminoacid.coordinates)
-
-				# count connections between neigbouring cysteine aminoacids in chain
-				if i != len(self.chain)-1:
-					if self.chain[i+1].molecule_type == "cysteine":
-						cys_connections += 1
-
-		# revise score taking into account connections between hydrofobic aminoacids and between cysteine aminoacids in chain
-		self.score += hydro_connections
-		self.score += cys_connections * 5
 
 
 
@@ -219,7 +165,7 @@ class Amino_acid_chain:
 		# iterate over directions to determine new coordinates
 		for i in range(to_change, len(abs_directions)):
 			if abs_directions[i] == "right":
-				new_coordinates = [rotated_coordinates[i][0] + 1, rotated_coordinates[i][1]]
+				new_coordinates = [rotated_coordinates[i][0] + 1, rotated_coordinates[i][1], 0]
 				if new_coordinates in rotated_coordinates:
 					doubles = 1
 					errors += 1
@@ -228,7 +174,7 @@ class Amino_acid_chain:
 				new_chain[i + 1].coordinates = new_coordinates
 				# print(i, new_coordinates)
 			if abs_directions[i] == "left":
-				new_coordinates = [rotated_coordinates[i][0] - 1, rotated_coordinates[i][1]]
+				new_coordinates = [rotated_coordinates[i][0] - 1, rotated_coordinates[i][1], 0]
 				if new_coordinates in rotated_coordinates:
 					doubles = 1
 					errors += 1
@@ -237,7 +183,7 @@ class Amino_acid_chain:
 				new_chain[i + 1].coordinates = new_coordinates
 				# print(i, new_coordinates)
 			if abs_directions[i] == "up":
-				new_coordinates = [rotated_coordinates[i][0], rotated_coordinates[i][1] + 1]
+				new_coordinates = [rotated_coordinates[i][0], rotated_coordinates[i][1] + 1, 0]
 				if new_coordinates in rotated_coordinates:
 					doubles = 1
 					errors += 1
@@ -246,7 +192,7 @@ class Amino_acid_chain:
 				new_chain[i + 1].coordinates = new_coordinates
 				# print(i, new_coordinates)
 			if abs_directions[i] == "down":
-				new_coordinates = [rotated_coordinates[i][0], rotated_coordinates[i][1] - 1]
+				new_coordinates = [rotated_coordinates[i][0], rotated_coordinates[i][1] - 1, 0]
 				if new_coordinates in rotated_coordinates:
 					doubles = 1
 					errors += 1
