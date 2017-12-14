@@ -31,7 +31,7 @@ def execute(input_chain, start_point, iterations, dimension):
 	# initialize variables to store temporary acid chains
 	new_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
 	rotated_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
-	best_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)\
+	best_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
 
 
 	if start_point == "straight_folded":
@@ -39,7 +39,6 @@ def execute(input_chain, start_point, iterations, dimension):
 		# fold amino acid chain straight
 		for i, acid in enumerate(new_acid_chain.chain):
 			acid.coordinates = [i, 0, 0]
-			# print(new_acid_chain.chain[i].coordinates)
 	
 	elif start_point == "random_folded":
 		new_acid_chain = helpers.fold_random(input_chain)
@@ -48,11 +47,9 @@ def execute(input_chain, start_point, iterations, dimension):
 	print("stability1")
 	new_acid_chain.stability()
 	start_score = new_acid_chain.score
-	print("stability now: ", start_score)
 
 
 	while attempts < iterations:
-		print("Rotating...")
 		rotated_chain = new_acid_chain.rotate(dimension, 0)
 		for i, a in enumerate(rotated_chain):
 			print("Coordinate nr:", i, ":", a.coordinates)

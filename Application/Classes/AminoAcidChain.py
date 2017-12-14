@@ -311,11 +311,12 @@ def drawLines(self, subPlot):
 				# calculate absolute difference in x- and y-coordinates 
 				x_difference = abs(j.coordinates[0] - self.chain[k].coordinates[0])
 				y_difference = abs(self.chain[k].coordinates[1] - j.coordinates[1])
+				z_difference = abs(self.chain[k].coordinates[2] - j.coordinates[2])
 				# if abs x- and y-difference is 1, acids are positioned next to eachother
 				# if neighbouring acids are hydrophobic, increase score
-				if self.chain[k].molecule_type == "hydrophobic" and x_difference + y_difference == 1:
+				if self.chain[k].molecule_type == "hydrophobic" and x_difference + y_difference + z_difference == 1:
 					subPlot.plot([j.coordinates[0], self.chain[k].coordinates[0]], [j.coordinates[1], self.chain[k].coordinates[1]], [j.coordinates[2], self.chain[k].coordinates[2]], 'r:')
-				if self.chain[k].molecule_type == "cysteine" and x_difference + y_difference == 1:
+				if self.chain[k].molecule_type == "cysteine" and x_difference + y_difference + z_difference == 1:
 					subPlot.plot([j.coordinates[0], self.chain[k].coordinates[0]], [j.coordinates[1], self.chain[k].coordinates[1]], [j.coordinates[2], self.chain[k].coordinates[2]], 'r--')
 	
 		if j.molecule_type == "cysteine":
@@ -325,7 +326,8 @@ def drawLines(self, subPlot):
 				# calculate absolute difference in x- and y-coordinates 
 				x_difference = abs(j.coordinates[0] - self.chain[k].coordinates[0])
 				y_difference = abs(self.chain[k].coordinates[1] - j.coordinates[1])
+				z_difference = abs(self.chain[k].coordinates[2] - j.coordinates[2])
 				# if abs x- and y-difference is 1, acids are positioned next to eachother
 				# if neighbouring acids are hydrophobic, increase score
-				if self.chain[k].molecule_type == "cysteine" and x_difference + y_difference == 1:
+				if self.chain[k].molecule_type == "cysteine" and x_difference + y_difference + z_difference == 1:
 					subPlot.plot([j.coordinates[0], self.chain[k].coordinates[0]], [j.coordinates[1], self.chain[k].coordinates[1]], [j.coordinates[2], self.chain[k].coordinates[2]], 'g:')
