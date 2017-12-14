@@ -64,6 +64,7 @@ class Amino_acid_chain:
 		self.score = 0
 		hydro_connections = 0
 		cys_connections = 0
+		hydro_cys_connections = 0
 
 		# create arrays to remember coordinates of hydrophobic and cysteine aminoacids
 		hydro_coordinates = []
@@ -82,6 +83,12 @@ class Amino_acid_chain:
 					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) + abs(aminoacid.coordinates[2] - coordinate[2]) == 1:
 						self.score -= 1
 
+				for coordinate in cys_coordinates:
+
+					# count score -1 if current cysteine aminoacid neighbours a remembered hydrophobic aminoacid
+					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) + abs(aminoacid.coordinates[2] - coordinate[2]) == 1:
+						self.score -= 1
+
 				# remember current hydrophobic aminoacid
 				hydro_coordinates.append(aminoacid.coordinates)
 
@@ -89,6 +96,8 @@ class Amino_acid_chain:
 				if i != len(self.chain)-1:
 					if self.chain[i+1].molecule_type == "hydrophobic":
 						hydro_connections += 1
+					if self.chain[i+1].molecule_type == "cysteine":
+						hydro_cys_connections += 1
 
 			if(aminoacid.molecule_type == "cysteine"):
 
@@ -99,6 +108,13 @@ class Amino_acid_chain:
 					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) + abs(aminoacid.coordinates[2] - coordinate[2]) == 1:
 						self.score -= 5
 
+				for coordinate in hydro_coordinates:
+
+					# count score -1 if current cysteine aminoacid neighbours a remembered hydrophobic aminoacid
+					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) + abs(aminoacid.coordinates[2] - coordinate[2]) == 1:
+						self.score -= 1
+					
+
 				# remember current cysteine aminoacid
 				cys_coordinates.append(aminoacid.coordinates)
 
@@ -106,10 +122,17 @@ class Amino_acid_chain:
 				if i != len(self.chain)-1:
 					if self.chain[i+1].molecule_type == "cysteine":
 						cys_connections += 1
+					if self.chain[i+1].molecule_type == "hydrophobic":
+						hydro_cys_connections += 1
 
 		# revise score taking into account connections between hydrofobic aminoacids and between cysteine aminoacids in chain
 		self.score += hydro_connections
 		self.score += cys_connections * 5 
+		self.score += hydro_cys_connections
+
+		print("hydro_hydro: ",hydro_connections)
+		print("cys_cys: ", cys_connections)
+		print("hydro_cys: ", hydro_cys_connections)
 
 	def rotate(self, dimension, errors):
 		"""This function returns a copy of self.chain 
