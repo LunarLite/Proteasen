@@ -80,15 +80,15 @@ def main():
 	# hillclimber
 	elif algorithm == "hillclimber":
 		if dimension == "2d": 
-			hillclimber_algorithm.execute(amino_acid_chain, "straight_folded", iterations)
+			hillclimber_algorithm.execute(amino_acid_chain, "straight_folded", iterations, dimension)
 		else:
-			hillclimber_algorithm3D.execute(amino_acid_chain, "straight_folded", iterations)
+			hillclimber_algorithm3D.execute(amino_acid_chain, "straight_folded", iterations, dimension)
 	# hillclimber with random start
 	elif algorithm == "randomhillclimber":
 		if dimension == "2d": 
-			hillclimber_algorithm.execute(amino_acid_chain, "straight_folded", iterations)
+			hillclimber_algorithm.execute(amino_acid_chain, "straight_folded", iterations, dimension)
 		else:
-			hillclimber_algorithm3D.execute(amino_acid_chain, "random_folded", iterations)
+			hillclimber_algorithm3D.execute(amino_acid_chain, "random_folded", iterations, dimension)
 	# simulated annealing
 	elif algorithm == "simulatedannealing":
 		if dimension == "2d": 
