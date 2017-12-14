@@ -19,14 +19,14 @@ from Dependencies import helpers
 from random import randint
 
 
-def execute(input_chain):
+def execute(input_chain, total_iterations):
 	"""This function takes as input an unfolded Amino_acid_chain object, 
 	folds it randomly 40 times, and returns the chain with the best score."""
 
 	# create new chain with sequence of input chain
 	new_random_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
 
-	for i in range (40):
+	for i in range (total_iterations):
 
 		# fold random new chain and calculate stability score
 		new_random_chain = helpers.fold_random(new_random_chain)

@@ -194,7 +194,7 @@ class Gui_Application(tk.Tk):
 			self.entry1.insert(0, self.listbox.get(i))
 
 	def on_checkbutton_click(self, checked):
-		if checked == "Hillclimber" or checked == "Randomhillclimber":
+		if checked == "Hillclimber" or checked == "Randomhillclimber" or checked == "Random":
 			if self.iterations_visibility == "hidden": 
 				self.show_properties("iterations")
 

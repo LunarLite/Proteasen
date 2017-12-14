@@ -39,7 +39,8 @@ def main():
 		# if iterative algorithm, ask user to input number of iterations
 		if (algorithm == "hillclimber" or 
 			algorithm == "randomhillclimber" or 
-			algorithm == "simulatedannealing"):
+			algorithm == "simulatedannealing" or
+			algorithm == "random"):
 			iterations = helpers.ask_for_iterations()
 
 		elif algorithm == "depth":
@@ -69,7 +70,7 @@ def main():
 		
 	# set x and y coordinates of the aminoacids of chain, depending on the algorithm	
 	if algorithm == "random":
-		random_algorithm.execute(amino_acid_chain)
+		random_algorithm.execute(amino_acid_chain, iterations)
 	# breadth-first
 	elif algorithm == "breadth" or algorithm == "breadth-first":
 		breadth_algorithm.execute(amino_acid_chain, dimension)
