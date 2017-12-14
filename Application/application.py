@@ -84,7 +84,7 @@ def main():
 		if depth_hill == "y" and finished == False:
 			amino_acid_chain.stability()
 			print("Performing hillclimber.. Current score: ", amino_acid_chain.score)
-			hillclimber_algorithm.execute(amino_acid_chain, "dept_chain", 500, dimension)
+			hillclimber_algorithm.execute(amino_acid_chain, "dept_chain", 1000, dimension)
 	# hillclimber
 	elif algorithm == "hillclimber":
 		hillclimber_algorithm.execute(amino_acid_chain, "straight_folded", iterations, dimension)

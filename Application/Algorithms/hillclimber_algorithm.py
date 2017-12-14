@@ -84,6 +84,8 @@ def execute(input_chain, start_point, iterations, dimension):
 	# print start_score to show whether hillclimber improved stability
 	print("Start score:", start_score)
 
+	scores.append([attempts, new_acid_chain.score])
+	
 	# set input chain random folded chain with best score
 	input_chain.chain = new_acid_chain.chain
 
@@ -91,7 +93,7 @@ def execute(input_chain, start_point, iterations, dimension):
 
 	with open("experiment3.csv", "w", newline="") as output_file:
 		writer = csv.writer(output_file)
-		writer.writerow(["Experiment2", "Test"])
+		writer.writerow(["Experiment1", "Test"])
 
 		for row in scores:
 			writer.writerow(row)
