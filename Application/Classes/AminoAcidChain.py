@@ -16,6 +16,7 @@ from Dependencies import helpers
 
 # imports required for plot
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import copy
 
@@ -110,8 +111,7 @@ class Amino_acid_chain:
 		self.score += hydro_connections
 		self.score += cys_connections * 5 
 
-
-# calculates chain stability score
+	# calculates chain stability score
 	def stability3D(self): 
 		"""This function calculates self.score, based on the 
 		coordinates of the hydrophobic (and cysteine) Amino_acid objects in self.chain."""
@@ -163,8 +163,6 @@ class Amino_acid_chain:
 		# revise score taking into account connections between hydrofobic aminoacids and between cysteine aminoacids in chain
 		self.score += hydro_connections
 		self.score += cys_connections * 5
-
-
 
 	def rotate(self, errors):
 		"""This function returns a copy of self.chain 
@@ -379,106 +377,51 @@ class Amino_acid_chain:
 		fig.suptitle("AminoAcidChain \n Score: " + str(self.score))
 		"""This function plots self.chain, based on the coordinates 
 		of the Amino_acids in self.chain"""
-		if dimension == "2d":
-			# Add new subplot
-			subPlot = fig.add_subplot(111)
+		
+		# Add new subplot
+		subPlot = fig.add_subplot(111, projection='3d')
 
-			# create empty lists to store x and y coordinates
-			x = []
-			y = []
+		# create empty lists to store x and y coordinates
+		x = []
+		y = []
+		z = []
+		
+		# iterate over each aminoacid 
+		for i in range(0, len(self.chain)):
 
+			# store x and y coordinates of current aminoacid
+			x.append(self.chain[i].coordinates[0])
+			y.append(self.chain[i].coordinates[1])
+			z.append(self.chain[i].coordinates[2])
+		
+		# subplot backbone aminoacid chain
+		subPlot.plot(x, y, z, 'k-')
+		# set subplot ticks to the exact amount required
+		subPlot.set_xticks(x, False)
+		subPlot.set_yticks(y, False)
+		subPlot.set_zticks(z, False)
+
+		
+		# iterate over each aminoacid and add them to plot
+		for i in range(0, len(self.chain)):
 			
-			# iterate over each aminoacid 
-			for i in range(0, len(self.chain)):
-
-				# store x and y coordinates of current aminoacid
-				x.append(self.chain[i].coordinates[0])
-				y.append(self.chain[i].coordinates[1])
+			xs = self.chain[i].coordinates[0]
+			ys = self.chain[i].coordinates[1]
+			zs = self.chain[i].coordinates[2]
 			
-			# subplot backbone aminoacid chain
-			subPlot.plot(x, y, 'k-')
-			# set subplot ticks to the exact amount required
-			subPlot.set_xticks(x, False)
-			subPlot.set_yticks(y, False)
+			# check for type of current aminoacid
+			if self.chain[i].molecule_type == "hydrophobic": 
+				c = 'r'
+			elif self.chain[i].molecule_type == "polair":  
+				c = 'b'
+			elif self.chain[i].molecule_type =="cysteine":
+				c = 'g'
+			subPlot.scatter(xs, ys, zs, c=c, marker='o')
 
-			# iterate over each aminoacid
-			for i in range(0, len(self.chain)):
-				
-				# check for type of current aminoacid
-				if self.chain[i].molecule_type == "hydrophobic": 
+		
+		# draw a grid behind Subplot 
+		subPlot.grid()
 
-					# plot red dot at coordinates of hydrophobic aminoacid
-					subPlot.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], "ro")
-					plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], "ro")
-
-				elif self.chain[i].molecule_type == "polair":  
-
-					# plot blue dot at coordinates of polair aminoacid
-					subPlot.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], "bo")
-					plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], "bo")
-
-				elif self.chain[i].molecule_type =="cysteine":
-
-					# plot green dot at coordinates of cysteine aminoacid
-					subPlot.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], "go")
-					plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], "go")
-
-			
-			# draw a grid behind Subplot 
-			subPlot.grid()
-
-			# display pop-up window with plot
-			plt.show()
-		else:
-			# Add new subplot
-			subPlot = fig.add_subplot(111, projection='3d')
-
-			# create empty lists to store x and y coordinates
-			x = []
-			y = []
-			z = []
-			
-			# iterate over each aminoacid 
-			for i in range(0, len(self.chain)):
-
-				# store x and y coordinates of current aminoacid
-				x.append(self.chain[i].coordinates[0])
-				y.append(self.chain[i].coordinates[1])
-				z.append(self.chain[i].coordinates[2])
-			
-			# subplot backbone aminoacid chain
-			subPlot.plot(x, y, z, 'k-')
-			# set subplot ticks to the exact amount required
-			subPlot.set_xticks(x, False)
-			subPlot.set_yticks(y, False)
-			subPlot.set_yticks(z, False)
-
-			# iterate over each aminoacid
-			for i in range(0, len(self.chain)):
-				
-				# check for type of current aminoacid
-				if self.chain[i].molecule_type == "hydrophobic": 
-
-					# plot red dot at coordinates of hydrophobic aminoacid
-					subPlot.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], self.chain[i].coordinates[2], "ro")
-					plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], self.chain[i].coordinates[2], "ro")
-
-				elif self.chain[i].molecule_type == "polair":  
-
-					# plot blue dot at coordinates of polair aminoacid
-					subPlot.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], self.chain[i].coordinates[2], "bo")
-					plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], self.chain[i].coordinates[2], "bo")
-
-				elif self.chain[i].molecule_type =="cysteine":
-
-					# plot green dot at coordinates of cysteine aminoacid
-					subPlot.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], self.chain[i].coordinates[2], "go")
-					plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], self.chain[i].coordinates[2], "go")
-
-			
-			# draw a grid behind Subplot 
-			subPlot.grid()
-
-			# display pop-up window with plot
-			plt.show()
+		# display pop-up window with plot
+		plt.show()
 
