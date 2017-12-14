@@ -14,7 +14,7 @@ from Classes import AminoAcidChain
 from random import randint
 import copy
 
-def fold_random(input_chain):
+def fold_random(input_chain, dimension):
 	""" This function takes as input an unfolded Amino_acid_chain object
 	 and returns it folded randomly."""
 
@@ -26,10 +26,14 @@ def fold_random(input_chain):
 		# remember coordinates of previous amino acid
 		x = output_chain.chain[i - 1].coordinates[0]
 		y = output_chain.chain[i - 1].coordinates[1]
+		z = output_chain.chain[i - 1].coordinates[2]
 
 		# create array containing possible positions
-		options = [[x + 1, y, 0], [x - 1, y, 0], [x, y + 1, 0], [x, y - 1, 0]]
+		options = [[x + 1, y, z], [x - 1, y, z], [x, y + 1, z], [x, y - 1, z]]
 
+		if dimension == "3d":
+			options.append([x, y, z + 1])
+			options.append([x, y, z - 1])
 		# keep track of (the amount of) conflicts
 		conflict = True
 		conflicts = 0;
@@ -42,7 +46,7 @@ def fold_random(input_chain):
 				break
 
 			# randomly choose one of the possible positions
-			option = randint(0, 3)
+			option = randint(0, len(options) - 1)
 			coordinates = options[option]
 			
 			# iterate over all previously positioned amino acids
@@ -68,7 +72,7 @@ def fold_random(input_chain):
 
 	#if chain stuck in conflict, set coordinates back and fold again
 	if conflicts >= 20:
-		output_chain = fold_random(input_chain)
+		output_chain = fold_random(input_chain, dimension)
 
 	return output_chain	
 

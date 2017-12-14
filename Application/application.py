@@ -70,7 +70,7 @@ def main():
 		
 	# set x and y coordinates of the aminoacids of chain, depending on the algorithm	
 	if algorithm == "random":
-		random_algorithm.execute(amino_acid_chain, iterations)
+		random_algorithm.execute(amino_acid_chain, iterations, dimension)
 	# breadth-first
 	elif algorithm == "breadth" or algorithm == "breadth-first":
 		breadth_algorithm.execute(amino_acid_chain, dimension)

@@ -17,7 +17,7 @@ def main():
 	x = []
 	y = []
 
-	with open("test.csv", 'r') as csvfile:
+	with open("experiment3.csv", 'r') as csvfile:
 		reader = csv.reader(csvfile, delimiter=',')
 
 		firstline = True

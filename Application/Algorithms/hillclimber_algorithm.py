@@ -42,7 +42,7 @@ def execute(input_chain, start_point, iterations, dimension):
 			acid.coordinates = [i, 0, 0]
 	
 	elif start_point == "random_folded":
-		new_acid_chain = helpers.fold_random(input_chain)
+		new_acid_chain = helpers.fold_random(input_chain, dimension)
 
 	elif start_point == "dept_chain":
 		new_acid_chain = copy.deepcopy(input_chain)
@@ -89,7 +89,7 @@ def execute(input_chain, start_point, iterations, dimension):
 
 
 
-	with open("experiment2.csv", "w", newline="") as output_file:
+	with open("experiment3.csv", "w", newline="") as output_file:
 		writer = csv.writer(output_file)
 		writer.writerow(["Experiment2", "Test"])
 
