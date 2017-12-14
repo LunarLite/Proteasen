@@ -429,9 +429,9 @@ class Amino_acid_chain:
 
 			# display pop-up window with plot
 			plt.show()
-		else:
+		elif dimension == "3d":
 			# Add new subplot
-			subPlot = fig.add_subplot(111, projection='3d')
+			subPlot = fig.add_subplot(111, projection="3d")
 
 			# create empty lists to store x and y coordinates
 			x = []

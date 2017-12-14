@@ -1,11 +1,11 @@
-# hillclimber_algorithm.py
+# simulated_annealing.py
 #
 # Heuristics - Protein Pow(d)er
 # http://heuristieken.nl/wiki/index.php?title=Protein_Pow(d)er
 #
 # Students: Mick Tozer, Eline Rietdijk and Vanessa Botha
 #
-# this file contains the hillclimber algorithm
+# this file contains the simulated annealing algorithm
 # can have either a "straight_folded" or "random_folded" 
 # amino acid chain as starting point
 # 
@@ -32,8 +32,9 @@ def execute(input_chain, start_point, total_iterations):
 
 	# parameters simulated annealing  
 	annealing_type = "Exponential"
-	T_begin = 100
+	T_begin = 30000
 	T_current = 0
+
 	T_end = 1
 	
 
@@ -62,18 +63,24 @@ def execute(input_chain, start_point, total_iterations):
 
 	while current_iteration < total_iterations:
 
+		print("__________________________________________________________")
 		print(current_iteration)
 
 		if annealing_type == "Lineair":
 			T_current = T_begin - current_iteration * (T_begin - T_end) / total_iterations
 
 		elif annealing_type == "Exponential": 
-			T_current = T_begin * math.pow((T_end / T_begin), (current_iteration / total_iterations))
+			T_current = T_begin * math.pow((T_end / T_begin), ((current_iteration * 1.2 ) / total_iterations))
 			print("CCCCCCurrent", T_current)
 		# elif annealing_type == "Sigmoidal":
-		# 	T_current = T_end + (T_begin - T_end) / (1+)
+		# 	T_current = T_end + (T_begin - T_end) / (1 + math.pow(math.e, (0.3 * (current_iteration - (total_iterations/2)))))
+		# 	print("cur_T", T_current)
 		# elif annealing_type == "Geman": 
-		# 	"T_current = c / (log i + d)"
+
+			# print(math.log(current_iteration + 1))
+
+			T_current = T_begin /  (math.log(current_iteration + 1) + 1)
+			print("cur_T", T_current)
 
 		rotated_chain = new_acid_chain.rotate(0)
 		if rotated_chain == 1:
@@ -88,22 +95,39 @@ def execute(input_chain, start_point, total_iterations):
 
 
 
-		downhill = (rotated_acid_chain.score - new_acid_chain.score)
-		acceptance_prob = math.pow(math.e, (downhill / T_current))
+		cost = ((new_acid_chain.score) - rotated_acid_chain.score)
+		acceptance_prob = math.pow(math.e, (cost / T_current))
+		# acceptance_prob = 0.01
+
+
 		# print("current score", rotated_acid_chain.score, "new score", new_acid_chain.score)
 		# print("verkorting", downhill)
 		# print("acceptance_prob", acceptance_prob)
-
-		if random() <= acceptance_prob: 
+		print("new", rotated_acid_chain.score)
+		print("prev", new_acid_chain.score)
+		print("cost", cost)
+		print("prob", acceptance_prob)
+		if random() < acceptance_prob: 
 			print("get in")
 
 			# set current chain to new chain and update stability score
 			new_acid_chain.chain = rotated_chain
 			new_acid_chain.stability()
 
+		if acceptance_prob == 1: 
+			if random() < 0.5: 
+				# set current chain to new chain and update stability score
+				new_acid_chain.chain = rotated_chain 
+				new_acid_chain.stability()
+
 		# increase number of attempts with 1
 		current_iteration += 1
-	
+
+		# new_acid_chain.plot("2d")
+
+		# for aminoacid in new_acid_chain.chain:
+		# 	print(aminoacid.coordinates)
+
 	# print start_score to show whether hillclimber improved stability
 	print("Start score:", start_score)
 
