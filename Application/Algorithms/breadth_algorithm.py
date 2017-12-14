@@ -101,8 +101,9 @@ def checkPossibilities(temp_chain, i):
 	options = [[x - 1, y, z], [x + 1, y, z], [x, y - 1, z], [x, y + 1, z]]
 	
 	global dimension
-	if dimension is "3d":
-		option.append([x, y, z + 1], [x, y, z - 1])
+	if dimension == "3d":
+		options.append([x, y, z + 1])
+		options.append([x, y, z - 1])
 
 	# removes invalid options from the array
 	for j in temp_chain:

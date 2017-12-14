@@ -121,7 +121,7 @@ def checkPossibilities(temp_chain, i):
 		options.append([x, y + 1, z])
 	
 	global dimension
-	if dimension is "3d":
+	if dimension == "3d":
 		if(z - 1 >= -dynamic_length):
 			options.append([x, y, z - 1])
 		if(z + 1 <= dynamic_length):

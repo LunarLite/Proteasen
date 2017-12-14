@@ -23,7 +23,7 @@ from Dependencies import helpers
 from random import randint
 
 
-def execute(input_chain, start_point, iterations):
+def execute(input_chain, start_point, iterations, dimension):
 	""" This function takes as input an unfolded Amino_acid_chain object 
 	and then folds it using hillcimber, with random_folded or straight_folded 
 	as a starting point. Number of iterations are given by user (500 recommended)"""
@@ -31,7 +31,7 @@ def execute(input_chain, start_point, iterations):
 	# initialize variables to store temporary acid chains
 	new_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
 	rotated_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
-	best_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)\
+	best_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
 
 
 	if start_point == "straight_folded":
@@ -39,21 +39,18 @@ def execute(input_chain, start_point, iterations):
 		# fold amino acid chain straight
 		for i, acid in enumerate(new_acid_chain.chain):
 			acid.coordinates = [i, 0, 0]
-			# print(new_acid_chain.chain[i].coordinates)
 	
 	elif start_point == "random_folded":
 		new_acid_chain = helpers.fold_random(input_chain)
 
 	attempts = 0
 	print("stability1")
-	new_acid_chain.stability3D()
+	new_acid_chain.stability()
 	start_score = new_acid_chain.score
-	print("stability now: ", start_score)
 
 
 	while attempts < iterations:
-		print("Rotating...")
-		rotated_chain = new_acid_chain.rotate3D(0)
+		rotated_chain = new_acid_chain.rotate(dimension, 0)
 		for i, a in enumerate(rotated_chain):
 			print("Coordinate nr:", i, ":", a.coordinates)
 		if rotated_chain == 1:
@@ -64,18 +61,14 @@ def execute(input_chain, start_point, iterations):
 
 		# set chain to new rotated_chain and update stability score
 		rotated_acid_chain.chain = rotated_chain
-		print("stability2")
-		rotated_acid_chain.stability3D()
-		print(rotated_acid_chain.score)
+		rotated_acid_chain.stability()
 
 		# if new score is lower than current score
 		if rotated_acid_chain.score <= new_acid_chain.score:
 
 			# set current chain to new chain and update stability score
 			new_acid_chain.chain = rotated_chain
-			print("stability3")
-			new_acid_chain.stability3D()
-			print(rotated_acid_chain.score)
+			new_acid_chain.stability()
 
 			# increase number of attempts with 1
 			attempts += 1
