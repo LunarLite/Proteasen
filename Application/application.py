@@ -79,22 +79,16 @@ def main():
 		depth_algorithm.execute(amino_acid_chain, dimension, max_duration)
 	# hillclimber
 	elif algorithm == "hillclimber":
-		if dimension == "2d": 
-			hillclimber_algorithm.execute(amino_acid_chain, "straight_folded", iterations)
-		else:
-			hillclimber_algorithm3D.execute(amino_acid_chain, "straight_folded", iterations)
+		hillclimber_algorithm.execute(amino_acid_chain, "straight_folded", iterations, dimension)
 	# hillclimber with random start
 	elif algorithm == "randomhillclimber":
-		if dimension == "2d": 
-			hillclimber_algorithm.execute(amino_acid_chain, "random_folded", iterations)
-		else:
-			hillclimber_algorithm3D.execute(amino_acid_chain, "random_folded", iterations)
+		hillclimber_algorithm.execute(amino_acid_chain, "random_folded", iterations, dimension)
 	# simulated annealing
 	elif algorithm == "simulatedannealing":
 		if dimension == "2d": 
-			simulated_annealing.execute(amino_acid_chain, "random_folded", iterations)
-		else:
 			simulated_annealing.execute(amino_acid_chain, "straight_folded", iterations)
+		else:
+			simulated_annealing.execute(amino_acid_chain, "random_folded", iterations)
 	# non-valid commandline arg		
 	else: 
 		sys.exit("\nUsage: application.py dimension algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
