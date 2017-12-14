@@ -46,7 +46,7 @@ def execute(input_chain, start_point, iterations):
 
 	attempts = 0
 	print("stability1")
-	new_acid_chain.stability3D()
+	new_acid_chain.stability()
 	start_score = new_acid_chain.score
 	print("stability now: ", start_score)
 
@@ -64,18 +64,14 @@ def execute(input_chain, start_point, iterations):
 
 		# set chain to new rotated_chain and update stability score
 		rotated_acid_chain.chain = rotated_chain
-		print("stability2")
-		rotated_acid_chain.stability3D()
-		print(rotated_acid_chain.score)
+		rotated_acid_chain.stability()
 
 		# if new score is lower than current score
 		if rotated_acid_chain.score <= new_acid_chain.score:
 
 			# set current chain to new chain and update stability score
 			new_acid_chain.chain = rotated_chain
-			print("stability3")
-			new_acid_chain.stability3D()
-			print(rotated_acid_chain.score)
+			new_acid_chain.stability()
 
 			# increase number of attempts with 1
 			attempts += 1

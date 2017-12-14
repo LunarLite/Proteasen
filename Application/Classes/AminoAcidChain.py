@@ -79,6 +79,7 @@ class Amino_acid_chain:
 				for coordinate in hydro_coordinates:
 
 					# count score -1 if current hydrophobic aminoacid neighbours a remembered hydrophobic aminoacid
+<<<<<<< HEAD
 					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) == 1:
 						self.score -= 1
 
@@ -132,6 +133,8 @@ class Amino_acid_chain:
 				for coordinate in hydro_coordinates:
 			
 					# count score -1 if current hydrophobic aminoacid neighbours a remembered hydrophobic aminoacid
+=======
+>>>>>>> 1f2dc5116586d64a6da7bb39240473256350608f
 					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) + abs(aminoacid.coordinates[2] - coordinate[2]) == 1:
 						self.score -= 1
 
@@ -162,7 +165,7 @@ class Amino_acid_chain:
 
 		# revise score taking into account connections between hydrofobic aminoacids and between cysteine aminoacids in chain
 		self.score += hydro_connections
-		self.score += cys_connections * 5
+		self.score += cys_connections * 5 
 
 	def rotate(self, errors):
 		"""This function returns a copy of self.chain 
@@ -217,7 +220,7 @@ class Amino_acid_chain:
 		# iterate over directions to determine new coordinates
 		for i in range(to_change, len(abs_directions)):
 			if abs_directions[i] == "right":
-				new_coordinates = [rotated_coordinates[i][0] + 1, rotated_coordinates[i][1]]
+				new_coordinates = [rotated_coordinates[i][0] + 1, rotated_coordinates[i][1], 0]
 				if new_coordinates in rotated_coordinates:
 					doubles = 1
 					errors += 1
@@ -226,7 +229,7 @@ class Amino_acid_chain:
 				new_chain[i + 1].coordinates = new_coordinates
 				# print(i, new_coordinates)
 			if abs_directions[i] == "left":
-				new_coordinates = [rotated_coordinates[i][0] - 1, rotated_coordinates[i][1]]
+				new_coordinates = [rotated_coordinates[i][0] - 1, rotated_coordinates[i][1], 0]
 				if new_coordinates in rotated_coordinates:
 					doubles = 1
 					errors += 1
@@ -235,7 +238,7 @@ class Amino_acid_chain:
 				new_chain[i + 1].coordinates = new_coordinates
 				# print(i, new_coordinates)
 			if abs_directions[i] == "up":
-				new_coordinates = [rotated_coordinates[i][0], rotated_coordinates[i][1] + 1]
+				new_coordinates = [rotated_coordinates[i][0], rotated_coordinates[i][1] + 1, 0]
 				if new_coordinates in rotated_coordinates:
 					doubles = 1
 					errors += 1
@@ -244,7 +247,7 @@ class Amino_acid_chain:
 				new_chain[i + 1].coordinates = new_coordinates
 				# print(i, new_coordinates)
 			if abs_directions[i] == "down":
-				new_coordinates = [rotated_coordinates[i][0], rotated_coordinates[i][1] - 1]
+				new_coordinates = [rotated_coordinates[i][0], rotated_coordinates[i][1] - 1, 0]
 				if new_coordinates in rotated_coordinates:
 					doubles = 1
 					errors += 1
