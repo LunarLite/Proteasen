@@ -335,20 +335,12 @@ class Amino_acid_chain:
 		
 		# iterate over each aminoacid 
 		for i in range(0, len(self.chain)):
-
 			# store x and y coordinates of current aminoacid
 			x.append(self.chain[i].coordinates[0])
 			y.append(self.chain[i].coordinates[1])
 			z.append(self.chain[i].coordinates[2])
-		
 		# subplot backbone aminoacid chain
-		subPlot.plot(x, y, z, 'k-')
-		# set subplot ticks to the exact amount required
-		subPlot.set_xticks(x, False)
-		subPlot.set_yticks(y, False)
-		subPlot.set_zticks(z, False)
-
-		
+		subPlot.plot(x, y, z, 'k-')	
 		# iterate over each aminoacid and add them to plot
 		for i in range(0, len(self.chain)):
 			
@@ -364,11 +356,25 @@ class Amino_acid_chain:
 			elif self.chain[i].molecule_type =="cysteine":
 				c = 'g'
 			subPlot.scatter(xs, ys, zs, c=c, marker='o')
-
-		
+		# determine the ranges
+		maxes = [max(x), max(y), max(z)]
+		mins = [min(x), min(y), min(z)]
+		maxlim = max(maxes)
+		minlim = min(mins)
+		# set the ranges
+		subPlot.set_xlim([minlim,maxlim])
+		subPlot.set_ylim([minlim,maxlim])
+		subPlot.set_zlim([minlim,maxlim])
+		# disable decimals
+		subPlot.set_xticks(x, False)
+		subPlot.set_yticks(y, False)
+		subPlot.set_zticks(z, False)
+		# add labels
+		subPlot.set_xlabel('X-axis')
+		subPlot.set_ylabel('Y-axis')
+		subPlot.set_zlabel('Z-axis')
 		# draw a grid behind Subplot 
 		subPlot.grid()
-
 		# display pop-up window with plot
 		plt.show()
 
