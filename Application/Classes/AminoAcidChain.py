@@ -79,7 +79,7 @@ class Amino_acid_chain:
 				for coordinate in hydro_coordinates:
 
 					# count score -1 if current hydrophobic aminoacid neighbours a remembered hydrophobic aminoacid
-					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1] + abs(aminoacid.coordinates[2] - coordinte[2]) == 1:
+					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) + abs(aminoacid.coordinates[2] - coordinate[2]) == 1:
 						self.score -= 1
 
 				# remember current hydrophobic aminoacid
@@ -96,7 +96,7 @@ class Amino_acid_chain:
 				for coordinate in cys_coordinates:
 
 					# count score -5 if current cysteine aminoacid neighbours a remembered cysteine aminoacid
-					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1] + abs(aminoacid.coordinates[2] - coordinte[2]) == 1:
+					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) + abs(aminoacid.coordinates[2] - coordinate[2]) == 1:
 						self.score -= 5
 
 				# remember current cysteine aminoacid

@@ -103,6 +103,7 @@ def checkPossibilities(temp_chain, i):
 	global dimension
 	if dimension is "3d":
 		option.append([x, y, z + 1], [x, y, z - 1])
+		print("yas")
 
 	# removes invalid options from the array
 	for j in temp_chain:
