@@ -23,7 +23,7 @@ from Dependencies import helpers
 from random import randint
 
 
-def execute(input_chain, start_point, iterations):
+def execute(input_chain, start_point, iterations, dimension):
 	""" This function takes as input an unfolded Amino_acid_chain object 
 	and then folds it using hillcimber, with random_folded or straight_folded 
 	as a starting point. Number of iterations are given by user (500 recommended)"""
@@ -51,7 +51,7 @@ def execute(input_chain, start_point, iterations):
 
 
 	while attempts < iterations:
-		rotated_chain = new_acid_chain.rotate(0)
+		rotated_chain = new_acid_chain.rotate(dimension, 0)
 		if rotated_chain == 1:
 			print("no possible rotations found at attempt nr", attempts)
 			

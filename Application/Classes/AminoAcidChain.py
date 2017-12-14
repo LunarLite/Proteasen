@@ -111,102 +111,7 @@ class Amino_acid_chain:
 		self.score += hydro_connections
 		self.score += cys_connections * 5 
 
-	def rotate(self, errors):
-		"""This function returns a copy of self.chain 
-		with one random Amino_acid rotated."""
-
-		# create array to store coordinates after rotation
-		rotated_coordinates = []
-
-		# create array to store absolute direction strings of previous step
-		abs_directions = []
-
-		# deepcopy is needed
-		new_chain = copy.deepcopy(self.chain)
-
-		# iterate over coordinates to create direction strings
-		for i in range(1, len(self.chain)):
-
-			# assign coordinate changes to absolute direction strings
-			if self.chain[i].coordinates[0] < self.chain[i - 1].coordinates[0]:
-				abs_directions.append("left")
-			if self.chain[i].coordinates[0] > self.chain[i - 1].coordinates[0]:
-				abs_directions.append("right")
-			if self.chain[i].coordinates[1] < self.chain[i - 1].coordinates[1]:
-				abs_directions.append("down")
-			if self.chain[i].coordinates[1] > self.chain[i - 1].coordinates[1]:
-				abs_directions.append("up")
-
-		# array with different possible changes
-		changes = ["right", "left", "up", "down"]
-
-		# create random integer that decides which direction will be changed
-		to_change = randint(0, len(abs_directions) - 1)
-
-		# create random int that decides which change will be applied
-		change = randint(0, len(changes) - 1)
-
-		# when these two directions are the same, choose new change to apply
-		while changes[change] == abs_directions[to_change]:
-			change = randint(0, len(changes) - 1)
-
-		# print("changing number", to_change, "from", abs_directions[to_change], "to", changes[change], "..")
-
-		# execute the change
-		abs_directions[to_change] = changes[change]
-
-		# iterate over coordinates before the change to store, they stay the same
-		for i in range(0, to_change + 1):
-			rotated_coordinates.append(self.chain[i].coordinates)
-
-		doubles = 0
-
-		# iterate over directions to determine new coordinates
-		for i in range(to_change, len(abs_directions)):
-			if abs_directions[i] == "right":
-				new_coordinates = [rotated_coordinates[i][0] + 1, rotated_coordinates[i][1], 0]
-				if new_coordinates in rotated_coordinates:
-					doubles = 1
-					errors += 1
-					break;
-				rotated_coordinates.append(new_coordinates)
-				new_chain[i + 1].coordinates = new_coordinates
-				# print(i, new_coordinates)
-			if abs_directions[i] == "left":
-				new_coordinates = [rotated_coordinates[i][0] - 1, rotated_coordinates[i][1], 0]
-				if new_coordinates in rotated_coordinates:
-					doubles = 1
-					errors += 1
-					break;
-				rotated_coordinates.append(new_coordinates)
-				new_chain[i + 1].coordinates = new_coordinates
-				# print(i, new_coordinates)
-			if abs_directions[i] == "up":
-				new_coordinates = [rotated_coordinates[i][0], rotated_coordinates[i][1] + 1, 0]
-				if new_coordinates in rotated_coordinates:
-					doubles = 1
-					errors += 1
-					break;
-				rotated_coordinates.append(new_coordinates)
-				new_chain[i + 1].coordinates = new_coordinates
-				# print(i, new_coordinates)
-			if abs_directions[i] == "down":
-				new_coordinates = [rotated_coordinates[i][0], rotated_coordinates[i][1] - 1, 0]
-				if new_coordinates in rotated_coordinates:
-					doubles = 1
-					errors += 1
-					break;
-				rotated_coordinates.append(new_coordinates)
-				new_chain[i + 1].coordinates = new_coordinates
-
-		if errors > 50:
-			return 1
-		elif doubles != 0:
-			new_chain = self.rotate(errors)
-
-		return new_chain
-
-	def rotate3D(self, errors):
+	def rotate(self, dimension, errors):
 		"""This function returns a copy of self.chain 
 		with one random Amino_acid rotated."""
 
@@ -232,12 +137,18 @@ class Amino_acid_chain:
 			if self.chain[i].coordinates[1] > self.chain[i - 1].coordinates[1]:
 				abs_directions.append("up")
 			if self.chain[i].coordinates[2] < self.chain[i - 1].coordinates[2]:
-				abs_directions.append("-left")
+				abs_directions.append("out")
 			if self.chain[i].coordinates[2] > self.chain[i - 1].coordinates[2]:
-				abs_directions.append("-right")
+				abs_directions.append("in")
+
+		
 
 		# array with different possible changes
-		changes = ["right", "left", "up", "down", "-left", "-right"]
+		changes = ["right", "left", "up", "down"]
+
+		if dimension == "3d" or dimension == "3D":
+			changes.append("out")
+			changes.append("in")
 
 		# create random integer that decides which direction will be changed
 		to_change = randint(0, len(abs_directions) - 1)
@@ -260,7 +171,6 @@ class Amino_acid_chain:
 
 		doubles = 0
 
-		# print("NIEUWE COORDINATEN BEPALEN.....")
 		# iterate over directions to determine new coordinates
 		for i in range(to_change, len(abs_directions)):
 			if abs_directions[i] == "right":
@@ -295,7 +205,7 @@ class Amino_acid_chain:
 					break;
 				rotated_coordinates.append(new_coordinates)
 				new_chain[i + 1].coordinates = new_coordinates
-			if abs_directions[i] == "-right":
+			if abs_directions[i] == "out":
 				new_coordinates = [rotated_coordinates[i][0], rotated_coordinates[i][1], rotated_coordinates[i][2] + 1]
 				if new_coordinates in rotated_coordinates:
 					doubles = 1
@@ -303,7 +213,7 @@ class Amino_acid_chain:
 					break;
 				rotated_coordinates.append(new_coordinates)
 				new_chain[i + 1].coordinates = new_coordinates
-			if abs_directions[i] == "-left":
+			if abs_directions[i] == "in":
 				new_coordinates = [rotated_coordinates[i][0], rotated_coordinates[i][1], rotated_coordinates[i][2] - 1]
 				if new_coordinates in rotated_coordinates:
 					doubles = 1
@@ -315,9 +225,11 @@ class Amino_acid_chain:
 		if errors > 50:
 			return 1
 		elif doubles != 0:
-			new_chain = self.rotate3D(errors)
+			new_chain = self.rotate(dimension, errors)
 
 		return new_chain
+
+	
 
 	# plots aminoacid chain configuration
 	def plot(self, dimension):
