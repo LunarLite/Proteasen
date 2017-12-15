@@ -64,9 +64,9 @@ def plot(x1, y1, x2, y2, x3, y3):
 	# Add new subplot
 	subPlot = fig.add_subplot(111)
 
-	subPlot.plot(x2, y2, 'b-')
-	subPlot.plot(x1, y1, 'r-')
-	subPlot.plot(x3, y3, 'g-')
+	subPlot.plot(x2, y2, 'b0')
+	subPlot.plot(x1, y1, 'r0')
+	subPlot.plot(x3, y3, 'g0')
 
 
 	# draw a grid behind Subplot 
