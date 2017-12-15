@@ -255,69 +255,120 @@ class Amino_acid_chain:
 		fig.suptitle("AminoAcidChain \n Score: " + str(self.score))
 		"""This function plots self.chain, based on the coordinates 
 		of the Amino_acids in self.chain"""
+		if (dimension == "2d"):
 		
-		# Add new subplot
-		subPlot = fig.add_subplot(111, projection='3d')
+			# Add new subplot
+			subPlot = fig.add_subplot(111)
 
-		# create empty lists to store x and y coordinates
-		x = []
-		y = []
-		z = []
-		
-		# iterate over each aminoacid 
-		for i in range(0, len(self.chain)):
-			# store x and y coordinates of current aminoacid
-			x.append(self.chain[i].coordinates[0])
-			y.append(self.chain[i].coordinates[1])
-			z.append(self.chain[i].coordinates[2])
-		# subplot backbone aminoacid chain
-		subPlot.plot(x, y, z, 'k-')	
-		hydrophobes = []
-		cysteines = []
-		# iterate over each aminoacid and add them to plot
-		for i in range(0, len(self.chain)):
+			# create empty lists to store x and y coordinates
+			x = []
+			y = []
+
 			
-			xs = self.chain[i].coordinates[0]
-			ys = self.chain[i].coordinates[1]
-			zs = self.chain[i].coordinates[2]
+			# iterate over each aminoacid 
+			for i in range(0, len(self.chain)):
+
+				# store x and y coordinates of current aminoacid
+				x.append(self.chain[i].coordinates[0])
+				y.append(self.chain[i].coordinates[1])
 			
-			# check for type of current aminoacid
-			if self.chain[i].molecule_type == "hydrophobic": 
-				c = 'r'
-				hydrophobes.append([self.chain[i].coordinates[0], self.chain[i].coordinates[1], self.chain[i].coordinates[2]])
-			elif self.chain[i].molecule_type == "polair":  
-				c = 'b'
-			elif self.chain[i].molecule_type =="cysteine":
-				c = 'g'
-				cysteines.append([self.chain[i].coordinates[0], self.chain[i].coordinates[1], self.chain[i].coordinates[2]])
-			subPlot.scatter(xs, ys, zs, c=c, marker='o')
+			# subplot backbone aminoacid chain
+			subPlot.plot(x, y, 'k-')
+			# set subplot ticks to the exact amount required
+			subPlot.set_xticks(x, False)
+			subPlot.set_yticks(y, False)
+
+			# iterate over each aminoacid
+			for i in range(0, len(self.chain)):
+				
+				# check for type of current aminoacid
+				if self.chain[i].molecule_type == "hydrophobic": 
+
+					# plot red dot at coordinates of hydrophobic aminoacid
+					subPlot.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], "ro")
+					plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], "ro")
+
+				elif self.chain[i].molecule_type == "polair":  
+
+					# plot blue dot at coordinates of polair aminoacid
+					subPlot.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], "bo")
+					plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], "bo")
+
+				elif self.chain[i].molecule_type =="cysteine":
+
+					# plot green dot at coordinates of cysteine aminoacid
+					subPlot.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], "go")
+					plt.plot(self.chain[i].coordinates[0], self.chain[i].coordinates[1], "go")
+
+			self.drawLines2D(subPlot)
+			# draw a grid behind Subplot 
+			subPlot.grid()
+
+			# display pop-up window with plot
+			plt.show()
+		else:
+			# Add new subplot
+			subPlot = fig.add_subplot(111, projection='3d')
+
+			# create empty lists to store x and y coordinates
+			x = []
+			y = []
+			z = []
+			
+			# iterate over each aminoacid 
+			for i in range(0, len(self.chain)):
+				# store x and y coordinates of current aminoacid
+				x.append(self.chain[i].coordinates[0])
+				y.append(self.chain[i].coordinates[1])
+				z.append(self.chain[i].coordinates[2])
+			# subplot backbone aminoacid chain
+			subPlot.plot(x, y, z, 'k-')	
+			hydrophobes = []
+			cysteines = []
+			# iterate over each aminoacid and add them to plot
+			for i in range(0, len(self.chain)):
+				
+				xs = self.chain[i].coordinates[0]
+				ys = self.chain[i].coordinates[1]
+				zs = self.chain[i].coordinates[2]
+				
+				# check for type of current aminoacid
+				if self.chain[i].molecule_type == "hydrophobic": 
+					c = 'r'
+					hydrophobes.append([self.chain[i].coordinates[0], self.chain[i].coordinates[1], self.chain[i].coordinates[2]])
+				elif self.chain[i].molecule_type == "polair":  
+					c = 'b'
+				elif self.chain[i].molecule_type =="cysteine":
+					c = 'g'
+					cysteines.append([self.chain[i].coordinates[0], self.chain[i].coordinates[1], self.chain[i].coordinates[2]])
+				subPlot.scatter(xs, ys, zs, c=c, marker='o')
+			
+			# determine the ranges
+			maxes = [max(x), max(y), max(z)]
+			mins = [min(x), min(y), min(z)]
+			maxlim = max(maxes)
+			minlim = min(mins)
+			# set the ranges
+			subPlot.set_xlim([minlim,maxlim])
+			subPlot.set_ylim([minlim,maxlim])
+			subPlot.set_zlim([minlim,maxlim])
+			# disable decimals
+			subPlot.set_xticks(x, False)
+			subPlot.set_yticks(y, False)
+			subPlot.set_zticks(z, False)
+			# add labels
+			subPlot.set_xlabel('X-axis')
+			subPlot.set_ylabel('Y-axis')
+			subPlot.set_zlabel('Z-axis')
+			
+			# draw coloured lines for the scores
+			self.drawLines3D(subPlot)
+			# draw a grid behind Subplot 
+			subPlot.grid()
+			# display pop-up window with plot
+			plt.show()
 		
-		# determine the ranges
-		maxes = [max(x), max(y), max(z)]
-		mins = [min(x), min(y), min(z)]
-		maxlim = max(maxes)
-		minlim = min(mins)
-		# set the ranges
-		subPlot.set_xlim([minlim,maxlim])
-		subPlot.set_ylim([minlim,maxlim])
-		subPlot.set_zlim([minlim,maxlim])
-		# disable decimals
-		subPlot.set_xticks(x, False)
-		subPlot.set_yticks(y, False)
-		subPlot.set_zticks(z, False)
-		# add labels
-		subPlot.set_xlabel('X-axis')
-		subPlot.set_ylabel('Y-axis')
-		subPlot.set_zlabel('Z-axis')
-		
-		# draw coloured lines for the scores
-		self.drawLines(subPlot)
-		# draw a grid behind Subplot 
-		subPlot.grid()
-		# display pop-up window with plot
-		plt.show()
-		
-	def drawLines(self, subPlot): 
+	def drawLines3D(self, subPlot): 
 
 		# iterate over chain, keeping track of the count
 		for count, j in enumerate(self.chain):
@@ -350,3 +401,40 @@ class Amino_acid_chain:
 					# if neighbouring acids are hydrophobic, increase score
 					if self.chain[k].molecule_type == "cysteine" and x_difference + y_difference + z_difference == 1:
 						subPlot.plot([j.coordinates[0], self.chain[k].coordinates[0]], [j.coordinates[1], self.chain[k].coordinates[1]], [j.coordinates[2], self.chain[k].coordinates[2]], 'g:')
+					if self.chain[k].molecule_type == "hydrophobic" and x_difference + y_difference + z_difference == 1:
+						subPlot.plot([j.coordinates[0], self.chain[k].coordinates[0]], [j.coordinates[1], self.chain[k].coordinates[1]], [j.coordinates[2], self.chain[k].coordinates[2]], 'r--')
+						
+
+	def drawLines2D(self, subPlot): 
+
+		# iterate over chain, keeping track of the count
+		for count, j in enumerate(self.chain):
+
+			# if current aminoacid is hydrophobic, check for neigbouring aminoacids
+			if j.molecule_type == "hydrophobic":
+				# loop through remaining acids to check coordinates and molecule type
+				# skip one acid (count + 2), since next acid in the string does not count for score
+				for k in range(count + 3, len(self.chain)):
+					# calculate absolute difference in x- and y-coordinates 
+					x_difference = abs(j.coordinates[0] - self.chain[k].coordinates[0])
+					y_difference = abs(j.coordinates[1] - self.chain[k].coordinates[1])
+					# if abs x- and y-difference is 1, acids are positioned next to eachother
+					# if neighbouring acids are hydrophobic, increase score
+					if self.chain[k].molecule_type == "hydrophobic" and x_difference + y_difference == 1:
+						subPlot.plot([j.coordinates[0], self.chain[k].coordinates[0]], [j.coordinates[1], self.chain[k].coordinates[1]], 'r:')
+					if self.chain[k].molecule_type == "cysteine" and x_difference + y_difference == 1:
+						subPlot.plot([j.coordinates[0], self.chain[k].coordinates[0]], [j.coordinates[1], self.chain[k].coordinates[1]], 'r--')
+		
+			if j.molecule_type == "cysteine":
+				# loop through remaining acids to check coordinates and molecule type
+				# skip one acid (count + 2), since next acid in the string does not count for score
+				for k in range(count + 3, len(self.chain)):
+					# calculate absolute difference in x- and y-coordinates 
+					x_difference = abs(j.coordinates[0] - self.chain[k].coordinates[0])
+					y_difference = abs(j.coordinates[1] - self.chain[k].coordinates[1])
+					# if abs x- and y-difference is 1, acids are positioned next to eachother
+					# if neighbouring acids are hydrophobic, increase score
+					if self.chain[k].molecule_type == "cysteine" and x_difference + y_difference == 1:
+						subPlot.plot([j.coordinates[0], self.chain[k].coordinates[0]], [j.coordinates[1], self.chain[k].coordinates[1]], 'g:')
+					if self.chain[k].molecule_type == "hydrophobic" and x_difference + y_difference == 1:
+						subPlot.plot([j.coordinates[0], self.chain[k].coordinates[0]], [j.coordinates[1], self.chain[k].coordinates[1]], 'r--')
