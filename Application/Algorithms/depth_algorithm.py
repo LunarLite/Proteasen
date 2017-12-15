@@ -5,10 +5,10 @@
 #
 # Students: Mick Tozer, Eline Rietdijk and Vanessa Botha
 #
-# this file contains the Breadth-first algorithm
+# this file contains the Depth-first algorithm
 # 
 # > Able to fold amino acid chains consisting of up to 14 amino acids (H / P)
-# --> first H/P chain
+# --> first H/P chain (2D)
 #		Runtime: aprox. 10 seconds
 # 
 
