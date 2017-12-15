@@ -61,19 +61,10 @@ There is no way as of yet to run a multitude of automated tests, for now you'll 
 
 ### Break down into end to end tests
 
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
+We tested the effect of start score on the end score that was achieved with our hillclimber algorithm.
+We ran the three versions of the hillclimber algorithm (straight, random, depth) that have different starting points.
+For results and a more detailed explanation of our experiment, see 'experiment documentatie.pdf' in the folder
+'\application\experiment'.
 
 ## Authors
 
