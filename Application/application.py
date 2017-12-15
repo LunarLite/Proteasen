@@ -56,7 +56,7 @@ def main():
 		
 	else: 
 		app = GuiApplication.Gui_Application()
-		app.run("csv", "Data/sequences.csv")
+		app.run("csv", "sequences.csv")
 		specs = app.specs()
 
 		print("\n", specs, "\n")
