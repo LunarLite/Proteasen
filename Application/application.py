@@ -84,7 +84,7 @@ def main():
 		
 	# set x and y coordinates of the aminoacids of chain, depending on the algorithm	
 	if algorithm == "random":
-		random_algorithm.execute(amino_acid_chain, iterations)
+		random_algorithm.execute(amino_acid_chain, iterations, dimension)
 	# breadth-first
 	elif algorithm == "breadth":
 		breadth_algorithm.execute(amino_acid_chain, dimension)
@@ -98,7 +98,7 @@ def main():
 		if algorithm == "depth_hill" and finished == False:
 			amino_acid_chain.stability()
 			print("Performing hillclimber.. Current score: ", amino_acid_chain.score)
-			hillclimber_algorithm.execute(amino_acid_chain, "dept_chain", 500, dimension)
+			hillclimber_algorithm.execute(amino_acid_chain, "dept_chain", 1000, dimension)
 	# hillclimber
 	elif algorithm == "hillclimber":
 		hillclimber_algorithm.execute(amino_acid_chain, "straight_folded", iterations, dimension)

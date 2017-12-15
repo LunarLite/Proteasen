@@ -19,7 +19,7 @@ from Dependencies import helpers
 from random import randint
 
 
-def execute(input_chain, total_iterations):
+def execute(input_chain, total_iterations, dimension):
 	"""This function takes as input an unfolded Amino_acid_chain object, 
 	folds it randomly 40 times, and returns the chain with the best score."""
 
@@ -29,7 +29,7 @@ def execute(input_chain, total_iterations):
 	for i in range (total_iterations):
 
 		# fold random new chain and calculate stability score
-		new_random_chain = helpers.fold_random(new_random_chain)
+		new_random_chain = helpers.fold_random(new_random_chain, dimension)
 		new_random_chain.stability()
 
 		# if score of new chain is higher than current input_chain
