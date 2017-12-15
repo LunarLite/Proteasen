@@ -7,14 +7,12 @@
 #
 # this file contains the simulated annealing algorithm
 # can have either a "straight_folded" or "random_folded" 
-# amino acid chain as starting point
+# amino acid chain as starting point. Dimension can either be 2D or 3D
 # 
 # Able to fold amino acid chains consisting of > 49 amino acids (H / P)
 # --> all of the H/P chains
 # 		Runtime: > 1.0 seconds
 #
-# 
-
 
 from Algorithms import random_algorithm
 from Classes import AminoAcidChain
@@ -24,17 +22,16 @@ from random import randint, random
 
 import math
 
-
 def execute(input_chain, start_point, total_iterations, dimension):
 	""" This function takes as input an unfolded Amino_acid_chain object 
-	and then folds it using hillcimber, with random_folded or straight_folded 
-	as a starting point. Number of iterations are given by user (500 recommended)"""
+	and then folds it using simulated annealing, with random_folded or straight_folded 
+	as a starting point. Number of iterations are given by user (10 000 recommended). 
+	Dimension can either be 2D or 3D"""
 
 	# parameters simulated annealing  
 	annealing_type = "Exponential"
 	T_begin = 30000
 	T_current = 0
-
 	T_end = 1
 	
 
@@ -52,7 +49,7 @@ def execute(input_chain, start_point, total_iterations, dimension):
 			# print(new_acid_chain.chain[i].coordinates)
 	
 	elif start_point == "random_folded":
-		new_acid_chain = helpers.fold_random(input_chain)
+		new_acid_chain = helpers.fold_random(input_chain, dimension)
 
 	
 	new_acid_chain.stability()
@@ -79,8 +76,8 @@ def execute(input_chain, start_point, total_iterations, dimension):
 
 			# print(math.log(current_iteration + 1))
 
-			T_current = T_begin /  (math.log(current_iteration + 1) + 1)
-			print("cur_T", T_current)
+			# T_current = T_begin /  (math.log(current_iteration + 1) + 1)
+			# print("cur_T", T_current)
 
 		rotated_chain = new_acid_chain.rotate(dimension, 0)
 		if rotated_chain == 1:
@@ -94,15 +91,9 @@ def execute(input_chain, start_point, total_iterations, dimension):
 		rotated_acid_chain.stability()
 
 
-
 		cost = ((new_acid_chain.score) - rotated_acid_chain.score)
 		acceptance_prob = math.pow(math.e, (cost / T_current))
-		# acceptance_prob = 0.01
 
-
-		# print("current score", rotated_acid_chain.score, "new score", new_acid_chain.score)
-		# print("verkorting", downhill)
-		# print("acceptance_prob", acceptance_prob)
 		print("new", rotated_acid_chain.score)
 		print("prev", new_acid_chain.score)
 		print("cost", cost)
@@ -123,10 +114,6 @@ def execute(input_chain, start_point, total_iterations, dimension):
 		# increase number of attempts with 1
 		current_iteration += 1
 
-		# new_acid_chain.plot("2d")
-
-		# for aminoacid in new_acid_chain.chain:
-		# 	print(aminoacid.coordinates)
 
 	# print start_score to show whether hillclimber improved stability
 	print("Start score:", start_score)

@@ -8,7 +8,8 @@
 # this file contains the main script of the program 
 # Usage: 
 # > application.py algorithm HHPHHHPHPHH
-#   algorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber 
+# 	dimension: 2D/3D
+#   algorithms: Random / Breadth / Breadth_heur / Depth/ Depth_hill / Hillclimber / Randomhillclimber / Simulatedannealing / RandomSimulatedannealing
 # 
 # > application.py (without command line arguments) to start GUI application
 
@@ -19,7 +20,7 @@ import sys
 import timeit
 
 from Classes import AminoAcidChain, GuiApplication
-from Algorithms import random_algorithm, breadth_algorithm, breadthh_algorithm, depth_algorithm, hillclimber_algorithm, hillclimber_algorithm3D, simulated_annealing
+from Algorithms import random_algorithm, breadth_algorithm, breadthh_algorithm, depth_algorithm, hillclimber_algorithm, simulated_annealing
 from Dependencies import helpers
 
 
@@ -33,7 +34,7 @@ def main():
 
 		if dimension != "2d" and dimension != "3d": 
 			sys.exit("\nUsage: application.py dimension algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
-					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Depth / Randomhillclimber / Simulatedannealing\n")
+					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Depth / Depth_hill / Hillclimber / RandomHillclimber / Simulatedannealing / RandomSimulatedannealing\n")
 
 
 		# if iterative algorithm, ask user to input number of iterations
@@ -51,7 +52,7 @@ def main():
 
 	elif len(sys.argv) > 1: 
 		sys.exit("\nUsage: application.py dimension algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
-					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Depth / Depth_hill / Hillclimber / Randomhillclimber / Simulatedannealing / RandomSimulatedannealing\n")
+					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Depth / Depth_hill / Hillclimber / RandomHillclimber / Simulatedannealing / RandomSimulatedannealing\n")
 		
 	else: 
 		app = GuiApplication.Gui_Application()
@@ -114,7 +115,7 @@ def main():
 	# invalid commandline arg		
 	else: 
 		sys.exit("\nUsage: application.py dimension algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
-					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Depth / Depth_hill / Hillclimber / Randomhillclimber / Simulatedannealing / RandomSimulatedannealing\n")
+					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Depth / Depth_hill / Hillclimber / RandomHillclimber / Simulatedannealing / RandomSimulatedannealing\n")
 	
 	# stop timer
 	stop = timeit.default_timer()
