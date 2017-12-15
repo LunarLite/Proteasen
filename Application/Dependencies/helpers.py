@@ -95,10 +95,10 @@ def ask_for_hillclimbing():
 
 		if answer != "":
 			if answer == "y" or answer == "Y":
-				depth_hill = "y"
+				algorithm = "depth_hill"
 				break;
 			elif answer == "n" or answer == "N":
-				depth_hill = "n"
+				algorithm = "depth"
 				break;
 
-	return depth_hill
+	return algorithm
