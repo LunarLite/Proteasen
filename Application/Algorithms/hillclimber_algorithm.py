@@ -90,9 +90,9 @@ def execute(input_chain, start_point, iterations, dimension):
 
 
 
-	with open("experiment5.5.csv", "w", newline="") as output_file:
+	with open("experiment10.5.csv", "w", newline="") as output_file:
 		writer = csv.writer(output_file)
-		writer.writerow(["Experiment5: ", "Depth, 3d, sequence 1, it: 1000"])
+		writer.writerow(["Experiment10: ", "Random, 3d, sequence 8, it: 1000"])
 
 		for row in scores:
 			writer.writerow(row)
