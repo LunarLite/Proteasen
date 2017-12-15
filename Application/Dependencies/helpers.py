@@ -76,11 +76,16 @@ def fold_random(input_chain, dimension):
 
 	return output_chain	
 
-def ask_for_iterations():
+def ask_for_iterations(algorithm):
 	"""ask user to input number of iterations"""
 	
+	if algorithm == "simulatedannealing" or algorithm == "randomsimulatedannealing":
+		recommended = "10000"
+	else:
+		recommended = "1000"
+
 	while True:
-		iterations = input("Give number of iterations to execute hillclimber (500 RCMD): ")
+		iterations = input("Give number of iterations to execute " + algorithm + " (" + recommended + " RCMD): ")
 	
 		if iterations != "": 
 			if str.isdigit(iterations): 

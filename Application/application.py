@@ -43,7 +43,7 @@ def main():
 			algorithm == "simulatedannealing" or
 			algorithm == "randomsimulatedannealing" or
 			algorithm == "random"):
-			iterations = helpers.ask_for_iterations()
+			iterations = helpers.ask_for_iterations(algorithm)
 
 		elif algorithm == "depth":
 			algorithm = helpers.ask_for_hillclimbing()
