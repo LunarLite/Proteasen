@@ -46,7 +46,7 @@ def main():
 			iterations = helpers.ask_for_iterations()
 
 		elif algorithm == "depth":
-			depth_hill = helpers.ask_for_hillclimbing()
+			algorithm = helpers.ask_for_hillclimbing()
 
 
 

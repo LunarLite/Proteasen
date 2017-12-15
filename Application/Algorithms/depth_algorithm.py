@@ -5,10 +5,10 @@
 #
 # Students: Mick Tozer, Eline Rietdijk and Vanessa Botha
 #
-# this file contains the Breadth-first algorithm
+# this file contains the Depth-first algorithm
 # 
 # > Able to fold amino acid chains consisting of up to 14 amino acids (H / P)
-# --> first H/P chain
+# --> first H/P chain (2D)
 #		Runtime: aprox. 10 seconds
 # 
 
@@ -68,7 +68,7 @@ def execute(input, d, max_time):
 			# get possible builds
 			builds = formChain(temp_chain, length, possibilities, input_chain)
 			# build new chains
-			chain_deque = buildChains(builds, chain_deque)
+			chain_deque = buildChains(new_acid_chain, builds, chain_deque)
 		else:
 			checkScore(temp_chain)
 
@@ -92,9 +92,18 @@ def formChain(temp_chain, i, possibilities, input_chain):
 
 	return builds
 	
-def buildChains(builds, chain_deque):
+def buildChains(new_acid_chain, builds, chain_deque):
 	
+	scores = []
+	
+	# append in order of score, ascending
 	for build in builds:
+		new_acid_chain.chain = build
+		new_acid_chain.stability()
+		scores.append(new_acid_chain.score)
+
+	sorted_builds = [x for (y,x) in sorted(zip(scores, builds), key=lambda pair: pair[0])]
+	for build in sorted_builds:
 		chain_deque.append(build)
 			
 	return chain_deque

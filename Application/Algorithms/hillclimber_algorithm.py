@@ -75,25 +75,24 @@ def execute(input_chain, start_point, iterations, dimension):
 
 			# increase number of attempts with 1
 			attempts += 1
-			scores.append([attempts, new_acid_chain.score])
 		else: 
 
 			# else, increase number of attempts with 5
 			attempts += 1
+
+		scores.append([attempts, new_acid_chain.score])
 	
 	# print start_score to show whether hillclimber improved stability
 	print("Start score:", start_score)
-
-	scores.append([attempts, new_acid_chain.score])
 	
 	# set input chain random folded chain with best score
 	input_chain.chain = new_acid_chain.chain
 
 
 
-	with open("experiment3.csv", "w", newline="") as output_file:
+	with open("experiment10.5.csv", "w", newline="") as output_file:
 		writer = csv.writer(output_file)
-		writer.writerow(["Experiment1", "Test"])
+		writer.writerow(["Experiment10: ", "Random, 3d, sequence 8, it: 1000"])
 
 		for row in scores:
 			writer.writerow(row)

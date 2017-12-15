@@ -5,11 +5,13 @@
 #
 # Students: Mick Tozer, Eline Rietdijk and Vanessa Botha
 #
-# this file contains the Breadth-first algorithm
+# this file contains the Breadth-first algorithm (with heuristic pruning)
 # 
-# > Able to fold amino acid chains consisting of up to 14 amino acids (H / P)
-# --> first H/P chain
-#		Runtime: aprox. 10 seconds
+# > Able to fold amino acid chains consisting of up to 20~ amino acids (H / P)
+# --> first H/P chain (2D)
+#		Runtime: aprox. 0.2 seconds
+# --> second H/P chain (2D)
+#		Runtime: aprox. 6.7 seconds
 # 
 
 from Classes import AminoAcidChain
