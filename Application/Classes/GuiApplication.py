@@ -222,7 +222,7 @@ class Gui_Application(tk.Tk):
 		self.label5 = ttk.Label(property_frame, text="Iterations:", font=SMALL_FONT)
 
 		self.entry2 = ttk.Entry(property_frame, width = 10)
-		self.entry2.insert(0,'500')
+		self.entry2.insert(0,'1000')
 		self.iterations_visibility = "hidden"
 
 

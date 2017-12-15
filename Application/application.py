@@ -43,7 +43,7 @@ def main():
 			algorithm == "simulatedannealing" or
 			algorithm == "randomsimulatedannealing" or
 			algorithm == "random"):
-			iterations = helpers.ask_for_iterations()
+			iterations = helpers.ask_for_iterations(algorithm)
 
 		elif algorithm == "depth":
 			algorithm = helpers.ask_for_hillclimbing()
@@ -56,7 +56,7 @@ def main():
 		
 	else: 
 		app = GuiApplication.Gui_Application()
-		app.run("csv", "Data/sequences.csv")
+		app.run("csv", "sequences.csv")
 		specs = app.specs()
 
 		print("\n", specs, "\n")
