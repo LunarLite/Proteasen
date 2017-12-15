@@ -51,7 +51,7 @@ class Amino_acid_chain:
 
 			else: 
 				sys.exit("\nUsage: application.py dimension algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
-					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Hillclimber / Randomhillclimber\n")
+					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Depth / Depth_hill / Hillclimber / Randomhillclimber / RandomSimulatedannealing\n")
 
 			# append amino acid with appropriate molecule type to chain
 			self.chain.append(Amino_acid(molecule_type))

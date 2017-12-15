@@ -25,7 +25,7 @@ from random import randint, random
 import math
 
 
-def execute(input_chain, start_point, total_iterations):
+def execute(input_chain, start_point, total_iterations, dimension):
 	""" This function takes as input an unfolded Amino_acid_chain object 
 	and then folds it using hillcimber, with random_folded or straight_folded 
 	as a starting point. Number of iterations are given by user (500 recommended)"""
@@ -48,7 +48,7 @@ def execute(input_chain, start_point, total_iterations):
 
 		# fold amino acid chain straight
 		for i, acid in enumerate(new_acid_chain.chain):
-			acid.coordinates = [i, 0]
+			acid.coordinates = [i, 0, 0]
 			# print(new_acid_chain.chain[i].coordinates)
 	
 	elif start_point == "random_folded":
@@ -82,7 +82,7 @@ def execute(input_chain, start_point, total_iterations):
 			T_current = T_begin /  (math.log(current_iteration + 1) + 1)
 			print("cur_T", T_current)
 
-		rotated_chain = new_acid_chain.rotate(0)
+		rotated_chain = new_acid_chain.rotate(dimension, 0)
 		if rotated_chain == 1:
 			print("no possible rotations found at attempt nr", current_iteration)
 			
