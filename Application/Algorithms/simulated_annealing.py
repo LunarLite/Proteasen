@@ -60,15 +60,15 @@ def execute(input_chain, start_point, total_iterations, dimension):
 
 	while current_iteration < total_iterations:
 
-		print("__________________________________________________________")
-		print(current_iteration)
+		# print("__________________________________________________________")
+		# print(current_iteration)
 
 		if annealing_type == "Lineair":
 			T_current = T_begin - current_iteration * (T_begin - T_end) / total_iterations
 
 		elif annealing_type == "Exponential": 
 			T_current = T_begin * math.pow((T_end / T_begin), ((current_iteration * 1.2 ) / total_iterations))
-			print("CCCCCCurrent", T_current)
+			# print("CCCCCCurrent", T_current)
 		# elif annealing_type == "Sigmoidal":
 		# 	T_current = T_end + (T_begin - T_end) / (1 + math.pow(math.e, (0.3 * (current_iteration - (total_iterations/2)))))
 		# 	print("cur_T", T_current)
@@ -81,7 +81,7 @@ def execute(input_chain, start_point, total_iterations, dimension):
 
 		rotated_chain = new_acid_chain.rotate(dimension, 0)
 		if rotated_chain == 1:
-			print("no possible rotations found at attempt nr", current_iteration)
+			# print("no possible rotations found at attempt nr", current_iteration)
 			
 			# no possible rotations found, break out of loop
 			break
@@ -94,12 +94,12 @@ def execute(input_chain, start_point, total_iterations, dimension):
 		cost = ((new_acid_chain.score) - rotated_acid_chain.score)
 		acceptance_prob = math.pow(math.e, (cost / T_current))
 
-		print("new", rotated_acid_chain.score)
-		print("prev", new_acid_chain.score)
-		print("cost", cost)
-		print("prob", acceptance_prob)
+		# print("new", rotated_acid_chain.score)
+		# print("prev", new_acid_chain.score)
+		# print("cost", cost)
+		# print("prob", acceptance_prob)
 		if random() < acceptance_prob: 
-			print("get in")
+			# print("get in")
 
 			# set current chain to new chain and update stability score
 			new_acid_chain.chain = rotated_chain
