@@ -1,0 +1,195 @@
+# application.py
+#
+# Heuristics - Protein Pow(d)er
+# http://heuristieken.nl/wiki/index.php?title=Protein_Pow(d)er
+#
+# Students: Mick Tozer, Eline Rietdijk and Vanessa Botha
+#
+# this file contains the main script of the program 
+# Usage: 
+# > application.py algorithm HHPHHHPHPHH
+# 	dimension: 2D/3D
+#   algorithms: Random / Breadth / Breadth_heur / Depth/ Depth_hill / Hillclimber / Randomhillclimber / Simulatedannealing / RandomSimulatedannealing
+# 
+# > application.py (without command line arguments) to start GUI application
+
+
+
+# imports
+import sys
+import timeit
+
+from Classes import AminoAcidChain, GuiApplication
+from Algorithms import random_algorithm, breadth_algorithm, breadthh_algorithm, depth_algorithm, hillclimber_algorithm, simulated_annealing
+from Dependencies import helpers
+import copy
+import csv
+
+
+# main function
+def main():
+
+	if len(sys.argv) == 4: 
+		dimension = sys.argv[1].lower()
+		algorithm = sys.argv[2].lower()
+		sequence = sys.argv[3].lower()
+
+		if dimension != "2d" and dimension != "3d": 
+			sys.exit("\nUsage: application.py dimension algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
+					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Depth / Depth_hill / Hillclimber / RandomHillclimber / Simulatedannealing / RandomSimulatedannealing\n")
+
+
+		# if iterative algorithm, ask user to input number of iterations
+		if (algorithm == "hillclimber" or 
+			algorithm == "randomhillclimber" or 
+			algorithm == "simulatedannealing" or
+			algorithm == "randomsimulatedannealing" or
+			algorithm == "random"):
+			iterations = helpers.ask_for_iterations(algorithm)
+
+		elif algorithm == "depth":
+			algorithm = helpers.ask_for_hillclimbing()
+
+
+
+	elif len(sys.argv) > 1: 
+		sys.exit("\nUsage: application.py dimension algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
+					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Depth / Depth_hill / Hillclimber / RandomHillclimber / Simulatedannealing / RandomSimulatedannealing\n")
+		
+	else: 
+		app = GuiApplication.Gui_Application()
+		app.run("csv", "sequences.csv")
+		specs = app.specs()
+
+		print("\n", specs, "\n")
+
+		sequence = specs["sequence"]
+		algorithm = specs["algorithm"]
+		dimension = specs["dimension"]
+
+		print(algorithm)
+
+		if (algorithm == "hillclimber" or 
+			algorithm == "randomhillclimber" or 
+			algorithm == "simulatedannealing" or
+			algorithm == "randomsimulatedannealing" or
+			algorithm == "random"):
+			iterations = specs["iterations"]
+
+		
+
+	# # initialize timer
+	# start = timeit.default_timer()
+		
+	# create AminoAcidChain object
+	amino_acid_chain = AminoAcidChain.Amino_acid_chain(sequence)
+	scores = []
+		
+	# set x and y coordinates of the aminoacids of chain, depending on the algorithm	
+	if algorithm == "random":
+		for i in range(20):
+			# initialize timer
+			start = timeit.default_timer()
+			random_algorithm.execute(amino_acid_chain, iterations, dimension)
+			# stop timer
+			stop = timeit.default_timer()
+			# calculate chains stability score
+			amino_acid_chain.stability()
+			scores.append([stop - start, copy.copy(amino_acid_chain.score)])
+	# breadth-first
+	elif algorithm == "breadth":
+		breadth_algorithm.execute(amino_acid_chain, dimension)
+	# breadth-first with heuristics
+	elif algorithm == "breadth_heur":
+		breadthh_algorithm.execute(amino_acid_chain, dimension)
+	# depth-first
+	elif algorithm == "depth" or algorithm == "depth_hill":
+		max_duration = 15
+		for i in range(20):
+			# initialize timer
+			start = timeit.default_timer()
+			finished = depth_algorithm.execute(amino_acid_chain, dimension, max_duration)
+			if algorithm == "depth_hill" and finished == False:
+				amino_acid_chain.stability()
+				print("Performing hillclimber.. Current score: ", amino_acid_chain.score)
+				hillclimber_algorithm.execute(amino_acid_chain, "dept_chain", 1000, dimension)
+			# stop timer
+			stop = timeit.default_timer()
+			# calculate chains stability score
+			amino_acid_chain.stability()
+			scores.append([stop - start, copy.copy(amino_acid_chain.score)])
+	# hillclimber
+	elif algorithm == "hillclimber":
+		for i in range(20):
+			# initialize timer
+			start = timeit.default_timer()
+			hillclimber_algorithm.execute(amino_acid_chain, "straight_folded", iterations, dimension)
+			# stop timer
+			stop = timeit.default_timer()
+			# calculate chains stability score
+			amino_acid_chain.stability()
+			scores.append([stop - start, copy.copy(amino_acid_chain.score)])
+
+	# hillclimber with random start
+	elif algorithm == "randomhillclimber":
+		for i in range(20):
+			# initialize timer
+			start = timeit.default_timer()
+			hillclimber_algorithm.execute(amino_acid_chain, "random_folded", iterations, dimension)
+			# stop timer
+			stop = timeit.default_timer()
+			# calculate chains stability score
+			amino_acid_chain.stability()
+			scores.append([stop - start, copy.copy(amino_acid_chain.score)])
+	# simulated annealing
+	elif algorithm == "simulatedannealing":
+		for i in range(20):
+			# initialize timer
+			start = timeit.default_timer()
+			simulated_annealing.execute(amino_acid_chain, "straight_folded", iterations, dimension)
+			# stop timer
+			stop = timeit.default_timer()
+			# calculate chains stability score
+			amino_acid_chain.stability()
+			scores.append([stop - start, copy.copy(amino_acid_chain.score)])
+		
+	# simulated annealing with random start
+	elif algorithm == "randomsimulatedannealing":
+		for i in range(20):
+			# initialize timer
+			start = timeit.default_timer()
+			simulated_annealing.execute(amino_acid_chain, "random_folded", iterations, dimension)
+			# stop timer
+			stop = timeit.default_timer()
+			# calculate chains stability score
+			amino_acid_chain.stability()
+			scores.append([stop - start, copy.copy(amino_acid_chain.score)])
+		
+	# invalid commandline arg		
+	else: 
+		sys.exit("\nUsage: application.py dimension algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
+					"dimension: 2D/3D\nalgorithms: Random / Breadth / Breadth_heur / Depth / Depth_hill / Hillclimber / RandomHillclimber / Simulatedannealing / RandomSimulatedannealing\n")
+	
+	# # stop timer
+	# stop = timeit.default_timer()
+	# print("Runtime:", (stop - start))
+	
+	# # calculate chains stability score
+	# amino_acid_chain.stability()
+	# print("Score:", (amino_acid_chain.score))
+
+	with open("random_siman_exp_3d.csv", "w", newline="") as output_file:
+		writer = csv.writer(output_file)
+		writer.writerow(["Experiment: ", "random_simulatedannealing, 3d, sequence 8, it: 1000"])
+
+		for row in scores:
+			writer.writerow(row)
+
+	# plot the "folded" aminoacid chain
+	amino_acid_chain.plot(dimension)
+
+		
+# main execution
+if __name__ == '__main__':
+	main()
+	
