@@ -26,7 +26,26 @@ fig = plt.figure()
 
 # amino acid chain. 
 class Amino_acid_chain:
+	"""Stores a chain of amino_acid objects which can then be manipulated by it's functions.
+	
+	Keyfuntions:
+	__init__ -- creates a list and score variable for itself and calls the create()function.
+	create() -- iterates through self.sequence and creates amino_acid's for each iteration.
+	stability() -- determines the current chain's score.
+	rotate() -- randomly rotates one amino_acid of self.chain
+	plot() -- draws out a plot using the matplotlib library.
+	drawLines2D -- draws lines on the plot, showing where points were scored (in 2D)
+	drawLines3D -- draws lines on the plot, showing where points were scored (in 3D)
+	
+    """
+	
 	def __init__(self, sequence):
+		"""Creates the neccesary variables for itself and stores the given sequence before creating itself.
+		
+		Keyword arguments:
+		sequence -- A string containing a number of "P"/"H"/"C" 's
+		
+		"""
 		self.chain = []
 		self.score = 0
 		self.sequence = sequence
@@ -34,7 +53,12 @@ class Amino_acid_chain:
 
 	def create(self):
 		"""This function appends Amino_acid objects with 
-		molecule_type according to sequence to self.chain."""
+		molecule_type according to sequence to self.chain.
+	
+		Keyword arguments:
+		sequence -- A string containing a number of "P"/"H"/"C" 's
+		
+		"""
 
 		# iterate over each character in command line argument
 		for c in self.sequence:
@@ -56,7 +80,6 @@ class Amino_acid_chain:
 			# append amino acid with appropriate molecule type to chain
 			self.chain.append(Amino_acid(molecule_type))
 
-	# calculates chain stability score
 	def stability(self): 
 		"""This function calculates self.score, based on the 
 		coordinates of the hydrophobic (and cysteine) Amino_acid objects in self.chain."""
@@ -132,7 +155,12 @@ class Amino_acid_chain:
 		
 	def rotate(self, dimension, errors):
 		"""This function returns a copy of self.chain 
-		with one random Amino_acid rotated."""
+		with one random Amino_acid rotated.
+		
+		Keyword arguments:
+		dimension -- determines wether the rotation occurs in 2D or 3D
+		errors -- the amount of errors allowed while randomly folding, untill forced to quit.
+		"""
 
 		# create array to store coordinates after rotation
 		rotated_coordinates = []
@@ -248,13 +276,15 @@ class Amino_acid_chain:
 
 		return new_chain
 
-	
-
-	# plots aminoacid chain configuration
 	def plot(self, dimension):
-		fig.suptitle("AminoAcidChain \n Score: " + str(self.score))
 		"""This function plots self.chain, based on the coordinates 
-		of the Amino_acids in self.chain"""
+		of the Amino_acids in self.chain
+		
+		Keyword arguments:
+		dimension -- determines wether the plot will be created/filled in 2D or 3D
+		"""
+		
+		fig.suptitle("AminoAcidChain \n Score: " + str(self.score))
 		if (dimension == "2d"):
 		
 			# Add new subplot
@@ -369,7 +399,12 @@ class Amino_acid_chain:
 			plt.show()
 		
 	def drawLines3D(self, subPlot): 
-
+		"""This function draws extra lines between all point-scoring nodes in 3D.
+		
+		Keyword arguments:
+		subPlot -- The actual plot on which the drawing occurs.
+		"""
+	
 		# iterate over chain, keeping track of the count
 		for count, j in enumerate(self.chain):
 
@@ -404,9 +439,13 @@ class Amino_acid_chain:
 					if self.chain[k].molecule_type == "hydrophobic" and x_difference + y_difference + z_difference == 1:
 						subPlot.plot([j.coordinates[0], self.chain[k].coordinates[0]], [j.coordinates[1], self.chain[k].coordinates[1]], [j.coordinates[2], self.chain[k].coordinates[2]], 'r--')
 						
-
 	def drawLines2D(self, subPlot): 
-
+		"""This function draws extra lines between all point-scoring nodes in 3D.
+		
+		Keyword arguments:
+		subPlot -- The actual plot on which the drawing occurs.
+		"""
+		
 		# iterate over chain, keeping track of the count
 		for count, j in enumerate(self.chain):
 

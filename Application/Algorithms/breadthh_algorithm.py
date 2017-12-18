@@ -33,6 +33,15 @@ new_acid_chain = AminoAcidChain.Amino_acid_chain("p")
 input_lenght = 0
 
 def execute(input, d):
+	"""Search for the best possible chain, utilizing the Breadth-first method.
+	Adds in 2 seperate heurstics:
+	Restricts used domain on the x/y/z axis.
+	Utilizes beam-search, only keeping the best input_length options based on score.
+	
+	Keyword arguments:
+	input -- the chain to work with (contains acid type and default coordinates, [0,0,0]).
+	d -- determines the dimension to work in, 2D/3D.
+    """
 	
 	# set local dimension
 	global dimension
@@ -85,7 +94,11 @@ def execute(input, d):
 
 	
 def deque_resize_beam(chain_deque):
+	"""Checks the score of all chains in chain_deque, keeps (up to input_length) of the best.
 	
+	Keyword arguments:
+	chain_deque -- the deque object which to iterate through.
+    """
 	global new_acid_chain
 	global input_lenght
 	best_chains = []
@@ -111,7 +124,14 @@ def deque_resize_beam(chain_deque):
 		
 	
 def formChain(temp_chain, i, possibilities, input_chain):
-
+	"""Build new chains based on the possible locations of the new acid..
+	
+	Keyword arguments:
+	temp_chain -- the starting chain to build from
+	i -- the current length of temp_chain
+	possibilities -- the possible ways to fold
+	input_chain -- the chain of which you copy amino_acids
+    """
 
 	builds = []
 	# make a new (possible) chain
@@ -125,6 +145,13 @@ def formChain(temp_chain, i, possibilities, input_chain):
 	return builds
 	
 def buildChains(builds, chain_deque):
+	"""Add new possible chains to chain_deque in order of (ascendind) score.
+	
+	Keyword arguments:
+	new_acid_chain -- the amino_acid_chain object, to use the score function with.
+	builds -- possible new chains
+	chain_deque -- the encapsulating list
+    """
 	
 	for build in builds:
 		chain_deque.append(build)
@@ -133,7 +160,15 @@ def buildChains(builds, chain_deque):
 
 # check possible positions a new node can be placed at
 def checkPossibilities(temp_chain, i):
-
+	"""Check possible positions for the next amino_acid in line, 
+	But don't allow them to placed outside of a certain domain.
+	This domain is based on global "dynamic_length".
+	
+	Keyword arguments:
+	temp_chain -- the current build the algorithm is working with.
+	i -- current length of temp_chain
+    """
+	
 	global dynamic_length
 	# remember coordinates of last amino acid in current chain
 	x = temp_chain[i - 1].coordinates[0]
@@ -168,7 +203,13 @@ def checkPossibilities(temp_chain, i):
 	return options	
 	
 def checkScore(temp_chain):
-
+	"""Check the score of a chosen folding and store it in best_chain and best_score,
+	if it's better than the previous best.
+	
+	Keyword arguments:
+	temp_chain -- the current chain you're iteratingthrough
+    """
+	
 	global new_acid_chain
 	global best_chain
 	global best_score
