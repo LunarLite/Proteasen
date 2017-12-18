@@ -113,6 +113,7 @@ def checkPossibilities(temp_chain, i, dimension):
 	z = temp_chain[i - 1].coordinates[2]
 	# create array containing possible positions
 	options = [[x - 1, y, z], [x + 1, y, z], [x, y - 1, z], [x, y + 1, z]]
+
 	# global dimension
 	if dimension == "3d":
 		options.append([x, y, z + 1])
