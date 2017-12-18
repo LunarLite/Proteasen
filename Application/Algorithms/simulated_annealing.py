@@ -9,9 +9,8 @@
 # can have either a "straight_folded" or "random_folded" 
 # amino acid chain as starting point. Dimension can either be 2D or 3D
 # 
-# Able to fold amino acid chains consisting of > 49 amino acids (H / P)
-# --> all of the H/P chains
-# 		Runtime: > 1.0 seconds
+# Able to fold amino acid chains consisting of > 50 amino acids (H / P / C +  2D and 3D)
+# --> all of the H/P chains and H/P/C chains
 #
 
 from Algorithms import random_algorithm
@@ -23,12 +22,16 @@ from random import randint, random
 import math
 
 def execute(input_chain, start_point, total_iterations, dimension):
-	""" This function takes as input an unfolded Amino_acid_chain object 
-	and then folds it using simulated annealing, with random_folded or straight_folded 
-	as a starting point. Number of iterations are given by user (10 000 recommended). 
-	Dimension can either be 2D or 3D"""
+	""" Folds using simulated annealing, keeping chains only with a probability of exponential cooling schedule.
 
-	# parameters simulated annealing  
+	Keyword arguments:
+	input_chain -- the chain to work with (contains acid type and coordinates, [x, y, c]
+	start_point -- the chain position with which to start making changes (straight-folded / random_folded)
+	iterations -- the amount of changes this function will make (10000 recommended)
+	dimension -- the dimension to fold chain in (2D / 3D)"""
+
+
+    # parameters simulated annealing  
 	annealing_type = "Exponential"
 	T_begin = 30000
 	T_current = 0
@@ -60,24 +63,12 @@ def execute(input_chain, start_point, total_iterations, dimension):
 
 	while current_iteration < total_iterations:
 
-		# print("__________________________________________________________")
-		# print(current_iteration)
-
 		if annealing_type == "Lineair":
 			T_current = T_begin - current_iteration * (T_begin - T_end) / total_iterations
 
 		elif annealing_type == "Exponential": 
-			T_current = T_begin * math.pow((T_end / T_begin), ((current_iteration * 1.2 ) / total_iterations))
-			# print("CCCCCCurrent", T_current)
-		# elif annealing_type == "Sigmoidal":
-		# 	T_current = T_end + (T_begin - T_end) / (1 + math.pow(math.e, (0.3 * (current_iteration - (total_iterations/2)))))
-		# 	print("cur_T", T_current)
-		# elif annealing_type == "Geman": 
-
-			# print(math.log(current_iteration + 1))
-
-			# T_current = T_begin /  (math.log(current_iteration + 1) + 1)
-			# print("cur_T", T_current)
+			T_current = T_begin * math.pow((T_end / T_begin), ((current_iteration * 1.5 ) / total_iterations))
+	
 
 		rotated_chain = new_acid_chain.rotate(dimension, 0)
 		if rotated_chain == 1:
