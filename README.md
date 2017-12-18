@@ -76,6 +76,6 @@ For results and a more detailed explanation of our experiment, see 'experiment d
 ## Acknowledgments
 
 Tip of the hat to the following people who helped:
-* **Daan Uittenhout** - *Help with heuristic calculations & Simmulated annealing* - [Daan](https://github.com/daanuittenhout)
+* **Daan Uittenhout** - *Help with heuristic calculations & Simulated annealing* - [Daan](https://github.com/daanuittenhout)
 
 
