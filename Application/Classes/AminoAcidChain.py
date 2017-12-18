@@ -309,14 +309,6 @@ class Amino_acid_chain:
 			# set subplot ticks to the exact amount required
 			subPlot.set_xticks(x, False)
 			subPlot.set_yticks(y, False)
-			# determine the ranges
-			maxes = [max(x), max(y)]
-			mins = [min(x), min(y)]
-			maxlim = max(maxes)
-			minlim = min(mins)
-			# set the ranges
-			subPlot.set_xlim([minlim,maxlim])
-			subPlot.set_ylim([minlim,maxlim])
 
 			# iterate over each aminoacid
 			for i in range(0, len(self.chain)):
