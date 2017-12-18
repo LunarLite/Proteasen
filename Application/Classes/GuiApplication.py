@@ -497,7 +497,6 @@ class Gui_Application(tk.Tk):
 			return False
 
 		# ensure dimension is given
-		print(self.get("dimension"))
 		if self.get("dimension") == None: 
 			self.status["text"] = "Warning: choose dimension"
 			return False
@@ -564,7 +563,6 @@ class Gui_Application(tk.Tk):
 				self.specifications["algorithm"] = self.get("pruning")
 
 		if algorithm_type == "Depth":
-			print("hillafter", self.get("hillafter"))
 			if self.get("hillafter") == None: 
 				self.status["text"] = "Warning: determine whether to run the hillclimber algorithm afterwards"
 				return False

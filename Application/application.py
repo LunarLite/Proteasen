@@ -59,13 +59,9 @@ def main():
 		app.run("csv", "sequences.csv")
 		specs = app.specs()
 
-		print("\n", specs, "\n")
-
 		sequence = specs["sequence"]
 		algorithm = specs["algorithm"]
 		dimension = specs["dimension"]
-
-		print(algorithm)
 
 		if (algorithm == "hillclimber" or 
 			algorithm == "randomhillclimber" or 
