@@ -178,7 +178,7 @@ def main():
 	# amino_acid_chain.stability()
 	# print("Score:", (amino_acid_chain.score))
 
-	with open("random_siman_exp_3d.csv", "w", newline="") as output_file:
+	with open("test.csv", "w", newline="") as output_file:
 		writer = csv.writer(output_file)
 		writer.writerow(["Experiment: ", "random_simulatedannealing, 3d, sequence 8, it: 1000"])
 

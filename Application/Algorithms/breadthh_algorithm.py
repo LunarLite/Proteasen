@@ -29,11 +29,14 @@ best_chain = []
 best_score = 0
 new_acid_chain = AminoAcidChain.Amino_acid_chain("p")
 
+# vars used for beamsearch
+input_lenght = 0
+
 def execute(input, d):
 	
+	# set local dimension
 	global dimension
 	dimension = d
-	
 	# initialize input chain starting coords
 	input_chain = input.chain
 	input_chain[0].coordinates = [0,0,0]
@@ -41,10 +44,7 @@ def execute(input, d):
 	
 	# determine x&y&z domain based on chain length
 	global dynamic_length
-	if(len(input_chain) < 10):
-		dynamic_length = math.floor(math.sqrt(len(input_chain)))
-	else:
-		dynamic_length = math.floor(math.sqrt(len(input_chain)))-1
+	dynamic_length = math.floor(math.sqrt(len(input_chain)))
 
 	# initialize starting chain, consisting of first 2 nodes
 	start_chain = [input_chain[0], input_chain[1]]
@@ -52,6 +52,8 @@ def execute(input, d):
 	chain_deque = deque()
 	chain_deque.append(start_chain)
 	
+	# lenght of input, used for beamsearch and stopping at the end
+	global input_lenght
 	input_lenght = len(input_chain)
 	
 	# increase the size of the chains with 1 node every loop
@@ -70,6 +72,10 @@ def execute(input, d):
 			builds = formChain(temp_chain, length, possibilities, input_chain)
 			# build new chains
 			chain_deque = buildChains(builds, chain_deque)
+			
+			if len(chain_deque) > input_lenght:
+				chain_deque = deque_resize_beam(chain_deque)
+			
 		else:
 			checkScore(temp_chain)
 
@@ -78,6 +84,31 @@ def execute(input, d):
 	return input
 
 	
+def deque_resize_beam(chain_deque):
+	
+	global new_acid_chain
+	global input_lenght
+	best_chains = []
+	scores = []
+	base_score = 1
+	
+	for i in chain_deque:
+		new_acid_chain.chain = i
+		new_acid_chain.stability()
+		new_score = new_acid_chain.score
+	
+		best_chains.append(i)
+		scores.append(copy.copy(new_score))
+	
+	sorted_builds = [x for (y,x) in sorted(zip(scores, best_chains), key=lambda pair: pair[0])]
+	best_chains = sorted_builds[0:input_lenght]
+
+	chain_deque.clear()
+	for i in best_chains:
+		
+		chain_deque.append(i)
+	return chain_deque
+		
 	
 def formChain(temp_chain, i, possibilities, input_chain):
 
@@ -142,7 +173,6 @@ def checkScore(temp_chain):
 	global best_chain
 	global best_score
 
-	
 	# check the scores of both the old and new chain
 	new_acid_chain.chain = temp_chain
 	new_acid_chain.stability()
