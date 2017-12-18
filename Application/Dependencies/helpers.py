@@ -1,13 +1,14 @@
 # helpers.py
-#
+
 # Heuristics - Protein Pow(d)er
 # http://heuristieken.nl/wiki/index.php?title=Protein_Pow(d)er
-#
+
 # Students: Mick Tozer, Eline Rietdijk and Vanessa Botha
-#
+
 # this file contains helpers functions: 
 # > fold_random()
-#
+# > ask_for_iterations(algorithm)
+# > ask_for_hillclimbing()
 
 from Algorithms import hillclimber_algorithm
 from Classes import AminoAcidChain
@@ -15,12 +16,17 @@ from random import randint
 import copy
 
 def fold_random(input_chain, dimension):
-	""" This function takes as input an unfolded Amino_acid_chain object
-	 and returns it folded randomly."""
+	"""Folds input_chain randomly.
 
+	Keyword arguments: 
+	input_chain -- the chain to work with (of class AminoAcidChain.Amino_acid_chain, 
+		containing acid type and default coordinates, [0, 0, 0]).
+	dimension -- the dimension in which this function should fold (2D / 3D)"""
+
+	# create AminoAcidChain.Amino_acid_chain class to store random folded amino_acid
 	output_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
+	
 	# iterate over each aminoacid
-
 	for i in range (1, len(input_chain.chain)):
 
 		# remember coordinates of previous amino acid
@@ -31,9 +37,11 @@ def fold_random(input_chain, dimension):
 		# create array containing possible positions
 		options = [[x + 1, y, z], [x - 1, y, z], [x, y + 1, z], [x, y - 1, z]]
 
+		# add more options if dimension is 3D
 		if dimension == "3d":
 			options.append([x, y, z + 1])
 			options.append([x, y, z - 1])
+
 		# keep track of (the amount of) conflicts
 		conflict = True
 		conflicts = 0;
@@ -77,28 +85,37 @@ def fold_random(input_chain, dimension):
 	return output_chain	
 
 def ask_for_iterations(algorithm):
-	"""ask user to input number of iterations"""
+	"""Ask user to input number of iterations.
+
+	Keyword arguments:
+	algorithm -- the algorithm the user is running."""
 	
 	if algorithm == "simulatedannealing" or algorithm == "randomsimulatedannealing":
 		recommended = "10000"
 	else:
 		recommended = "1000"
 
+	# wait for answer
 	while True:
 		iterations = input("Give number of iterations to execute " + algorithm + " (" + recommended + " RCMD): ")
 	
 		if iterations != "": 
+
+			# break only if answer is a digit
 			if str.isdigit(iterations): 
 				break
 	return int(iterations)
 
 def ask_for_hillclimbing():
-	"""ask user whether hillclimbing is desired in addition to depth-first search""" 
+	"""Ask user whether hillclimbing is desired in addition to depth-first search.""" 
 
+	# wait for proper answer
 	while True:
 		answer = input("Would you like to perform hillclimbing after DFS? (y/n)")
 
 		if answer != "":
+
+			# set algorithm to appropriate algorithm name 
 			if answer == "y" or answer == "Y":
 				algorithm = "depth_hill"
 				break;

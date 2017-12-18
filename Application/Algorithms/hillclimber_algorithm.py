@@ -6,12 +6,10 @@
 # Students: Mick Tozer, Eline Rietdijk and Vanessa Botha
 #
 # this file contains the hillclimber algorithm
-# can have either a "straight_folded" or "random_folded" 
+# can have either a "straight_folded", "random_folded" or "dept_chain"
 # amino acid chain as starting point
 # 
-# Able to fold amino acid chains consisting of > 49 amino acids (H / P)
-# --> all of the H/P chains
-# 		Runtime: > 1.0 seconds
+# Able to fold amino acid chains consisting of > 49 amino acids (H / P / C)
 #
 # 
 
@@ -20,21 +18,23 @@ from Algorithms import random_algorithm
 from Classes import AminoAcidChain
 import copy
 from Dependencies import helpers
-from random import randint
-import csv
 
 
 def execute(input_chain, start_point, iterations, dimension):
-	""" This function takes as input an unfolded Amino_acid_chain object 
-	and then folds it using hillcimber, with random_folded or straight_folded 
-	as a starting point. Number of iterations are given by user (500 recommended)"""
+	"""Folds using hillclimber, keeping new chains only if score is equal or better than old chain.
+
+	Keyword arguments:
+	input_chain -- the chain to work with (contains acid type and coordinates, [x, y, z])
+	start_point -- the chain position with which to start making changes (straight-folded / random-folded / after depth-first) 
+	iterations -- the amount of changes this function will make (1000 recommended)
+	dimension -- the dimension to fold chain in (2D / 3D)"""
 
 	# initialize variables to store temporary acid chains
 	new_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
 	rotated_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
 	best_acid_chain = AminoAcidChain.Amino_acid_chain(input_chain.sequence)
 
-
+	# fold new_acid_chain accordinly based on input (start_point)
 	if start_point == "straight_folded":
 
 		# fold amino acid chain straight
@@ -42,23 +42,30 @@ def execute(input_chain, start_point, iterations, dimension):
 			acid.coordinates = [i, 0, 0]
 	
 	elif start_point == "random_folded":
+
+		# fold amino acid chain randomly
 		new_acid_chain = helpers.fold_random(input_chain, dimension)
 
 	elif start_point == "dept_chain":
+
+		# set new amino acid chain to input_chainm (depth-first output)
 		new_acid_chain = copy.deepcopy(input_chain)
 
 	scores = []
 
-	attempts = 0
+	current_iteration = 0
+
+	# score of current new_acid_chain is the start score
 	new_acid_chain.stability()
 	start_score = new_acid_chain.score
 
-	scores.append([attempts, start_score])
+	# append current 
+	# scores.append([current_iteration, start_score])
 
-	while attempts < iterations:
+	while current_iteration < iterations:
 		rotated_chain = new_acid_chain.rotate(dimension, 0)
 		if rotated_chain == 1:
-			print("no possible rotations found at attempt nr", attempts)
+			print("no possible rotations found at iteration nr", current_iteration)
 			
 			# no possible rotations found, break out of loop
 			break
@@ -66,6 +73,7 @@ def execute(input_chain, start_point, iterations, dimension):
 		# set chain to new rotated_chain and update stability score
 		rotated_acid_chain.chain = rotated_chain
 		rotated_acid_chain.stability()
+
 		# if new score is lower than current score
 		if rotated_acid_chain.score <= new_acid_chain.score:
 
@@ -73,14 +81,14 @@ def execute(input_chain, start_point, iterations, dimension):
 			new_acid_chain.chain = rotated_chain
 			new_acid_chain.stability()
 
-			# increase number of attempts with 1
-			attempts += 1
+			# increase number of current_iteration with 1
+			current_iteration += 1
 		else: 
 
-			# else, increase number of attempts with 5
-			attempts += 1
+			# else, increase number of current_iteration with 1
+			current_iteration += 1
 
-		scores.append([attempts, new_acid_chain.score])
+		# scores.append([current_iteration, new_acid_chain.score])
 	
 	# print start_score to show whether hillclimber improved stability
 	print("Start score:", start_score)
@@ -90,12 +98,12 @@ def execute(input_chain, start_point, iterations, dimension):
 
 
 
-	with open("straight_hill_exp.csv", "w", newline="") as output_file:
-		writer = csv.writer(output_file)
-		writer.writerow(["Experiment: ", "Straight, 3d, sequence 8, it: 1000"])
+	# with open("straight_hill_exp.csv", "w", newline="") as output_file:
+	# 	writer = csv.writer(output_file)
+	# 	writer.writerow(["Experiment: ", "Straight, 3d, sequence 8, it: 1000"])
 
-		for row in scores:
-			writer.writerow(row)
+	# 	for row in scores:
+	# 		writer.writerow(row)
 
 
 
