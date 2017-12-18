@@ -1,9 +1,11 @@
 # experiment.py
 #
-# plots data from csv file of type: 
-# header 
-# x, y
-# x, y etc 
+# Heuristics - Protein Pow(d)er
+# http://heuristieken.nl/wiki/index.php?title=Protein_Pow(d)er
+#
+# Students: Mick Tozer, Eline Rietdijk and Vanessa Botha
+#
+# This file plots data from csv files.
 #
 
 import matplotlib.pyplot as plt 
