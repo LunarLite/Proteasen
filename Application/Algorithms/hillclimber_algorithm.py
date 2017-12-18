@@ -59,9 +59,6 @@ def execute(input_chain, start_point, iterations, dimension):
 	new_acid_chain.stability()
 	start_score = new_acid_chain.score
 
-	# append current 
-	# scores.append([current_iteration, start_score])
-
 	while current_iteration < iterations:
 		rotated_chain = new_acid_chain.rotate(dimension, 0)
 		if rotated_chain == 1:
@@ -87,23 +84,12 @@ def execute(input_chain, start_point, iterations, dimension):
 
 			# else, increase number of current_iteration with 1
 			current_iteration += 1
-
-		# scores.append([current_iteration, new_acid_chain.score])
 	
 	# print start_score to show whether hillclimber improved stability
 	print("Start score:", start_score)
 	
 	# set input chain random folded chain with best score
 	input_chain.chain = new_acid_chain.chain
-
-
-
-	# with open("straight_hill_exp.csv", "w", newline="") as output_file:
-	# 	writer = csv.writer(output_file)
-	# 	writer.writerow(["Experiment: ", "Straight, 3d, sequence 8, it: 1000"])
-
-	# 	for row in scores:
-	# 		writer.writerow(row)
 
 
 

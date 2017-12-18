@@ -34,7 +34,7 @@ def main():
 	x6 = []
 	y6 = []
 
-	with open("straight_hill_exp_3d.csv", 'r') as csvfile:
+	with open("changes_randomhillclimber_sequence7_3d_40.csv", 'r') as csvfile:
 		reader = csv.reader(csvfile, delimiter=',')
 
 		firstline = True
