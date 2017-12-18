@@ -20,7 +20,7 @@ import sys
 import timeit
 
 from Classes import AminoAcidChain, GuiApplication
-from Algorithms import random_algorithm, breadth_algorithm, breadthh_algorithm, depth_algorithm, hillclimber_algorithm, simulated_annealing
+from Algorithms import random_algorithm, breadth_algorithm, breadth_heur_algorithm, depth_algorithm, hillclimber_algorithm, simulated_annealing
 from Dependencies import helpers
 
 
@@ -91,7 +91,7 @@ def main():
 		breadth_algorithm.execute(amino_acid_chain, dimension)
 	# breadth-first with heuristics
 	elif algorithm == "breadth_heur":
-		breadthh_algorithm.execute(amino_acid_chain, dimension)
+		breadth_heur_algorithm.execute(amino_acid_chain, dimension)
 	# depth-first
 	elif algorithm == "depth" or algorithm == "depth_hill":
 		max_duration = 15
