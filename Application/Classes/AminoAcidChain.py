@@ -177,6 +177,7 @@ class Amino_acid_chain:
 
 		# iterate over coordinates to create direction strings
 		for i in range(1, len(self.chain)):
+
 			# assign coordinate changes to absolute direction strings
 			if self.chain[i].coordinates[0] < self.chain[i - 1].coordinates[0]:
 				abs_directions.append("left")
@@ -208,7 +209,6 @@ class Amino_acid_chain:
 		# when these two directions are the same, choose new change to apply
 		while changes[change] == abs_directions[to_change]:
 			change = randint(0, len(changes) - 1)
-
 
 		# execute the change
 		abs_directions[to_change] = changes[change]
