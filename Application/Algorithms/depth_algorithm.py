@@ -63,7 +63,7 @@ def execute(input, d, max_time):
 		temp_chain = chain_deque.pop()
 		length = len(temp_chain)
 		
-		# check whether to add another amino_acid or to check score and finish a chain.
+		# check whether to add another amino_acid or to check score and finish a chain
 		if length is not input_lenght:
 			# check possible places for the new node
 			possibilities = checkPossibilities(temp_chain, length, d)
@@ -80,7 +80,7 @@ def execute(input, d, max_time):
 	return True
 
 def formChain(temp_chain, i, possibilities, input_chain):
-	"""Build new chains based on the possible locations of the new acid..
+	"""Build new chains based on the possible locations of the new acid.
 	
 	Keyword arguments:
 	temp_chain -- the starting chain to build from
@@ -117,7 +117,7 @@ def buildChains(new_acid_chain, builds, chain_deque):
 		new_acid_chain.stability()
 		scores.append(new_acid_chain.score)
 	
-	# sort chains based on scores, append in order of ascending score.
+	# sort chains based on scores, append in order of ascending score
 	sorted_builds = [x for (y,x) in sorted(zip(scores, builds), key=lambda pair: pair[0])]
 	for build in sorted_builds:
 		chain_deque.append(build)
@@ -169,7 +169,7 @@ def checkScore(temp_chain):
 	new_acid_chain.stability()
 	new_score = new_acid_chain.score
 	
-	# store new one in best, if it's better or equal than the best.
+	# store new one in best, if it's better or equal than the best
 	if(new_score <= best_score):
 		best_chain = temp_chain
 		best_score = new_score
