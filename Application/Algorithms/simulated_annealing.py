@@ -21,19 +21,20 @@ from random import randint, random
 
 import math
 
-def execute(input_chain, start_point, total_iterations, dimension):
-	""" Folds using simulated annealing, keeping chains only with a probability of exponential cooling schedule.
+def execute(input_chain, start_point, iterations, dimension):
+	""" Folds using simulated annealing, keeping chains only with a probability
+	derived from exponential cooling schedule.
 
 	Keyword arguments:
 	input_chain -- the chain to work with (contains acid type and coordinates, [x, y, c]
-	start_point -- the chain position with which to start making changes (straight-folded / random_folded)
+	start_point -- the chain position with which to start making changes 
+		(straight-folded / random_folded)
 	iterations -- the amount of changes this function will make (10000 recommended)
 	dimension -- the dimension to fold chain in (2D / 3D)"""
 
 
     # parameters simulated annealing  
-	annealing_type = "Exponential"
-	T_begin = 30000
+	T_begin = 100
 	T_current = 0
 	T_end = 1
 	
@@ -49,7 +50,6 @@ def execute(input_chain, start_point, total_iterations, dimension):
 		# fold amino acid chain straight
 		for i, acid in enumerate(new_acid_chain.chain):
 			acid.coordinates = [i, 0, 0]
-			# print(new_acid_chain.chain[i].coordinates)
 	
 	elif start_point == "random_folded":
 		new_acid_chain = helpers.fold_random(input_chain, dimension)
@@ -57,23 +57,16 @@ def execute(input_chain, start_point, total_iterations, dimension):
 	
 	new_acid_chain.stability()
 	start_score = new_acid_chain.score
-	# print("stability now: ", start_score)
 
 	current_iteration = 0
 
-	while current_iteration < total_iterations:
+	while current_iteration < iterations:
 
-		if annealing_type == "Lineair":
-			T_current = T_begin - current_iteration * (T_begin - T_end) / total_iterations
-
-		elif annealing_type == "Exponential": 
-			T_current = T_begin * math.pow((T_end / T_begin), ((current_iteration * 1.5 ) / total_iterations))
+		# calculate current temperature using exponential cooling schedule
+		T_current = T_begin * (T_end / T_begin) ** ((current_iteration * 1.5 ) / iterations)
 	
-
 		rotated_chain = new_acid_chain.rotate(dimension, 0)
-		if rotated_chain == 1:
-			# print("no possible rotations found at attempt nr", current_iteration)
-			
+		if rotated_chain == 1:	
 			# no possible rotations found, break out of loop
 			break
 
@@ -83,15 +76,9 @@ def execute(input_chain, start_point, total_iterations, dimension):
 
 
 		cost = ((new_acid_chain.score) - rotated_acid_chain.score)
-		acceptance_prob = math.pow(math.e, (cost / T_current))
+		acceptance_prob = math.e ** (cost / T_current)
 
-		# print("new", rotated_acid_chain.score)
-		# print("prev", new_acid_chain.score)
-		# print("cost", cost)
-		# print("prob", acceptance_prob)
 		if random() < acceptance_prob: 
-			# print("get in")
-
 			# set current chain to new chain and update stability score
 			new_acid_chain.chain = rotated_chain
 			new_acid_chain.stability()
@@ -102,7 +89,7 @@ def execute(input_chain, start_point, total_iterations, dimension):
 				new_acid_chain.chain = rotated_chain 
 				new_acid_chain.stability()
 
-		# increase number of attempts with 1
+		# increase number of iterations with 1
 		current_iteration += 1
 
 
