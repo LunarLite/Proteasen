@@ -15,7 +15,6 @@
 
 from Algorithms import random_algorithm
 from Classes import AminoAcidChain
-import copy
 from Dependencies import helpers
 from random import randint, random
 
