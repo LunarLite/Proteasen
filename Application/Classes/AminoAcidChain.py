@@ -67,10 +67,13 @@ class Amino_acid_chain:
 			# set molecule type to either polair (P), hydrophobic (H) or cysteine (C)
 			if (c.upper() == 'H'):
 				molecule_type = "hydrophobic"
+
 			elif (c.upper() == 'P'):
 				molecule_type = "polair"
+
 			elif (c.upper() == 'C'): 
 				molecule_type = "cysteine"
+
 			else: 
 				# warn user if commandline arguement was wrong
 				sys.exit("\nUsage: application.py dimension algorithm HHPHHHPHPHHHPH/CHPHCHPHCHHCPH\n"
@@ -87,21 +90,27 @@ class Amino_acid_chain:
 		hydro_connections = 0
 		cys_connections = 0
 		hydro_cys_connections = 0
+
 		# create arrays to remember coordinates of hydrophobic and cysteine aminoacids
 		hydro_coordinates = []
 		cys_coordinates = []
 
 		# iterate over aminoacids in chain
 		for i, aminoacid in enumerate(self.chain):
+
 			# if the amino_acid is a hydrophobe:
 			if(aminoacid.molecule_type == "hydrophobic"):
+
 				# iterate over remembered hydrophobic coordinates
 				for coordinate in hydro_coordinates:
+
 					# count score -1 if current hydrophobic aminoacid neighbours a remembered hydrophobic aminoacid
 					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) + abs(aminoacid.coordinates[2] - coordinate[2]) == 1:
 						self.score -= 1
+
 				# iterate over remembered cysteine coordinates
 				for coordinate in cys_coordinates:
+
 					# count score -1 if current cysteine aminoacid neighbours a remembered hydrophobic aminoacid
 					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) + abs(aminoacid.coordinates[2] - coordinate[2]) == 1:
 						self.score -= 1
@@ -118,13 +127,17 @@ class Amino_acid_chain:
 						
 			# if the amino_acid is a cysteine:
 			if(aminoacid.molecule_type == "cysteine"):
+
 				# iterate over remembered cysteine coordinates
 				for coordinate in cys_coordinates:
+
 					# count score -5 if current cysteine aminoacid neighbours a remembered cysteine aminoacid
 					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) + abs(aminoacid.coordinates[2] - coordinate[2]) == 1:
 						self.score -= 5
+
 				# iterate over remembered hydrophobic coordinates
 				for coordinate in hydro_coordinates:
+
 					# count score -1 if current cysteine aminoacid neighbours a remembered hydrophobic aminoacid
 					if abs(aminoacid.coordinates[0] - coordinate[0]) + abs(aminoacid.coordinates[1] - coordinate[1]) + abs(aminoacid.coordinates[2] - coordinate[2]) == 1:
 						self.score -= 1
@@ -150,13 +163,15 @@ class Amino_acid_chain:
 		
 		Keyword arguments:
 		dimension -- determines wether the rotation occurs in 2D or 3D
-		errors -- the amount of errors allowed while randomly folding, untill forced to quit.
+		errors -- the amount of errors while rotating.
 		"""
 
 		# create array to store coordinates after rotation
 		rotated_coordinates = []
+
 		# create array to store absolute direction strings of previous step
 		abs_directions = []
+
 		# deepcopy is needed
 		new_chain = copy.deepcopy(self.chain)
 
@@ -178,14 +193,18 @@ class Amino_acid_chain:
 				
 		# array with different possible changes
 		changes = ["right", "left", "up", "down"]
+
 		# determine dimension
 		if dimension == "3d":
 			changes.append("out")
 			changes.append("in")
+
 		# create random integer that decides which direction will be changed
 		to_change = randint(0, len(abs_directions) - 1)
+
 		# create random int that decides which change will be applied
 		change = randint(0, len(changes) - 1)
+
 		# when these two directions are the same, choose new change to apply
 		while changes[change] == abs_directions[to_change]:
 			change = randint(0, len(changes) - 1)
@@ -193,11 +212,13 @@ class Amino_acid_chain:
 
 		# execute the change
 		abs_directions[to_change] = changes[change]
+
 		# iterate over coordinates before the change to store, they stay the same
 		for i in range(0, to_change + 1):
 			rotated_coordinates.append(self.chain[i].coordinates)
 
 		doubles = 0
+
 		# iterate over directions to determine new coordinates whilst checking overlaps
 		for i in range(to_change, len(abs_directions)):
 			if abs_directions[i] == "right":
@@ -253,6 +274,8 @@ class Amino_acid_chain:
 		if errors > 50:
 			return 1
 		elif doubles != 0:
+			
+			# try to fold again, remembering errors made 
 			new_chain = self.rotate(dimension, errors)
 
 		return new_chain
@@ -286,14 +309,6 @@ class Amino_acid_chain:
 			# set subplot ticks to the exact amount required
 			subPlot.set_xticks(x, False)
 			subPlot.set_yticks(y, False)
-			# determine the ranges
-			maxes = [max(x), max(y)]
-			mins = [min(x), min(y)]
-			maxlim = max(maxes)
-			minlim = min(mins)
-			# set the ranges
-			subPlot.set_xlim([minlim,maxlim])
-			subPlot.set_ylim([minlim,maxlim])
 
 			# iterate over each aminoacid
 			for i in range(0, len(self.chain)):
