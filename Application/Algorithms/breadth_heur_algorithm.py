@@ -65,7 +65,7 @@ def execute(input, d):
 		# determine whether to continue building, or to finish a chain and determine it's score
 		if length is not input_lenght:
 			# check possible places for the new node
-			possibilities = checkPossibilities(temp_chain, length. d)
+			possibilities = checkPossibilities(temp_chain, length, d)
 			# get possible builds
 			builds = formChain(temp_chain, length, possibilities, input_chain)
 			# build new chains
@@ -158,7 +158,6 @@ def checkPossibilities(temp_chain, i, dimension):
     """
 	
 	global dynamic_length
-	global dimension
 	# remember coordinates of last amino acid in current chain
 	x = temp_chain[i - 1].coordinates[0]
 	y = temp_chain[i - 1].coordinates[1]
