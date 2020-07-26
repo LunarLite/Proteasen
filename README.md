@@ -68,9 +68,9 @@ For results and a more detailed explanation of our experiment, see 'experiment d
 
 ## Authors
 
-* **Vanessa Botha** - *All work* - [Vanessa](https://github.com/PurpleBooth)
+* **Vanessa Botha** - *All work* - [Vanessa](https://github.com/VanessaBotha)
 * **Eliene Rietdijk** - *All work* - [Eliene](https://github.com/elinerietdijk)
-* **Mick Tozer** - *All work* - [Mick](https://github.com/VanessaBotha)
+* **Mick Tozer** - *All work* - [Mick](https://github.com/LunarLite)
 
 
 ## Acknowledgments
